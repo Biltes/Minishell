@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/03/28 20:38:39 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:53:32 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int exit_error(char *str, t_shell *m_shell)
 {
     printf("%s",str);
     clean_exit(m_shell, EXIT_SUCCESS);
-    return 1;
+    return (1);
 }
 
 
@@ -31,12 +31,14 @@ void	free_exec_node(t_exec_node *exec)
     tokenzinho = exec->tokens_argv[i];
 	while (tokenzinho)
 	{
+		printf("o executavel->  %s.\n\n\n", exec->tokens_argv[i]->value);
         free(tokenzinho->value);
         free(tokenzinho);
         i++;
         tokenzinho = exec->tokens_argv[i];
     }
 	free(exec);
+	printf("LIMPANDO UM EXEC\n");
 	exec = NULL;
 }
 
@@ -48,6 +50,7 @@ static void	free_redir_node(t_redir_node *redir)
 	if (redir->file)
 		free(redir->file);
 	free(redir);
+	printf("LIMPANDO A ESTRUTURA DO REDIR\n");
 	redir = NULL;
 }
 
@@ -61,6 +64,7 @@ static void	free_here_doc(t_here *here)
 		free(here->eof);
 	free(here);
 	here = NULL;
+	printf("LIMPANDO A ESTRUTURA DO HEREDOC\n");
 }
 
 static void	free_pipe_node(t_pipe_node *pipe)
@@ -70,6 +74,7 @@ static void	free_pipe_node(t_pipe_node *pipe)
 	free_cmd(pipe->left);
 	free_cmd(pipe->right);
 	free(pipe);
+	printf("LIMPANDO A ESTRUTURA DO PIPE\n");
 	pipe = NULL;
 }
 
@@ -114,13 +119,25 @@ void	envp_destroy(t_env *env)
 void	clean_exit(t_shell *m_shell, int mode)
 {
 	if (m_shell->input)
+	{
 		free(m_shell->input);
-	free_cmd(m_shell->ast);
-    free(m_shell->prompt);
+		m_shell->input = NULL;
+		printf("input liberado\n");
+	}
+	if (m_shell->ast)
+		free_cmd(m_shell->ast);
+    if (m_shell->prompt)
+		free(m_shell->prompt);
     if (m_shell->lexer)
+	{
         free(m_shell->lexer);
-    free (m_shell->next_token);
-	envp_destroy(*m_shell->env);
+	}
+	if (m_shell->next_token)
+	{
+		free(m_shell->next_token);
+	}
+	if (m_shell->env)
+		envp_destroy(*m_shell->env);
 	if (m_shell->envp)
 		free_array(m_shell->envp);    
 	if (mode == BUILTIN_EXIT)

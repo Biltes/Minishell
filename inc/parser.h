@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:24:40 by pevieira          #+#    #+#             */
-/*   Updated: 2024/03/25 13:01:20 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/10 18:49:56 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSER_H
 
 # define WSPACES " \t\f\n\v\r"
-# define SYMBOLS "<;>|&()"
+# define SYMBOLS "<>|"
 # define MAXARG 50
 
 # define OPEN 1

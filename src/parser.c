@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:21:07 by pevieira          #+#    #+#             */
-/*   Updated: 2024/03/28 23:07:00 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/10 18:48:45 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_presence(t_lexer *lexer, char *op, int mode)
 
 	cur_index = lexer->i - 1;
 	end = lexer->str_len - 1;
-	printf("VIU O CARACTER-> %c\n", lexer->str[cur_index]);
+	printf("AI!!!!!!\n");
 	while (cur_index < end && ft_strchr(WSPACES, lexer->str[cur_index]))
 		cur_index++;
 	if (mode == 2)
@@ -33,8 +33,6 @@ int	check_presence(t_lexer *lexer, char *op, int mode)
 
 int parser(t_shell *m_shell)
 {
-
 	init_ast(m_shell);
-	
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/03/29 11:05:08 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:48:19 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
     char    *eof;
 
     eof = token->value;
-    //freetoken;
 	here = (t_here *)ft_calloc(1, sizeof(t_here));
 	here->type = HERE_DOC;
 	here->eof = ft_strdup(eof);
@@ -91,15 +90,21 @@ static t_cmd     *parsing_exec(t_shell *m_shell)
     {
         if (!m_shell->next_token)
             break;
+
         if (m_shell->next_token->type != TOKEN_ID)    
         {
             exit_error("Erro syntax2", m_shell);
             return (ret);
         }
+        printf("LOROROROR\n");
         ft_add_token_to_exec((t_exec_node *) ret, m_shell->next_token);
+        printf("alalalalalala\n");
         m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+        printf("asssss\n");
         ret = check_redirections(ret, m_shell);
+        printf("maaaaaaa\n");
     }
+    printf("Teste5\n");
     return (ret);
 }
 
