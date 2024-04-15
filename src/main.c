@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/15 18:13:36 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:18:09 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int get_input(t_shell *m_shell)
 		return (exit_error("Syntax error detected.\n", m_shell));
 	return (1);
 }
+
 
 int main(int ac, char **av, char **envp)
 {
