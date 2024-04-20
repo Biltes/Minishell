@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 10:25:23 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/10 18:42:37 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:48:57 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,6 @@ void	back_slash(int sig)
 	(void)sig;
 }
 
-void	reset_prompt(int sg)
-{
-	g_exit = 130;
-	ft_putchar('\n');
-	//rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	(void)sg;
-}
-
 void	signals_set(int sg, t_shell *m_shell)
 {
 	if (sg == RESTORE)
@@ -72,7 +62,6 @@ void	signals_set(int sg, t_shell *m_shell)
 		printf("exit\n");
 		clean_exit(m_shell, BUILTIN_EXIT);
 	}
-    
 	if (sg == HEREDOC)
 		signal(SIGINT, child_signal_handler);
 	if (sg == HEREDOC_PAUSE)

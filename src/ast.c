@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/15 16:48:19 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:34:52 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
 	t_here	*here;
 	t_cmd	*tmp;
 	t_cmd	*tmp2;
-    char    *eof;
 
-    eof = token->value;
 	here = (t_here *)ft_calloc(1, sizeof(t_here));
 	here->type = HERE_DOC;
-	here->eof = ft_strdup(eof);
+	here->eof = ft_strdup((char *)token->value);
 	here->mode = O_WRONLY | O_CREAT | O_TRUNC;
 	here->fdin = dup(STDIN_FILENO);
 	here->fdout = dup(STDOUT_FILENO);
@@ -43,97 +41,82 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
 	return ((t_cmd *)here);
 }
 
-static t_cmd    *check_redirections(t_cmd *cmd, t_shell *m_shell)
+static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 {
-    while (check_presence(m_shell->lexer, "<>", 1) || check_presence(m_shell->lexer, "<>", 2)) //pq dois
-    {
-        m_shell->next_token = lexer_get_next_token(m_shell->lexer); //leak???
-        if (m_shell->next_token->type == TOKEN_REDIR1)
-            cmd = init_redir_cmd(cmd, m_shell->next_token, O_RDONLY, 0); //redirecionamento de entrada
+	while (check_presence(m_shell->lexer, "<>", 1) || \
+		check_presence(m_shell->lexer, "<>", 2))
+	{
+		m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+		if (m_shell->next_token->type == TOKEN_REDIR1)
+			cmd = init_redir_cmd(cmd, m_shell->next_token, O_RDONLY, 0);
 		else if (m_shell->next_token->type == TOKEN_REDIR2)
-            cmd = init_redir_cmd(cmd, m_shell->next_token,O_WRONLY | O_CREAT | O_TRUNC, 1); //red. de saida subscrevendo
-        else if (m_shell->next_token->type == TOKEN_REDIR3)
-			cmd = init_redir_cmd(cmd, m_shell->next_token,O_WRONLY | O_CREAT | O_APPEND, 1); //red de saida anexando
+			cmd = init_redir_cmd(cmd, m_shell->next_token, \
+				O_WRONLY | O_CREAT | O_TRUNC, 1);
+		else if (m_shell->next_token->type == TOKEN_REDIR3)
+			cmd = init_redir_cmd(cmd, m_shell->next_token, \
+				O_WRONLY | O_CREAT | O_APPEND, 1);
 		else if (m_shell->next_token->type == TOKEN_REDIR4)
-			cmd = init_heredoc_cmd(cmd,m_shell->next_token); //red. heredoc
-        
-    }
-    return (cmd);
+			cmd = init_heredoc_cmd(cmd, m_shell->next_token);
+	}
+	return (cmd);
 }
 
 void	ft_add_token_to_exec(t_exec_node *exec, t_token *token)
 {
-    int i;
+	int	i;
 
-    i=0;
-    if (!token)
-        return; 
-    while (exec->tokens_argv[i] && i < MAXARG)
-        i++;
-    if (!exec->tokens_argv[i])
-        exec->tokens_argv[i] = token;
+	i = 0;
+	if (!token)
+		return ;
+	while (exec->tokens_argv[i] && i < MAXARG)
+		i++;
+	if (!exec->tokens_argv[i])
+		exec->tokens_argv[i] = token;
 }
 
-static t_cmd     *parsing_exec(t_shell *m_shell)
+static t_cmd	*parsing_exec(t_shell *m_shell)
 {
-    t_cmd       *ret;
-    
+	t_cmd	*ret;
 
-    if (check_presence(m_shell->lexer, "(", 1))
-    {
-        exit_error("this is not the bonus", m_shell);
-        return NULL;
-    }
-    ret= init_exec_node();
-    ret = check_redirections(ret, m_shell);
-    while(!check_presence(m_shell->lexer, "|", 1))
-    {
-        if (!m_shell->next_token)
-            break;
-
-        if (m_shell->next_token->type != TOKEN_ID)    
-        {
-            exit_error("Erro syntax2", m_shell);
-            return (ret);
-        }
-        printf("LOROROROR\n");
-        ft_add_token_to_exec((t_exec_node *) ret, m_shell->next_token);
-        printf("alalalalalala\n");
-        m_shell->next_token = lexer_get_next_token(m_shell->lexer);
-        printf("asssss\n");
-        ret = check_redirections(ret, m_shell);
-        printf("maaaaaaa\n");
-    }
-    printf("Teste5\n");
-    return (ret);
+	if (check_presence(m_shell->lexer, "(", 1))
+	{
+		exit_error("this is not the bonus", m_shell);
+		return (NULL);
+	}
+	ret = init_exec_node();
+	ret = check_redirections(ret, m_shell);
+	while (!check_presence(m_shell->lexer, "|", 1))
+	{
+		if (!m_shell->next_token)
+			break ;
+		if (m_shell->next_token->type != TOKEN_ID)
+		{
+			exit_error("Erro syntax2", m_shell);
+			return (ret);
+		}
+		ft_add_token_to_exec((t_exec_node *) ret, m_shell->next_token);
+		m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+		ret = check_redirections(ret, m_shell);
+	}
+	return (ret);
 }
 
-static t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
+t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 {
-    t_cmd *cmd;
-    
-    m_shell->next_token = lexer_get_next_token(m_shell->lexer);
-    if (check_presence(m_shell->lexer, "|", 1) && m_shell->status == CONTINUE)  //pq verificamos a presença de 1 ou 2???) //&& m_shell->status == CONTINUE) // pq é importante colocar o status???
-    {       
-            exit_error("this is not the bonus!", m_shell);
-            return NULL;
-    }
-    cmd = parsing_exec(m_shell);
-    if (cmd && check_presence(m_shell->lexer, "|", 1))
-    {
-        free(m_shell->next_token);
-        //lexer_get_next_token(m_shell->lexer);
-        cmd = init_pipe_node(cmd, parsing_exec_and_pipe(m_shell));
-    }
-    return (cmd);
-}
+	t_cmd	*cmd;
 
-void  init_ast(t_shell *m_shell)
-{
-    t_cmd   *cmd;
-
-    cmd = parsing_exec_and_pipe(m_shell);
-    if (check_presence(m_shell->lexer, "&|", 2) && cmd)
-        exit_error("this is not the bonus!", m_shell);
-    m_shell->ast = cmd;
+	m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+	if (check_presence(m_shell->lexer, "|", 1) \
+		&& m_shell->status == CONTINUE)
+	{
+		exit_error("this is not the bonus!", m_shell);
+		return (NULL);
+	}
+	cmd = parsing_exec(m_shell);
+	if (cmd && check_presence(m_shell->lexer, "|", 1))
+	{
+		free(m_shell->next_token);
+		cmd = init_pipe_node(cmd, parsing_exec_and_pipe(m_shell));
+	}
+	return (cmd);
 }

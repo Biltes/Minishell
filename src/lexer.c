@@ -3,171 +3,95 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:17:32 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/15 16:14:48 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/20 22:40:49 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_lexer*    init_lexer(char *str)
+t_lexer	*init_lexer(char *str)
 {
-    t_lexer* lexer;
+	t_lexer	*lexer;
 
-    lexer = ft_calloc(1,sizeof(struct s_lexer));
-    lexer->str = ft_strdup(str);
-    lexer->i = 0;
-    lexer->c = str[lexer->i];
-    lexer->str_len = ft_strlen(str);
-    return lexer;
+	lexer = ft_calloc(1, sizeof(struct s_lexer));
+	lexer->str = ft_strdup(str);
+	lexer->i = 0;
+	lexer->c = str[lexer->i];
+	lexer->str_len = ft_strlen(str);
+	return (lexer);
 }
+
 //FICA ENTRE AS PROXIMAS DUAS FUN;OES QUANDO TERMINA COM MAIS DE 1 ESPACO
-void    increment_lexer(t_lexer* lexer)
+void	increment_lexer(t_lexer *lexer)
 {
-    if (lexer->c && lexer->i < ft_strlen(lexer->str))
-    {
-        lexer->i += 1;
-        lexer->c = lexer->str[lexer->i];
-    }
+	if (lexer->c && lexer->i < ft_strlen(lexer->str))
+	{
+		lexer->i += 1;
+		lexer->c = lexer->str[lexer->i];
+	}
 }
 
-void    skip_wspaces_lexer(t_lexer* lexer)
+void	skip_wspaces_lexer(t_lexer *lexer)
 {
-    while (ft_strchr(WSPACES, lexer->c))
-        increment_lexer(lexer);
+	while (ft_strchr(WSPACES, lexer->c))
+	{
+		increment_lexer(lexer);
+		printf("oi?\n");
+	}
 }
 
-t_token* lexer_get_next_token(t_lexer* lexer)
+t_token	*lexer_get_next_token(t_lexer *lexer)
 {
-    while (lexer->c && lexer->i < ft_strlen(lexer->str)-1) //ADICIONEI O -1
-    {
-        printf("o lexer-c e %c, o i e %d \n", lexer->c, lexer->i);
-        if ((ft_strchr(WSPACES, lexer->c)))
-            skip_wspaces_lexer(lexer);
-
-        //if (lexer->c == '"')
-        //    return (parsing_string_lexer(lexer));
-        //else if (ft_isalnum(lexer->c))
-         //   return parsing_id_lexer(lexer);
-        else if (lexer->c == '=')
-            return (increment_lexer_and_token(lexer, init_token(TOKEN_EQUALSIGN, char_to_str(lexer))));
-        else if (lexer->c == '(')
-            return (increment_lexer_and_token(lexer, init_token(TOKEN_LPARENT, char_to_str(lexer))));
-        else if (lexer->c == ')')
-            return (increment_lexer_and_token(lexer, init_token(TOKEN_RPARENT, char_to_str(lexer))));
-        else if (lexer->c == ';')
-            return (increment_lexer_and_token(lexer, init_token(TOKEN_SEMICOLON, char_to_str(lexer))));
-        else if (lexer->c == '|')
-            return (increment_lexer_and_token(lexer, init_token(TOKEN_PIPE, char_to_str(lexer))));
-        else if(lexer->c == '<' || lexer->c == '>')
-            return (parsing_redirections_lexer1(lexer));
-        else if (lexer->c)
-            return parsing_id_lexer(lexer);
-        else
-            return (NULL);
-        printf("CARALHO!!!!!\n");
-    }
-    return NULL;
-}
-t_token *parsing_redirections_lexer1(t_lexer *lexer)
-{
-    int  type;
-    char *value;
-
-    type = TOKEN_REDIR1;
-    value = NULL;
-    if (lexer->c == '<') //Redirecionamento de Entrada, faz com que comando leia a entrada do arquivo, e não do teclado.
-    {
-        type = TOKEN_REDIR1;
-        increment_lexer(lexer);
-        if (lexer->c == '<') //heredoc
-            return (increment_lexer_and_token(lexer, init_token(TOKEN_REDIR3, ft_strdup("<<"))));
-        value = ft_strdup("<");
-    }
-    else if (lexer->c == '>' ) // redirencionamento de saida. faz com que a saída de comando seja escrita em arquivo, não exibida na tela.
-    {
-        type = TOKEN_REDIR2;
-        increment_lexer(lexer);
-        if (lexer->c =='>') // redirecionamento de saida anexado. anexa a saída do comando ao final do arquivo. Se o arquivo não existir, ele é criado.
-            return (increment_lexer_and_token(lexer, init_token(TOKEN_REDIR4, ft_strdup(">>"))));
-        value = ft_strdup("<");
-    }
-    return (init_token(type, value));
-
+	while (lexer->c && lexer->i < ft_strlen(lexer->str))
+	{
+		if ((ft_strchr(WSPACES, lexer->c)))
+		{
+			printf("entrou aqui4\n\n");
+			skip_wspaces_lexer(lexer);
+		}
+		else if (lexer->c == '|')
+		{
+			printf("entrou aqui3\n\n");
+			return (increment_lexer_and_token(lexer, \
+				init_token(TOKEN_PIPE, char_to_str(lexer))));
+		}
+		else if (lexer->c == '<' || lexer->c == '>')
+			return (parsing_redirections_lexer1(lexer));
+		else if (lexer->c)
+			return (parsing_id_lexer(lexer, CLOSE, CLOSE));
+		else
+			return (NULL);
+	}
+	return (NULL);
 }
 
-t_token*    increment_lexer_and_token(t_lexer* lexer, t_token* token)
+t_token	*parsing_redirections_lexer1(t_lexer *lexer)
 {
-    increment_lexer(lexer);
-    return token;
-}
-t_token*    parsing_string_lexer(t_lexer* lexer)  //(algo muito estranho)
-{
-    char* value;
-    char* cs;
-    char* tmp;
+	int		type;
+	char	*value;
 
-    value= calloc(1, sizeof(char));
-    value[0] = '\0';
-    increment_lexer(lexer);
-    while(lexer->c != '"')
-    {
-        if (lexer->c == '\0')
-        {
-            printf("\nerro3 no parsing string lexer!\n"); //COLOCAR FUNÇAO DE ERRO!
-            return(NULL);
-        }
-        cs = char_to_str(lexer);
-        tmp = ft_strjoin(value, cs);
-        free(value);
-        free(cs); //adiçao leaks
-        value = tmp;
-        increment_lexer(lexer);
-    }
-    increment_lexer(lexer);
-    return (init_token(TOKEN_STRING, value));
-}
-
-
-t_token*  parsing_id_lexer(t_lexer* lexer)  //(repete caracteres)
-{
-    char* value;
-    char* cs;
-    char* tmp;
-	int double_quotes;
-	int single_quotes;
-
-	double_quotes = CLOSE; 
-	single_quotes = CLOSE;
-    value= calloc(1, sizeof(char));
-    value[0] = '\0';
-    while(!(ft_strchr(WSPACES, lexer->c)) || ((!(double_quotes == CLOSE) || !(single_quotes == CLOSE)) && lexer->c))
-    {
-        if (lexer->c == '"' && single_quotes == CLOSE)
-          double_quotes = !double_quotes;
-        if (lexer->c == '\'' && double_quotes == CLOSE)
-			single_quotes = !single_quotes;
-        else if(ft_strchr(SYMBOLS, lexer->c) && !single_quotes && !double_quotes)
-            break;
-        cs = char_to_str(lexer); //LEAK!!!
-        tmp = ft_strjoin(value, cs);
-
-        free(value);
-        free(cs); //coloquei isto agora 
-        value = tmp;
-        increment_lexer(lexer);
-    }
-    printf("OLA!!! o value que sera armazenado e->  %s.\n\n\n", value);
-    return (init_token(TOKEN_ID, value));
-}
-
-char *    char_to_str(t_lexer* lexer)
-{
-    char* str;
-    str = calloc (2, sizeof(char));  //leak???
-    str[0] = lexer->c;
-    str[1] = '\0';
-    return (str);
+	type = TOKEN_REDIR1;
+	value = NULL;
+	if (lexer->c == '<')
+	{
+		type = TOKEN_REDIR1;
+		increment_lexer(lexer);
+		if (lexer->c == '<')
+			return (increment_lexer_and_token(lexer, \
+				init_token(TOKEN_REDIR3, ft_strdup("<<"))));
+		value = ft_strdup("<");
+	}
+	else if (lexer->c == '>' )
+	{
+		type = TOKEN_REDIR2;
+		increment_lexer(lexer);
+		if (lexer->c == '>')
+			return (increment_lexer_and_token(lexer, \
+				init_token(TOKEN_REDIR4, ft_strdup(">>"))));
+		value = ft_strdup("<");
+	}
+	return (init_token(type, value));
 }
