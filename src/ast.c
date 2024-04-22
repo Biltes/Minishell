@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 22:34:52 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 10:56:29 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,22 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
 
 static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 {
+	int	red_type;
+
 	while (check_presence(m_shell->lexer, "<>", 1) || \
 		check_presence(m_shell->lexer, "<>", 2))
 	{
+		red_type = m_shell->next_token->type;
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer);
-		if (m_shell->next_token->type == TOKEN_REDIR1)
+		if (red_type == TOKEN_REDIR1)
 			cmd = init_redir_cmd(cmd, m_shell->next_token, O_RDONLY, 0);
-		else if (m_shell->next_token->type == TOKEN_REDIR2)
+		else if (red_type == TOKEN_REDIR2)
 			cmd = init_redir_cmd(cmd, m_shell->next_token, \
 				O_WRONLY | O_CREAT | O_TRUNC, 1);
-		else if (m_shell->next_token->type == TOKEN_REDIR3)
+		else if (red_type == TOKEN_REDIR3)
 			cmd = init_redir_cmd(cmd, m_shell->next_token, \
 				O_WRONLY | O_CREAT | O_APPEND, 1);
-		else if (m_shell->next_token->type == TOKEN_REDIR4)
+		else if (red_type == TOKEN_REDIR4)
 			cmd = init_heredoc_cmd(cmd, m_shell->next_token);
 	}
 	return (cmd);

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:03:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 21:03:58 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:04:41 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ t_token	*parsing_string_lexer(t_lexer *lexer)
 t_token	*parsing_id_lexer(t_lexer *lexer, int double_quotes, int single_quotes)
 {
 	char	*value;
-	char	*cs;
-	char	*tmp;
 
 	value = calloc(1, sizeof(char));
 	value[0] = '\0';
@@ -60,14 +58,15 @@ t_token	*parsing_id_lexer(t_lexer *lexer, int double_quotes, int single_quotes)
 			double_quotes = !double_quotes;
 		if (lexer->c == '\'' && double_quotes == CLOSE)
 			single_quotes = !single_quotes;
+		else if (lexer->c == '$' && single_quotes == CLOSE)
+		{
+			value = handle_variable_expansion(lexer, value);
+			continue ;
+		}
 		else if (ft_strchr(SYMBOLS, lexer->c) \
 			&& !single_quotes && !double_quotes)
 			break ;
-		cs = char_to_str(lexer);
-		tmp = ft_strjoin(value, cs);
-		free(value);
-		free(cs);
-		value = tmp;
+		value = char_append(lexer, value);
 		increment_lexer(lexer);
 	}
 	return (init_token(TOKEN_ID, value));
@@ -81,4 +80,31 @@ char	*char_to_str(t_lexer *lexer)
 	str[0] = lexer->c;
 	str[1] = '\0';
 	return (str);
+}
+
+char	*handle_variable_expansion(t_lexer *lexer, char *current_value)
+{
+	char	*var_name;
+	char	*value;
+	char	*new_value;
+
+	increment_lexer(lexer);
+	var_name = calloc(1, sizeof(char));
+	while (ft_isalnum(lexer->c) || lexer->c == '_')
+	{
+		var_name = char_append(lexer, var_name);
+		increment_lexer(lexer);
+	}
+	if (strcmp(var_name, "?") == 0)
+		value = status_handler();
+	else
+		value = getenv(var_name);
+	if (!value)
+		value = "";
+	new_value = calloc(strlen(current_value) + strlen(value) + 1, sizeof(char));
+	strcpy(new_value, current_value);
+	strcat(new_value, value);
+	free(var_name);
+	free(current_value);
+	return (new_value);
 }

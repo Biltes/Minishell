@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:17:32 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 22:40:49 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:02:48 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_lexer	*init_lexer(char *str)
 	return (lexer);
 }
 
-//FICA ENTRE AS PROXIMAS DUAS FUN;OES QUANDO TERMINA COM MAIS DE 1 ESPACO
 void	increment_lexer(t_lexer *lexer)
 {
 	if (lexer->c && lexer->i < ft_strlen(lexer->str))
@@ -36,11 +35,8 @@ void	increment_lexer(t_lexer *lexer)
 
 void	skip_wspaces_lexer(t_lexer *lexer)
 {
-	while (ft_strchr(WSPACES, lexer->c))
-	{
+	while (ft_strchr(WSPACES, lexer->c) && lexer->i < ft_strlen(lexer->str))
 		increment_lexer(lexer);
-		printf("oi?\n");
-	}
 }
 
 t_token	*lexer_get_next_token(t_lexer *lexer)
@@ -48,13 +44,9 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	while (lexer->c && lexer->i < ft_strlen(lexer->str))
 	{
 		if ((ft_strchr(WSPACES, lexer->c)))
-		{
-			printf("entrou aqui4\n\n");
 			skip_wspaces_lexer(lexer);
-		}
 		else if (lexer->c == '|')
 		{
-			printf("entrou aqui3\n\n");
 			return (increment_lexer_and_token(lexer, \
 				init_token(TOKEN_PIPE, char_to_str(lexer))));
 		}

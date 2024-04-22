@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 22:59:07 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/21 11:05:13 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	get_input(t_shell *m_shell)
 	if (!m_shell->input)
 	{
 		free(m_shell->prompt);
-		return (0);
+		return (1);
 	}
 	if (!m_shell->input[0])
 	{
@@ -90,7 +90,7 @@ int	get_input(t_shell *m_shell)
 	add_history(m_shell->input);
 	if (!check_syntax(m_shell, CLOSE, CLOSE, -1))
 		return (exit_error("Syntax error detected.\n", m_shell));
-	return (1);
+	return (0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -104,7 +104,7 @@ int	main(int ac, char **av, char **envp)
 	m_shell = (t_shell){0};
 	while (1)
 	{
-		if (!get_input(&m_shell))
+		if (get_input(&m_shell))
 			break ;
 		if (m_shell.input && parser(&m_shell))
 			executor(&m_shell);

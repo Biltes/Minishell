@@ -1,20 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   lexer_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 12:16:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 11:05:59 by pevieira         ###   ########.fr       */
+/*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
+/*   Updated: 2024/04/22 11:04:57 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	executor(t_shell *m_shell)
+char	*char_append(t_lexer *lexer, char *value)
 {
-	if (m_shell->ast->type == PIPE)
-		printf("hello");
-	usleep(1000);
+	char	*cs;
+	char	*tmp;
+
+	cs = char_to_str(lexer);
+	tmp = ft_strjoin(value, cs);
+	free(value);
+	free(cs);
+	return (tmp);
+}
+
+char	*status_handler(void)
+{
+	char	*status_str;
+
+	status_str = ft_itoa(g_exit);
+	if (status_str == NULL)
+	{
+		printf("Failed to allocate memory for status string\n");
+		return (NULL);
+	}
+	return (status_str);
 }
