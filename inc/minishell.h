@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 11:48:11 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:31:01 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
+
 # include "parser.h"
 # include "../libft/libft.h"
 # include <signal.h>

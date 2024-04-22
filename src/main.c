@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 11:42:09 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:38:56 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 int	g_exit;
-
-//NAo esta a limpar bem as redire;oes. ou se calahr na oesta a criar bem
 
 static int	prepare_and_initial_check(t_shell *m_shell)
 {
@@ -74,10 +72,11 @@ int	get_input(t_shell *m_shell)
 	signals_set(RESTORE, m_shell);
 	m_shell->prompt = get_prompt();
 	m_shell->input = readline(m_shell->prompt);
-	free(m_shell->prompt);
+	if(m_shell->prompt)
+		free(m_shell->prompt);
 	if (!m_shell->input)
 	{
-		free(m_shell->prompt);
+		free(m_shell->input);
 		return (1);
 	}
 	if (!m_shell->input[0])

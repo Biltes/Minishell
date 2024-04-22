@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:35:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 22:44:15 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:06:11 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_exec_node(t_exec_node *exec)
 	tokenzinho = exec->tokens_argv[i];
 	while (tokenzinho)
 	{
+		printf("TOKEN VALOR -> %s\n", tokenzinho->value);
 		free(tokenzinho->value);
 		free(tokenzinho);
 		i++;
