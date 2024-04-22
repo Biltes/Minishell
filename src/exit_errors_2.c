@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:35:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 15:06:11 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:26:35 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ void	clean_exit(t_shell *m_shell, int mode)
 		envp_destroy(*m_shell->env);
 	if (m_shell->envp)
 		free_array(m_shell->envp);
+	(void) mode;
+	/*
 	if (mode == BUILTIN_EXIT)
 		exit(EXIT_SUCCESS);
 	else
-		exit(g_exit);
+		exit(g_exit);*/
 }

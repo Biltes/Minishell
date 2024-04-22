@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 21:36:49 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:26:22 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	exit_error(char *str, t_shell *m_shell)
 {
 	printf ("%s", str);
-	clean_exit(m_shell, EXIT_SUCCESS);
+	(void)m_shell;
+	//clean_exit(m_shell, EXIT_SUCCESS);
 	return (1);
 }
 

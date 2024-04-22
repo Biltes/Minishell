@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 14:38:56 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:25:38 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,15 @@ static int	prepare_and_initial_check(t_shell *m_shell)
 	if (tmp != NULL)
 		free(tmp);
 	if (ft_strchr("&;|", m_shell->input[0]))
+	{
+		free(m_shell->input);
 		return (exit_error("Can't start with that operator\n", m_shell));
+	}
 	else if (ft_strchr("&|<>", m_shell->input[ft_strlen(m_shell->input) - 1]))
+	{
+		free(m_shell->input);
 		return (exit_error("Open | or || or && not supported\n", m_shell));
+	}
 	return (0);
 }
 
@@ -51,7 +57,7 @@ int	check_syntax(t_shell *m_shell, int double_quotes, int single_quotes, int i)
 	}
 	if (single_quotes == OPEN || double_quotes == OPEN)
 		return (exit_error("Open quotes not supported.\n", m_shell));
-	return (1);
+	return (0);
 }
 
 static char	*get_prompt(void)
@@ -72,7 +78,7 @@ int	get_input(t_shell *m_shell)
 	signals_set(RESTORE, m_shell);
 	m_shell->prompt = get_prompt();
 	m_shell->input = readline(m_shell->prompt);
-	if(m_shell->prompt)
+	if (m_shell->prompt)
 		free(m_shell->prompt);
 	if (!m_shell->input)
 	{
@@ -84,11 +90,11 @@ int	get_input(t_shell *m_shell)
 		free(m_shell->input);
 		return (1);
 	}
-	m_shell->lexer = init_lexer(m_shell->input);
 	m_shell->status = CONTINUE;
 	add_history(m_shell->input);
-	if (!check_syntax(m_shell, CLOSE, CLOSE, -1))
-		return (exit_error("Syntax error detected.\n", m_shell));
+	if (check_syntax(m_shell, CLOSE, CLOSE, -1))
+		return (1); //exit_error("Syntax error detected.\n", m_shell)
+	m_shell->lexer = init_lexer(m_shell->input);
 	return (0);
 }
 
@@ -104,7 +110,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		if (get_input(&m_shell))
-			break ;
+			continue ;
 		if (m_shell.input && parser(&m_shell))
 			executor(&m_shell);
 		free_cmd(m_shell.ast);

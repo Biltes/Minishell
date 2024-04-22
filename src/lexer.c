@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:17:32 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 14:43:47 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:17:50 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 		else if (lexer->c == '|')
 		{
 			return (increment_lexer_and_token(lexer, \
-				init_token(TOKEN_PIPE, NULL)));//char_to_str(lexer)
+				init_token(TOKEN_PIPE, NULL)));
 		}
 		else if (lexer->c == '<' || lexer->c == '>')
 			return (parsing_redirections_lexer1(lexer));
