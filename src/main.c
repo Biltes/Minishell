@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/21 11:05:13 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:42:09 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static char	*get_prompt(void)
 
 int	get_input(t_shell *m_shell)
 {
-	m_shell->prompt = get_prompt();
 	signals_set(RESTORE, m_shell);
+	m_shell->prompt = get_prompt();
 	m_shell->input = readline(m_shell->prompt);
 	free(m_shell->prompt);
 	if (!m_shell->input)

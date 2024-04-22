@@ -6,19 +6,19 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 10:27:47 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:48:11 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <stdio.h>
 # include "parser.h"
-# include <readline/readline.h>
 # include "../libft/libft.h"
 # include <signal.h>
-# include <readline/history.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 
@@ -73,7 +73,6 @@ int		exit_error(char *str, t_shell *m_shell);
 void	set_signal(int sg, t_shell *msh);
 void	executor(t_shell *m_shell);
 
-void	reset_prompt(int sg);
 void	child_signal_handler2(int sig);
 void	child_signal_handler(int sig);
 void	ctrl_c(int sig);
@@ -91,5 +90,5 @@ t_cmd	*parsing_exec_and_pipe(t_shell *m_shell);
 void	cleaning_input_and_lexer(t_shell *m_shell);
 char	*handle_variable_expansion(t_lexer *lexer, char *current_value);
 char	*char_append(t_lexer *lexer, char *value);
-char	*status_handler();
+char	*status_handler(void);
 #endif

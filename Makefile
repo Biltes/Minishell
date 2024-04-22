@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+         #
+#    By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 10:10:24 by pevieira          #+#    #+#              #
-#    Updated: 2024/04/10 18:58:16 by pevieira         ###   ########.fr        #
+#    Updated: 2024/04/22 11:49:09 by pevieira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LFLAGS = -L ${LIBFT_PATH} -lft -lreadline
 ${OBJDIR}/%.o: src/%.c
 		@mkdir -p ${OBJDIR}
 		${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
-		
+
 ${NAME}: ${OBJS}
 		${MAKE} ${LIBFT_PATH}
 		${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LFLAGS} -o ${NAME}
@@ -37,7 +37,7 @@ all:	${NAME}
 clean:
 		${MAKE} ${LIBFT_PATH} clean
 		${RM} -r ${OBJDIR}
-		
+
 fclean: clean
 		${MAKE} ${LIBFT_PATH} fclean
 		${RM} ${NAME}

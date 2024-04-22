@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 10:25:23 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 22:48:57 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:53:06 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ void	back_slash(int sig)
 	g_exit = 131;
 	printf("Quit (core dumped)\n");
 	(void)sig;
+}
+
+static void	reset_prompt(int sig)
+{
+	(void)sig;
+	g_exit = 130;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	signals_set(int sg, t_shell *m_shell)
