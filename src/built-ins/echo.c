@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:40 by migupere          #+#    #+#             */
-/*   Updated: 2024/04/15 11:02:11 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:53:30 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,38 @@ static int	ft_contains_only(char *str, char *characters)
     return (1);
 }
 
-static int	echo_flag(t_exec *cmd, int *arg_index)
+static int	echo_flag(t_exec_node *cmd, int *arg_index)
 {
-    while (cmd->argv[++*arg_index])
+    while (cmd->tokens_argv[++i]->value[0])
     {
-        if (cmd->argv[*arg_index][0] != '-')
+        if (cmd->tokens_argv[i]->value[0] != '-')
             break;
-        if (!ft_contains_only(&cmd->argv[*arg_index][1], "n"))
+        if (!ft_contains_only(&cmd->tokens_argv[i]->value[1], "n"))
             break;
         return 1;
     }
     return 0;
 }
 
-static void print_arguments(t_exec *cmd, int start_index)
+static void print_arguments(t_exec_node *cmd, int start_index)
 {	
 	int	i;
-	ft_putstr_fd(cmd->argv[start_index], STDOUT_FILENO);
+	ft_putstr_fd(cmd->tokens_argv[i]->value[0], STDOUT_FILENO);
 	i = start_index + 1;
-	while (cmd->argv[i])
+	while (cmd->tokens_argv[i])
 	{
 		ft_putchar_fd(' ', STDOUT_FILENO);
-		ft_putstr_fd(cmd->argv[i], STDOUT_FILENO);
+		ft_putstr_fd(cmd->tokens_argv[i]->value[0], STDOUT_FILENO);
 		i++;
 	}
 }
 
-void echo_command(t_exec *cmd)
+void echo_command(t_exec_node *cmd)
 {
     int	i = 0;
     int	flag = echo_flag(cmd, &i);
 
-    if (cmd->argv[i])
+    if (cmd->tokens_argv[i]->value[0])
         print_arguments(cmd, i);
 
     if (!flag)

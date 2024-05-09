@@ -6,11 +6,11 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:32:52 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/06 16:30:17 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:53:30 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+viiravieiacom2peviaviiravieiacom4peviaviiravieiacom3pevia#include "../../inc/minishell.h"
 
 static char	*path_slash(char *cdpath, char **path)
 {
@@ -90,18 +90,18 @@ static void	hyphen_cd_print(t_shell *shell, char *pwd)
 	}
 }
 
-void	cd_command(t_shell *shell, t_exec *cmd)
+void	cd_command(t_shell *shell, t_exec_node *cmd)
 {
-	if (!cmd->argv[1] || !*cmd->argv[1])
+	if (!cmd->tokens_argv[1] || !cmd->tokens_argv)
 	{
 		if (!chdir_command(shell, env_get("HOME", shell)))
 			print_error(shell, "cd", "HOME not set", 1);
 	}
 	else
 	{
-		if (cmd->argv[2])
+		if (cmd->tokens_argv[2])
 			print_error(shell, "cd", "too many arguments", 1);
-		else if (ft_strcmp(cmd->argv[1], "-") == 0)
+		else if (ft_strcmp(cmd->tokens_argv[1]->value, "-") == 0)
 		{
 			if (!chdir_command(shell, env_get("OLDPWD", shell)))
 			{
@@ -110,10 +110,10 @@ void	cd_command(t_shell *shell, t_exec *cmd)
 			}
 			hyphen_cd_print(shell, env_get("PWD", shell));
 		}
-		else if (cmd->argv[1][0]
-			&& !chdir_command(shell, cmd->argv[1]) && !cdpath(shell, cmd->argv[1]))
+		else if (cmd->tokens_argv[1]->value[0]
+			&& !chdir_command(shell, cmd->tokens_arg[1]->value) && !cdpath(shell, cmd->tokens_argv[1]->value))
 			print_error(shell, "cd: no such file or directory",
-				cmd->argv[1], 1);
+				cmd->tokens_argv[1]->value, 1);
 	}
 	if (shell->status == CONTINUE)
 		g_exit = 0;

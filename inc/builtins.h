@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:26:55 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/08 15:34:58 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:15:331 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,21 @@
 # define FLOAT_EXCEPTION_COREDUMPED 136
 # define NOT_EXP "|><&();/ \t\n\v\f\r"
 # define SPACES " \t\n\v\f\r"
+# include <dirent.h>
+# define EXIT_SIG_OFFSET 128
+# define SIGINT_EXIT_STATUS 130
 
 typedef struct s_exec
 {
 	int		type;
 	char	*argv[MAXARG];
 }			t_exec;
+
+typedef struct s_exec_node
+{
+	int		type;
+	t_token	*tokens_argv[MAXARG];
+}			t_exec_node;
 
 typedef struct s_command_block
 {
@@ -51,6 +60,24 @@ void	envp_sort(t_shell *shell);
 void	envp_to_list(char **envp, t_shell *shell);
 char	*env_get(char *key, t_shell *shell);
 bool	env_rm(char *key, t_shell *shell);
+void	run_cmd(t_shell *shell, t_cmd *cmd);
+void	expand_arg(t_shell *shell, char **arg);
+void	trim_quotes(char *arg, int *len);
+int		expand(char *key, int i, int j, char **line);
+int		check_fork(void);
+void	run_cmd(t_shell *shell, t_cmd *cmd);
+void	run_exec(t_shell *shell, t_exec_node *cmd);
+void	free_exit(t_shell *shell);
+void	run_heredoc(t_shell *shell, t_here *here);
+int		check_error_and_exit(int result, char *msg, int exit_code);
+int		check_fork(void);
+void	wait_children(t_shell *shell);
+void	run_redir(t_shell *shell, t_redir_node *cmd);
+void	trim_arg(char *arg);
+int		expand_free(char *key, int i, int j, char **line);
+void	expand_wildcard(char **line);
+
+
 
 
 #endif

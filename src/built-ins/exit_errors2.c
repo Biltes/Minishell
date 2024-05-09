@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:30:18 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/06 13:38:40 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:53:29 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,15 @@ int	error_in(t_shell *shell, char *cmd, char *arg, int error_code)
 	print_error(shell, error, "not a valid identifier", error_code);
 	free(error);
 	return (0);
+}
+
+void	free_exit(t_shell *shell)
+{
+	if (shell->input)
+		free(shell->input);
+	free_cmd(shell->ast);
+	envp_destroy(shell->env);
+	if (shell->envp)
+		free_array(shell->envp);
+	exit(g_exit);
 }
