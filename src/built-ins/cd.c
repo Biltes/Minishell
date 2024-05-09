@@ -6,11 +6,11 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:32:52 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 12:53:30 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:02:02 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-viiravieiacom2peviaviiravieiacom4peviaviiravieiacom3pevia#include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static char	*path_slash(char *cdpath, char **path)
 {
@@ -92,29 +92,29 @@ static void	hyphen_cd_print(t_shell *shell, char *pwd)
 
 void	cd_command(t_shell *shell, t_exec_node *cmd)
 {
-	if (!cmd->tokens_argv[1] || !cmd->tokens_argv)
-	{
-		if (!chdir_command(shell, env_get("HOME", shell)))
-			print_error(shell, "cd", "HOME not set", 1);
-	}
-	else
-	{
-		if (cmd->tokens_argv[2])
-			print_error(shell, "cd", "too many arguments", 1);
-		else if (ft_strcmp(cmd->tokens_argv[1]->value, "-") == 0)
-		{
-			if (!chdir_command(shell, env_get("OLDPWD", shell)))
-			{
-				print_error(shell, "cd", "OLDPWD not set", 1);
-				return ;
-			}
-			hyphen_cd_print(shell, env_get("PWD", shell));
-		}
-		else if (cmd->tokens_argv[1]->value[0]
-			&& !chdir_command(shell, cmd->tokens_arg[1]->value) && !cdpath(shell, cmd->tokens_argv[1]->value))
-			print_error(shell, "cd: no such file or directory",
-				cmd->tokens_argv[1]->value, 1);
-	}
-	if (shell->status == CONTINUE)
-		g_exit = 0;
+    if (!cmd->tokens_argv[1] || !*cmd->tokens_argv[1]->value)
+    {
+        if (!chdir_command(shell, env_get("HOME", shell)))
+            print_error(shell, "cd", "HOME not set", 1);
+    }
+    else
+    {
+        if (cmd->tokens_argv[2])
+            print_error(shell, "cd", "too many arguments", 1);
+        else if (ft_strcmp(cmd->tokens_argv[1]->value, "-") == 0)
+        {
+            if (!chdir_command(shell, env_get("OLDPWD", shell)))
+            {
+                print_error(shell, "cd", "OLDPWD not set", 1);
+                return ;
+            }
+            hyphen_cd_print(shell, env_get("PWD", shell));
+        }
+        else if (cmd->tokens_argv[1]->value[0]
+            && !chdir_command(shell, cmd->tokens_argv[1]->value) && !cdpath(shell, cmd->tokens_argv[1]->value))
+            print_error(shell, "cd: no such file or directory",
+                cmd->tokens_argv[1]->value, 1);
+    }
+    if (shell->status == CONTINUE)
+        g_exit = 0;
 }

@@ -6,16 +6,16 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:43 by migupere          #+#    #+#             */
-/*   Updated: 2024/04/15 16:05:13 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:40:37 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	env_command(t_shell *shell, t_exec *cmd)
+void	env_command(t_shell *shell, t_exec_node *cmd)
 {
     // Check if any arguments are passed to the env command
-    if (cmd->argv[1])
+    if (cmd->tokens_argv[1])
     {
         print_error(shell, "env", "too many arguments", 2);
         return;

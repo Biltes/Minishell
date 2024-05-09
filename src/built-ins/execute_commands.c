@@ -14,19 +14,19 @@
 
 int	run_builtin(t_shell *shell, t_exec_node *cmd)
 {
-	if (!ft_strcmp(cmd->tokens_argv[0]->value[0], "echo"))
-		return (echo_command(cmd), 1);
-	else if (!ft_strcmp(cmd->tokens_argv[0]->value[0], "cd"))
-		return (cd_command(shell, cmd), 1);
-	else if (!ft_strcmp(cmd->tokens_argv[0]->value[0], "pwd"))
-		return (pwd_command(shell, cmd), 1);
-	else if (!ft_strcmp(cmd->tokens_argv[0]->value[0], "export"))
-		return (export_command(shell, cmd), 1);
-	else if (!ft_strcmp(cmd->tokens_argv[0]->value[0], "unset"))
-		return (unset_command(shell, cmd), 1);
-	else if (!ft_strcmp(cmd->tokens_argv[0]->value[0], "env"))
-		return (env_command(shell, cmd), 1);
-	else if (!ft_strcmp(cmd->tokens_argv[0]->value[0], "exit"))
-		return (exit_command(shell, cmd), 1);
-	return (0);
+    if (!ft_strcmp(cmd->tokens_argv[0]->value, "echo"))
+        return (echo_command(cmd), 1);
+    else if (!ft_strcmp(cmd->tokens_argv[0]->value, "cd"))
+        return (cd_command(shell, cmd), 1);
+    else if (!ft_strcmp(cmd->tokens_argv[0]->value, "pwd"))
+        return (pwd_command(shell, cmd), 1);
+    else if (!ft_strcmp(cmd->tokens_argv[0]->value, "export"))
+        return (export_command(shell, cmd), 1);
+    else if (!ft_strcmp(cmd->tokens_argv[0]->value, "unset"))
+        return (unset_command(shell, cmd), 1);
+    else if (!ft_strcmp(cmd->tokens_argv[0]->value, "env"))
+        return (env_command(shell, cmd), 1);
+    else if (!ft_strcmp(cmd->tokens_argv[0]->value, "exit"))
+        return (exit_command(shell, cmd), 1);
+    return (0);
 }

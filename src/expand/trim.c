@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 11:14:31 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:02:29 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,16 @@ void	trim_quotes(char *arg, int *len)
 		else
 			i++;
 	}
+}
+
+char **convert_tokens_to_argv(t_token **tokens) 
+{
+    int i = 0;
+    while (tokens[i] != NULL) i++;
+    char **argv = malloc((i + 1) * sizeof(char *));
+    for (int j = 0; j < i; j++) {
+        argv[j] = tokens[j]->value;
+    }
+    argv[i] = NULL;
+    return argv;
 }

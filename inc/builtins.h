@@ -24,36 +24,24 @@
 # define EXIT_SIG_OFFSET 128
 # define SIGINT_EXIT_STATUS 130
 
-typedef struct s_exec
-{
-	int		type;
-	char	*argv[MAXARG];
-}			t_exec;
-
-typedef struct s_exec_node
-{
-	int		type;
-	t_token	*tokens_argv[MAXARG];
-}			t_exec_node;
-
 typedef struct s_command_block
 {
     int		type;
     t_cmd	*cmd;
 }			t_command_block;
 
-void 	echo_command(t_exec *cmd);
-int		run_builtin(t_shell *shell, t_exec *cmd);
-void	cd_command(t_shell *shell, t_exec *cmd);
+void 	echo_command(t_exec_node *cmd);
+int		run_builtin(t_shell *shell, t_exec_node *cmd);
+void	cd_command(t_shell *shell, t_exec_node *cmd);
 bool	chdir_command(t_shell *shell, char *path);
 int		print_error(t_shell *shell, char *msg, char *msg2, int exit);
-void	env_command(t_shell *shell, t_exec *cmd);
+void	env_command(t_shell *shell, t_exec_node *cmd);
 void 	envp_print(t_shell *shell);
 void	env_export(t_shell *shell, char *key, char *value, int visible);
-int		pwd_command(t_shell *shell, t_exec *cmd);
-void	export_command(t_shell *shell, t_exec *cmd);
-void 	unset_command(t_shell *shell, t_exec *cmd);
-void	exit_command(t_shell *shell, t_exec *cmd);
+int		pwd_command(t_shell *shell, t_exec_node *cmd);
+void	export_command(t_shell *shell, t_exec_node *cmd);
+void 	unset_command(t_shell *shell, t_exec_node *cmd);
+void	exit_command(t_shell *shell, t_exec_node *cmd);
 int		error_in(t_shell *shell, char *cmd, char *arg, int error_code);
 void	envp_update(t_shell *shell);
 void	envp_sort(t_shell *shell);
@@ -76,8 +64,6 @@ void	run_redir(t_shell *shell, t_redir_node *cmd);
 void	trim_arg(char *arg);
 int		expand_free(char *key, int i, int j, char **line);
 void	expand_wildcard(char **line);
-
-
-
+char 	**convert_tokens_to_argv(t_token **tokens);
 
 #endif

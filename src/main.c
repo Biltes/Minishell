@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/09 11:16:31 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:58:16 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,23 +98,34 @@ int	get_input(t_shell *m_shell)
 	return (0);
 }
 
-int	main(int ac, char **av, char **envp)
-{
-	t_shell	m_shell;
+int main(int ac, char **av, char **envp) {
+    t_shell m_shell;
 
-	(void)ac;
-	(void)av;
-	(void)envp;
-	g_exit = 0;
-	m_shell = (t_shell){0};
-	while (1)
-	{
-		if (get_input(&m_shell))
-			continue ;
-		if (m_shell.input && parser(&m_shell))
-			executor(&m_shell);
-		free_cmd(m_shell.ast);
-		cleaning_input_and_lexer(&m_shell);
-	}
-	return (0);
+    (void)ac;
+    (void)av;
+    (void)envp;
+    g_exit = 0;
+    m_shell = (t_shell){0};
+    m_shell.status = CONTINUE; // Initialize the status to CONTINUE
+
+    while (m_shell.status == CONTINUE) { // Continue as long as the status is CONTINUE
+        if (get_input(&m_shell))
+            continue;
+        if (m_shell.input && parser(&m_shell))
+            executor(&m_shell);
+        free_cmd(m_shell.ast);
+        cleaning_input_and_lexer(&m_shell);
+
+        // If the exit command was entered, break the loop
+        if (m_shell.status == STOP) {
+            break;
+        }
+    }
+
+    // Clean up
+    free_cmd(m_shell.ast);
+    cleaning_input_and_lexer(&m_shell);
+
+    // Return the exit status
+    return (g_exit);
 }

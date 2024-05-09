@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:57 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/06 16:38:11 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:57:38 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ int get_key_and_rm(char *key, t_shell *shell) {
     return 0;
 }
 
-void unset_command(t_shell *shell, t_exec *cmd) 
+void unset_command(t_shell *shell, t_exec_node *cmd) 
 {
     int i;
 
     i = 0;
-    while (cmd->argv[++i]) 
+    while (cmd->tokens_argv[++i]) 
     {
-        if (*cmd->argv[i] && valid_unset_var(shell, cmd->argv[i])) 
+        if (*cmd->tokens_argv[i]->value && valid_unset_var(shell, cmd->tokens_argv[i]->value)) 
         {  
-            if (!get_key_and_rm(cmd->argv[i], shell))
-                error_in(shell, "unset: ", cmd->argv[i], 1);
+            if (!get_key_and_rm(cmd->tokens_argv[i]->value, shell))
+                error_in(shell, "unset: ", cmd->tokens_argv[i]->value, 1);
         }
     }
     if (shell->status == CONTINUE)

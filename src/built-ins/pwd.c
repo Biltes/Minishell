@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:11 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 12:53:30 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:48:08 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ static int handle_pwd(t_shell *shell, char *pwd)
     return (0);
 }
 
-int	pwd_command(t_shell *shell, t_exec *cmd)
+int	pwd_command(t_shell *shell, t_exec_node *cmd)
 {
     char	*pwd;
     int		logical = 0;
 
-    if (cmd->argv[1] && cmd->argv[1][0] == '-')
+    if (cmd->tokens_argv[1] && cmd->tokens_argv[1]->value[0] == '-')
     {
-        if (ft_strcmp(cmd->argv[1], "-L") == 0)
+        if (ft_strcmp(cmd->tokens_argv[1]->value, "-L") == 0)
             logical = 1;
-        else if (ft_strcmp(cmd->argv[1], "-P") != 0)
-            return print_error_invalid_option(shell, cmd->argv[1]);
+        else if (ft_strcmp(cmd->tokens_argv[1]->value, "-P") != 0)
+            return print_error_invalid_option(shell, cmd->tokens_argv[1]->value);
     }
 
     if (logical && shell->pwd)

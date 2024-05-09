@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:49:21 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 12:53:29 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:28:14 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@ static void	run_pipe(t_shell *shell, t_ast_list *cmd)
         close_fds_and_signals_set(fd, SIGIGNORE);
         run_cmd(shell, cmd->left);
         free_exit(shell);
-    }
-    else
-    {
-        close(fd[1]);  // Close write end of pipe in parent
     }
 	if (cmd->left->type == HERE_DOC)
 		wait_children(shell);

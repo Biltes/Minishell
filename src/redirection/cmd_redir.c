@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:24:50 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 12:53:29 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/09 15:32:52 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,4 @@ void	run_redir(t_shell *shell, t_redir_node *cmd)
         run_cmd(shell, cmd->cmd);
     }
     check_error_and_exit(dup2(original_fd, cmd->fd), "dup2 error", 1);
-    close(original_fd); // Close original file descriptor
 }
