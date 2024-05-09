@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 14:31:01 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:31:15 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include "builtins.h"
+# include <errno.h>
 
 # define RESTORE 1
 # define QUIT 2
@@ -29,6 +31,14 @@
 # define HEREDOC 4
 # define HEREDOC_PAUSE 5
 # define BUILTIN_EXIT 1
+# define ERROR_TITLE "minishell: "
+# define ERROR_HERE_DOC "unexpected EOF while looking for matching `"
+# define ERROR_SYNTAX "syntax error"
+
+# define SIGRESTORE 1
+# define SIGHEREDOC 2
+# define SIGCHILD 3
+# define SIGIGNORE 4
 
 # define CONTINUE 1
 # define STOP 0
@@ -48,13 +58,17 @@ typedef struct s_shell
 {
 	char	*input;
 	char	*prompt;
+	char 	*pwd;
 	int		line_len;
 	int		status;
+	int		envp_size;
+	int		exec_cmd;
+	int 	pid;
 	char	**envp;
 	t_lexer	*lexer;
 	t_token	*next_token;
 	t_cmd	*ast;
-	t_env	**env;
+	t_env	*env;
 }			t_shell;
 
 int		parser(t_shell *m_shell);
@@ -92,4 +106,9 @@ void	cleaning_input_and_lexer(t_shell *m_shell);
 char	*handle_variable_expansion(t_lexer *lexer, char *current_value);
 char	*char_append(t_lexer *lexer, char *value);
 char	*status_handler(void);
+
+t_env	*env_add(t_shell *shell, char *key, char *value, int visible);
+t_env	*manage_env_node(char *key, char *value, int visible, int action);
+t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible);
+
 #endif

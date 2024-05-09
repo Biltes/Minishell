@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 10:25:23 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 11:53:06 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:03:34 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,9 @@ void	signals_set(int sg, t_shell *m_shell)
 		signal(SIGINT, child_signal_handler);
 	if (sg == HEREDOC_PAUSE)
 		signal(SIGINT, child_signal_handler2);
+	if (sg == SIGCHILD)
+	{
+		signal(SIGINT, back_slash);
+		signal(SIGQUIT, back_slash);
+	}
 }

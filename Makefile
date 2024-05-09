@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+         #
+#    By: migupere <migupere@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 10:10:24 by pevieira          #+#    #+#              #
-#    Updated: 2024/04/22 11:49:09 by pevieira         ###   ########.fr        #
+#    Updated: 2024/05/06 13:41:11 by migupere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = ${wildcard src/*.c} #ALTERAR, WILDCARD N É PERMITIDO
+SRC = $(shell find src -name "*.c")
 OBJDIR = obj
-OBJS = ${SRC:src/%.c=${OBJDIR}/%.o}
+OBJS = $(patsubst src/%,${OBJDIR}/%,${SRC:.c=.o})
 
 CC = cc
 RM = rm -f
@@ -25,22 +25,22 @@ LIBFT_PATH = libft
 LFLAGS = -L ${LIBFT_PATH} -lft -lreadline
 
 ${OBJDIR}/%.o: src/%.c
-		@mkdir -p ${OBJDIR}
-		${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
+	@mkdir -p $(dir $@)
+	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@
 
 ${NAME}: ${OBJS}
-		${MAKE} ${LIBFT_PATH}
-		${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LFLAGS} -o ${NAME}
+	${MAKE} ${LIBFT_PATH}
+	${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LFLAGS} -o ${NAME}
 
 all:	${NAME}
 
 clean:
-		${MAKE} ${LIBFT_PATH} clean
-		${RM} -r ${OBJDIR}
+	${MAKE} ${LIBFT_PATH} clean
+	${RM} -r ${OBJDIR}
 
 fclean: clean
-		${MAKE} ${LIBFT_PATH} fclean
-		${RM} ${NAME}
+	${MAKE} ${LIBFT_PATH} fclean
+	${RM} ${NAME}
 
 re: fclean all
 

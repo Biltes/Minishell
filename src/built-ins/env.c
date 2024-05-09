@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 12:16:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/09 11:00:55 by migupere         ###   ########.fr       */
+/*   Created: 2024/04/08 15:55:43 by migupere          #+#    #+#             */
+/*   Updated: 2024/04/15 16:05:13 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	executor(t_shell *m_shell)
+void	env_command(t_shell *shell, t_exec *cmd)
 {
-	if (m_shell->ast->type == PIPE)
-		printf("hello");
-	usleep(1000);
+    // Check if any arguments are passed to the env command
+    if (cmd->argv[1])
+    {
+        print_error(shell, "env", "too many arguments", 2);
+        return;
+    }
+
+    // Print all the environment variables
+    envp_print(shell);
+
+    // The env command always succeeds
+    if (shell->status == CONTINUE)
+        g_exit = 0;
 }

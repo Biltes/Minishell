@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:24:40 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/20 22:42:49 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:17:56 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define LIST 4
 # define BACK 5
 # define BLOCK 6
+# define AND 303
+# define OR_OP 305
+# define APPEND 306
 
 # define TOKEN_STRING 7
 # define TOKEN_SEMICOLON 8

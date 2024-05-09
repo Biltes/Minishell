@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   chdir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/25 12:16:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/09 11:00:55 by migupere         ###   ########.fr       */
+/*   Created: 2024/04/09 15:56:44 by migupere          #+#    #+#             */
+/*   Updated: 2024/05/06 14:45:18 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	executor(t_shell *m_shell)
+bool	chdir_command(t_shell *shell, char *path)
 {
-	if (m_shell->ast->type == PIPE)
-		printf("hello");
-	usleep(1000);
+	char	*tmp_pwd;
+
+	if (!path)
+		return (false);
+	tmp_pwd = getcwd(NULL, 0);
+	if (chdir(path) != 0)
+	{
+		free(tmp_pwd);
+		return (false);
+	}
+	env_export(shell, "OLDPWD", tmp_pwd, 1);
+	free(tmp_pwd);
+	tmp_pwd = getcwd(NULL, 0);
+	env_export(shell, "PWD", tmp_pwd, 1);
+	free(tmp_pwd);
+	return (true);
 }
