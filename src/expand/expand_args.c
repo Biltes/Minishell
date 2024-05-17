@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:13:12 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/08 15:39:47 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:52:45 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	point_to_exp_tilde(t_shell *sh, int point, char *tmp, char **line)
 {
     char *env_var;
 	char *exit_status;
-	
+
     if (!tmp[1] || ft_strchr(NOT_EXP, tmp[1]))
     {
         env_var = env_get("HOME", sh);
@@ -135,9 +135,45 @@ static void	env_expand(t_shell *shell, char *tmp, char **line)
 	}
 }
 
+ void expand_argv(t_shell *shell, t_token **tokens_argv)
+{
+    int len;
+    int i;
+    int expanded;
+    char *tmp;
+
+    if (!tokens_argv[0]->value)
+        return;
+
+    i = 0;
+    while (tokens_argv[i])
+    {
+        expanded = (ft_strchr(tokens_argv[i]->value, '$') || ft_strchr(tokens_argv[i]->value, '*'));
+        expand_arg(shell, &tokens_argv[i]->value);
+        len = ft_strlen(tokens_argv[i]->value);
+        trim_arg(tokens_argv[i]->value);
+        trim_quotes(tokens_argv[i]->value, &len);
+
+        tmp = tokens_argv[i]->value;
+        while ((tmp < tokens_argv[i]->value + len) && i < (MAXARG - 1))
+        {
+            if (*tmp == '\0' && (ft_strcmp(tokens_argv[i]->value, "printf") || i != 2))
+                tokens_argv[i + 1]->value = tmp + 1;
+            tmp++;
+        }
+        if (!tokens_argv[i]->value[0] && expanded)
+        {
+            free(tokens_argv[i]->value);
+            tokens_argv[i]->value = NULL;
+        }
+        i++;
+    }
+}
+
 void	expand_arg(t_shell *shell, char **arg)
 {
 	expand_tilde(shell, arg);
 	env_expand(shell, *arg - 1, arg);
 	expand_wildcard(arg);
 }
+

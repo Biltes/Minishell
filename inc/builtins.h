@@ -29,7 +29,6 @@ typedef struct s_command_block
     int		type;
     t_cmd	*cmd;
 }			t_command_block;
-
 void 	echo_command(t_exec_node *cmd);
 int		run_builtin(t_shell *shell, t_exec_node *cmd);
 void	cd_command(t_shell *shell, t_exec_node *cmd);
@@ -65,5 +64,7 @@ void	trim_arg(char *arg);
 int		expand_free(char *key, int i, int j, char **line);
 void	expand_wildcard(char **line);
 char 	**convert_tokens_to_argv(t_token **tokens);
+void 	check_exit_status(void);
+void expand_argv(t_shell *shell, t_token **tokens_argv);
 
 #endif

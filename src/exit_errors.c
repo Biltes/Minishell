@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 16:26:22 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:38:16 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ void	free_cmd(t_cmd *cmd)
 		free_redir_node((t_redir_node *)cmd);
 	else if (cmd->type == EXEC)
 		free_exec_node((t_exec_node *)cmd);
+	//ENTRA AQUI DUAS VEZES :´(
 }

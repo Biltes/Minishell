@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:11 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 13:48:08 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:11:45 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ static int print_error_getcwd(t_shell *shell)
 
 static int handle_pwd(t_shell *shell, char *pwd)
 {
-    ft_putendl_fd(pwd, STDOUT_FILENO);
-    free(pwd);
-    shell->status = 0;
-    return (0);
+	ft_putendl_fd(pwd, STDOUT_FILENO);
+	if (pwd)
+		free(pwd);
+	shell->status = 1;
+	return (0);
 }
 
 int	pwd_command(t_shell *shell, t_exec_node *cmd)

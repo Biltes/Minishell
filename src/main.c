@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/09 15:58:16 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:02:23 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	get_input(t_shell *m_shell)
 {
 	signals_set(RESTORE, m_shell);
 	m_shell->prompt = get_prompt();
+	m_shell->envp = NULL;
 	m_shell->input = readline(m_shell->prompt);
 	if (m_shell->prompt)
 		free(m_shell->prompt);
@@ -97,25 +98,34 @@ int	get_input(t_shell *m_shell)
 	m_shell->lexer = init_lexer(m_shell->input);
 	return (0);
 }
+void init_env(t_shell *shell, char **envp)
+{
+    shell->env = NULL;
+    shell->envp = NULL;
+    shell->envp_size = 0;
+    envp_to_list(envp, shell);
+    envp_update(shell);
+    //printf("Initial environment:\n");
+    //envp_print(shell);
+}
 
 int main(int ac, char **av, char **envp) {
     t_shell m_shell;
 
     (void)ac;
     (void)av;
-    (void)envp;
     g_exit = 0;
     m_shell = (t_shell){0};
+    init_env(&m_shell, envp);
     m_shell.status = CONTINUE; // Initialize the status to CONTINUE
 
-    while (m_shell.status == CONTINUE) { // Continue as long as the status is CONTINUE
-        if (get_input(&m_shell))
-            continue;
-        if (m_shell.input && parser(&m_shell))
-            executor(&m_shell);
-        free_cmd(m_shell.ast);
+	while (m_shell.status == CONTINUE) { // Continue as long as the status is CONTINUE
+		if (get_input(&m_shell))
+			continue;
+		if (m_shell.input && parser(&m_shell))
+			executor(&m_shell);
+		free_cmd(m_shell.ast);
         cleaning_input_and_lexer(&m_shell);
-
         // If the exit command was entered, break the loop
         if (m_shell.status == STOP) {
             break;

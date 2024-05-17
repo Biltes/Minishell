@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:30:18 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 12:57:59 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:18:34 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	free_exit(t_shell *shell)
 {
 	if (shell->input)
 		free(shell->input);
-	free_cmd(shell->ast);
+	if (shell->ast)
+		free_cmd(shell->ast);
 	envp_destroy(shell->env);
 	if (shell->envp)
 		free_array(shell->envp);

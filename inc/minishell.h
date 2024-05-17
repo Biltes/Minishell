@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/09 12:58:00 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:35:32 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@
 # define ERROR_HERE_DOC "unexpected EOF while looking for matching `"
 # define ERROR_SYNTAX "syntax error"
 
-# define SIGRESTORE 1
-# define SIGHEREDOC 2
-# define SIGCHILD 3
-# define SIGIGNORE 4
+# define SIGRESTORE 11
+# define SIGHEREDOC 21
+# define SIGCHILD 31
+# define SIGIGNORE 41
 
 # define CONTINUE 1
 # define STOP 0
