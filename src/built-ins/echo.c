@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:40 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/24 17:38:39 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:56:41 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,44 @@ static int	ft_contains_only(char *str, char *characters)
     }
     return (1);
 }
-
-static int	echo_flag(t_exec_node *cmd, int index) //Miguel pq é um pointer o int aqui????
+/*
+static int	echo_flag(t_exec_node *cmd, int *index) //Miguel pq é um pointer o int aqui????
 {
-	index = 0;
+	*index = 0;
     while (cmd->tokens_argv[++index]->value[0])
     {
-		if (!cmd->tokens_argv[index]->value[0])
-		{
-			break;
-		}
 		if (cmd->tokens_argv[index]->value[0] != '-')
 			break;
 		if (!ft_contains_only(&cmd->tokens_argv[index]->value[1], "n"))
 			break;
+		if (!cmd->tokens_argv[index]->value[0])
+		{
+			break;
+		}
 		return 1;
 	}
 	return 0;
+}*/
+static int echo_flag(t_exec_node *cmd, int *arg_index)
+{
+    int index = *arg_index;
+    int flag = 0;
+
+    while (cmd->tokens_argv[index] && cmd->tokens_argv[index]->value[0] == '-')
+    {
+        if (ft_contains_only(&cmd->tokens_argv[index]->value[1], "n"))
+        {
+            flag = 1;
+            index++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    *arg_index = index;
+    return flag;
 }
 
 
@@ -79,7 +100,7 @@ void echo_command(t_exec_node *cmd)
 	i = 1;
 	if (cmd->tokens_argv[1])
 	{
-		flag = echo_flag(cmd, i);
+		flag = echo_flag(cmd, &i);
 	}
 	else
 		flag = 0;
