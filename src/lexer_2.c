@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:03:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 11:04:41 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:50:29 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*handle_variable_expansion(t_lexer *lexer, char *current_value)
 
 	increment_lexer(lexer);
 	var_name = calloc(1, sizeof(char));
-	while (ft_isalnum(lexer->c) || lexer->c == '_')
+	while (ft_isalnum(lexer->c) || lexer->c == '_' || lexer->c == '?')
 	{
 		var_name = char_append(lexer, var_name);
 		increment_lexer(lexer);
