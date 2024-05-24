@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/17 18:02:23 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:00:06 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ static int	prepare_and_initial_check(t_shell *m_shell)
 	m_shell->input = ft_strtrim(m_shell->input, WSPACES);
 	if (tmp != NULL)
 		free(tmp);
-	if (ft_strchr("&;|", m_shell->input[0]))
+	else if (ft_strchr("&;|", m_shell->input[0]))
 	{
+		printf("o  operador é: %d ",  m_shell->input[0]);
 		free(m_shell->input);
 		return (exit_error("Can't start with that operator\n", m_shell));
 	}
@@ -81,9 +82,11 @@ int	get_input(t_shell *m_shell)
 	m_shell->input = readline(m_shell->prompt);
 	if (m_shell->prompt)
 		free(m_shell->prompt);
-	if (!m_shell->input)
+	if (!m_shell->input) // Detecta CTRL-D
 	{
-		free(m_shell->input);
+		printf("quit minishell\n");
+		g_exit = 0; // Define o código de saída para 0
+		m_shell->status = STOP; // Define o status para STOP para encerrar o loop
 		return (1);
 	}
 	if (!m_shell->input[0])
@@ -109,7 +112,8 @@ void init_env(t_shell *shell, char **envp)
     //envp_print(shell);
 }
 
-int main(int ac, char **av, char **envp) {
+int main(int ac, char **av, char **envp)
+{
     t_shell m_shell;
 
     (void)ac;
@@ -119,23 +123,26 @@ int main(int ac, char **av, char **envp) {
     init_env(&m_shell, envp);
     m_shell.status = CONTINUE; // Initialize the status to CONTINUE
 
-	while (m_shell.status == CONTINUE) { // Continue as long as the status is CONTINUE
+	while (m_shell.status == CONTINUE) // Continue as long as the status is CONTINUE
+	{
 		if (get_input(&m_shell))
 			continue;
-		if (m_shell.input && parser(&m_shell))
-			executor(&m_shell);
+		if(m_shell.input[0])
+		{
+			if (parser(&m_shell))
+				executor(&m_shell);
+		}
 		free_cmd(m_shell.ast);
         cleaning_input_and_lexer(&m_shell);
         // If the exit command was entered, break the loop
-        if (m_shell.status == STOP) {
+        if (m_shell.status == STOP)
             break;
-        }
     }
 
     // Clean up
-    free_cmd(m_shell.ast);
-    cleaning_input_and_lexer(&m_shell);
-
+	if (m_shell.ast)
+		free_cmd(m_shell.ast);
+	cleaning_input_and_lexer(&m_shell);
     // Return the exit status
     return (g_exit);
 }
