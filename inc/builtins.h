@@ -24,11 +24,6 @@
 # define EXIT_SIG_OFFSET 128
 # define SIGINT_EXIT_STATUS 130
 
-typedef struct s_command_block
-{
-    int		type;
-    t_cmd	*cmd;
-}			t_command_block;
 void 	echo_command(t_exec_node *cmd);
 int		run_builtin(t_shell *shell, t_exec_node *cmd);
 void	cd_command(t_shell *shell, t_exec_node *cmd);

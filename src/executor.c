@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:16:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/09 11:22:57 by migupere         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:06:29 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ void	execute_cmd(t_cmd *cmd)
 }
 */
 
-void	executor(t_shell *m_shell)
+void executor(t_shell *m_shell)
 {
-	if (m_shell->ast)
-		run_cmd(m_shell, m_shell->ast);
+    if (m_shell->ast)
+	{
+        run_cmd(m_shell, m_shell->ast);
+    }
 }
