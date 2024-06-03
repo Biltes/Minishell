@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:30:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 11:08:40 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:07:03 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ t_cmd	*init_pipe_node(t_cmd *left, t_cmd *right)
 	cmd->type = PIPE;
 	cmd->left = left;
 	cmd->right = right;
+	//t_exec_node *teste = (t_exec_node *)left;
+	//t_exec_node *teste2 = (t_exec_node *)right;
+	//printf("criando um pipe node com comando lef: %s e o comando right %s\n", teste->tokens_argv[0]->value, teste2->tokens_argv[0]->value);
 	return ((t_cmd *)cmd);
 }
 

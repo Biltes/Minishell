@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 10:25:23 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/07 16:03:34 by migupere         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:11:23 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	child_signal_handler(int sig)
 
 void	ctrl_c(int sig)
 {
+	printf("ctrl_c (SIGINT) recebido\n");
 	g_exit = 130;
 	ft_putchar('\n');
 	(void)sig;
@@ -41,6 +42,7 @@ void	ctrl_c(int sig)
 void	back_slash(int sig)
 {
 	g_exit = 131;
+	printf("back_slash (SIGQUIT) recebido\n");
 	printf("Quit (core dumped)\n");
 	(void)sig;
 }
@@ -57,6 +59,7 @@ static void	reset_prompt(int sig)
 
 void	signals_set(int sg, t_shell *m_shell)
 {
+	printf("Setting signal state: %d\n", sg);
 	if (sg == RESTORE)
 	{
 		signal(SIGINT, reset_prompt);
@@ -64,6 +67,7 @@ void	signals_set(int sg, t_shell *m_shell)
 	}
 	if (sg == QUIT)
 	{
+		printf("entrando aqui\n");
 		signal(SIGINT, ctrl_c);
 		signal(SIGQUIT, back_slash);
 	}

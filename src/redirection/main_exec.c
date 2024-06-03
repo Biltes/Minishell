@@ -79,7 +79,7 @@ static char	*get_path(t_shell *sh, char *cmd)
     if (ft_strchr("/.", cmd[0]) || !env_get("PATH", sh) || !ft_strcmp(cmd, ""))
         return (ft_strdup(cmd));
 
-    printf("PATH: %s\n", env_get("PATH", sh)); // Ponto de depuração
+    //printf("PATH: %s\n", env_get("PATH", sh)); // Ponto de depuração
 
     paths = ft_split(env_get("PATH", sh), ':');
     while (paths[i])
@@ -149,7 +149,7 @@ void run_exec(t_shell *shell, t_exec_node *cmd)
     if (pid == 0)
     {
         path = get_path(shell, cmd->tokens_argv[0]->value);
-        printf("Executing command: %s\n", path);
+        //printf("Executing command: %s\n", path);
 
         argv = convert_tokens_to_argv(cmd->tokens_argv);
         execve(path, argv, shell->envp);

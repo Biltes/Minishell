@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/17 15:38:16 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:03:15 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	free_pipe_node(t_pipe_node *pipe)
 	free_cmd(pipe->left);
 	free_cmd(pipe->right);
 	free(pipe);
-	printf("LIMPANDO A ESTRUTURA DO PIPE\n");
 	pipe = NULL;
 }
 
