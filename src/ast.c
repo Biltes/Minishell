@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/04/22 10:56:29 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:55:58 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
 	}
 	return ((t_cmd *)here);
 }
-
+/*ANTIGO
 static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 {
 	int	red_type;
@@ -51,6 +51,34 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 		red_type = m_shell->next_token->type;
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer);
 		if (red_type == TOKEN_REDIR1)
+			cmd = init_redir_cmd(cmd, m_shell->next_token, O_RDONLY, 0);
+		else if (red_type == TOKEN_REDIR2)
+			cmd = init_redir_cmd(cmd, m_shell->next_token, \
+				O_WRONLY | O_CREAT | O_TRUNC, 1);
+		else if (red_type == TOKEN_REDIR3)
+			cmd = init_redir_cmd(cmd, m_shell->next_token, \
+				O_WRONLY | O_CREAT | O_APPEND, 1);
+		else if (red_type == TOKEN_REDIR4) //TALVEZ COLOCAR VERIRICAÇÃO AQUI m_shell->next_token->type == ID)
+			cmd = init_heredoc_cmd(cmd, m_shell->next_token);
+	}
+	return (cmd);
+}*/
+static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
+{
+	int	red_type;
+
+	while (check_presence(m_shell->lexer, "<>", 1) || \
+		check_presence(m_shell->lexer, "<>", 2))
+	{
+		red_type = m_shell->next_token->type;
+		m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+		if (m_shell->next_token->type != TOKEN_ID)
+		{
+			printf("minishell: syntax error near unexpected token `%i '\n", red_type);//TALVEZ ARRANJAR AQUI??para o tipo de erro
+			exit_error("", m_shell); //TALVEZ ARRANJAR AQUI??para o tipo de erro
+			return (NULL);
+		}
+		else if (red_type == TOKEN_REDIR1)
 			cmd = init_redir_cmd(cmd, m_shell->next_token, O_RDONLY, 0);
 		else if (red_type == TOKEN_REDIR2)
 			cmd = init_redir_cmd(cmd, m_shell->next_token, \
@@ -94,7 +122,7 @@ static t_cmd	*parsing_exec(t_shell *m_shell)
 			break ;
 		if (m_shell->next_token->type != TOKEN_ID)
 		{
-			exit_error("Erro syntax2", m_shell);
+			exit_error("Erro syntax2\n", m_shell);
 			return (ret);
 		}
 		ft_add_token_to_exec((t_exec_node *) ret, m_shell->next_token);

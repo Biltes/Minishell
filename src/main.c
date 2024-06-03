@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/24 16:00:06 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:34:50 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ static int	prepare_and_initial_check(t_shell *m_shell)
 
 	tmp = m_shell->input;
 	m_shell->input = ft_strtrim(m_shell->input, WSPACES);
-	if (tmp != NULL)
+	if (tmp == NULL)
 		free(tmp);
-	else if (ft_strchr("&;|", m_shell->input[0]))
+	else if (ft_strchr("&;|<>", m_shell->input[0]))
 	{
-		printf("o  operador é: %d ",  m_shell->input[0]);
 		free(m_shell->input);
 		return (exit_error("Can't start with that operator\n", m_shell));
 	}
