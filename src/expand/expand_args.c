@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:13:12 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/24 16:50:06 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:58:03 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ static void	env_expand(t_shell *shell, char *tmp, char **line)
 		}
 	}
 }
-
+/*old
  void expand_argv(t_shell *shell, t_token **tokens_argv)
 {
     int len;
@@ -168,7 +168,43 @@ static void	env_expand(t_shell *shell, char *tmp, char **line)
         }
         i++;
     }
+}*/
+
+void expand_argv(t_shell *shell, t_token **tokens_argv)
+{
+	//QUANDO ENTRAM NESTA FUNCAO JA ESTA TROCADO
+    int len;
+    int i;
+    int expanded;
+    char *tmp;
+
+    if (!tokens_argv[0]->value)
+        return;
+
+    i = 0;
+    while (tokens_argv[i])
+    {
+        expanded = (ft_strchr(tokens_argv[i]->value, '$') || ft_strchr(tokens_argv[i]->value, '*'));
+		expand_arg(shell, &tokens_argv[i]->value);
+        len = ft_strlen(tokens_argv[i]->value);
+        trim_arg(tokens_argv[i]->value);
+        trim_quotes(tokens_argv[i]->value, &len);
+        tmp = tokens_argv[i]->value;
+        while ((tmp < tokens_argv[i]->value + len) && i < (MAXARG - 1))
+        {
+            if (*tmp == '\0' && (ft_strcmp(tokens_argv[i]->value, "printf") || i != 2))
+                tokens_argv[i + 1]->value = tmp + 1;
+            tmp++;
+        }
+        if (!tokens_argv[i]->value[0] && expanded)
+        {
+            free(tokens_argv[i]->value);
+            tokens_argv[i]->value = NULL;
+        }
+        i++;
+    }
 }
+
 
 void	expand_arg(t_shell *shell, char **arg)
 {

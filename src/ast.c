@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/31 17:55:58 by biltes           ###   ########.fr       */
+/*   Updated: 2024/06/06 13:44:52 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 		check_presence(m_shell->lexer, "<>", 2))
 	{
 		red_type = m_shell->next_token->type;
-		m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 		if (m_shell->next_token->type != TOKEN_ID)
 		{
 			printf("minishell: syntax error near unexpected token `%i '\n", red_type);//TALVEZ ARRANJAR AQUI??para o tipo de erro
@@ -126,7 +126,7 @@ static t_cmd	*parsing_exec(t_shell *m_shell)
 			return (ret);
 		}
 		ft_add_token_to_exec((t_exec_node *) ret, m_shell->next_token);
-		m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 		ret = check_redirections(ret, m_shell);
 	}
 	return (ret);
@@ -136,7 +136,7 @@ t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 {
 	t_cmd	*cmd;
 
-	m_shell->next_token = lexer_get_next_token(m_shell->lexer);
+	m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 	if (check_presence(m_shell->lexer, "|", 1) \
 		&& m_shell->status == CONTINUE)
 	{

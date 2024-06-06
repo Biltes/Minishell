@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:17:32 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/24 15:54:16 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:46:34 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	skip_wspaces_lexer(t_lexer *lexer)
 		increment_lexer(lexer);
 }
 
-t_token	*lexer_get_next_token(t_lexer *lexer)
+t_token	*lexer_get_next_token(t_lexer *lexer, t_shell *m_shell)
 {
 	while (lexer->c && lexer->i < ft_strlen(lexer->str))
 	{
@@ -53,7 +53,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 		else if (lexer->c == '<' || lexer->c == '>')
 			return (parsing_redirections_lexer1(lexer));
 		else if (lexer->c)
-			return (parsing_id_lexer(lexer, CLOSE, CLOSE));
+			return (parsing_id_lexer(lexer, CLOSE, CLOSE, m_shell));
 		else
 			return (NULL);
 	}

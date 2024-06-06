@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:03:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/24 16:50:29 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:59:54 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*parsing_string_lexer(t_lexer *lexer)
 	return (init_token(TOKEN_STRING, value));
 }
 
-t_token	*parsing_id_lexer(t_lexer *lexer, int double_quotes, int single_quotes)
+t_token	*parsing_id_lexer(t_lexer *lexer, int double_quotes, int single_quotes, t_shell *m_shell)
 {
 	char	*value;
 
@@ -60,7 +60,7 @@ t_token	*parsing_id_lexer(t_lexer *lexer, int double_quotes, int single_quotes)
 			single_quotes = !single_quotes;
 		else if (lexer->c == '$' && single_quotes == CLOSE)
 		{
-			value = handle_variable_expansion(lexer, value);
+			value = handle_variable_expansion(lexer, value, m_shell);
 			continue ;
 		}
 		else if (ft_strchr(SYMBOLS, lexer->c) \
@@ -82,7 +82,7 @@ char	*char_to_str(t_lexer *lexer)
 	return (str);
 }
 
-char	*handle_variable_expansion(t_lexer *lexer, char *current_value)
+char	*handle_variable_expansion(t_lexer *lexer, char *current_value, t_shell *m_shell)
 {
 	char	*var_name;
 	char	*value;
@@ -98,7 +98,10 @@ char	*handle_variable_expansion(t_lexer *lexer, char *current_value)
 	if (strcmp(var_name, "?") == 0)
 		value = status_handler();
 	else
-		value = getenv(var_name);
+	{
+		value= env_get(var_name, m_shell);
+		//value = getenv(var_name);
+	}
 	if (!value)
 		value = "";
 	new_value = calloc(strlen(current_value) + strlen(value) + 1, sizeof(char));
