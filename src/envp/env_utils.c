@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:47:47 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/31 18:42:33 by biltes           ###   ########.fr       */
+/*   Updated: 2024/06/06 12:11:55 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_env	*manage_env_node(char *key, char *value, int visible, int action)
 	printf("A222\n");
     return NULL;
 }*/
+/*
+old
 t_env	*manage_env_node(char *key, char *value, int visible, int action)
 {
     t_env	*new;
@@ -63,7 +65,31 @@ t_env	*manage_env_node(char *key, char *value, int visible, int action)
             free(value);
     }
     return NULL;
+}*/
+t_env *manage_env_node(char *key, char *value, int visible, int action)
+{
+    if (action == 0) // Create
+    {
+        t_env *new = malloc(sizeof(t_env));
+        if (!new)
+            return NULL;
+        new->key = ft_strdup(key);
+        new->value = ft_strdup(value);
+        new->index = 0;
+        new->visible = visible;
+        new->next = NULL;
+        return new;
+    }
+    else if (action == 1) // Free
+    {
+        free(key);
+        if (value)
+            free(value);
+    }
+    return NULL;
 }
+/*
+old
 void envp_update(t_shell *shell)
 {
     t_env *tmp;
@@ -107,6 +133,40 @@ void envp_update(t_shell *shell)
     shell->envp[i] = NULL;
     //printf("Updated envp with %d entries.\n", i); // Ponto de depuração
 }
+*/
+void envp_update(t_shell *shell)
+{
+    t_env *tmp = shell->env;
+    int i = 0;
+
+    // Free old envp array if it exists
+    if (shell->envp)
+    {
+        free_array(shell->envp);
+    }
+
+    // Allocate memory for new envp array
+    shell->envp = malloc(sizeof(char *) * (shell->envp_size + 1));
+    if (!shell->envp)
+        return;
+
+    // Populate the envp array
+    while (tmp)
+    {
+        if (tmp->visible)
+        {
+            shell->envp[i] = malloc(ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2);
+            if (!shell->envp[i])
+                return;
+            strcpy(shell->envp[i], tmp->key);
+            strcat(shell->envp[i], "=");
+            strcat(shell->envp[i], tmp->value);
+            i++;
+        }
+        tmp = tmp->next;
+    }
+    shell->envp[i] = NULL;
+}
 
 
 
@@ -149,6 +209,8 @@ t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible)
     envp_update(shell);
     return (shell->env);
 }*/
+
+/*old
 t_env *env_add_or_mod(t_shell *shell, char *key, char *value, int visible)
 {
     t_env *tmp;
@@ -186,6 +248,43 @@ t_env *env_add_or_mod(t_shell *shell, char *key, char *value, int visible)
     }
     envp_update(shell);
     return (shell->env);
+}*/
+
+t_env *env_add_or_mod(t_shell *shell, char *key, char *value, int visible)
+{
+    t_env *tmp = shell->env;
+
+    // Check if the key already exists
+    while (tmp)
+    {
+        if (ft_strcmp(key, tmp->key) == 0)
+        {
+            free(tmp->value);
+            tmp->value = ft_strdup(value);
+            tmp->visible = visible;
+            envp_update(shell);
+            return shell->env;
+        }
+        tmp = tmp->next;
+    }
+
+    // If key not found, add a new node
+    t_env *new = manage_env_node(key, value, visible, 0);
+    if (!new)
+        return NULL;
+
+    shell->envp_size++;
+    if (!shell->env)
+        shell->env = new;
+    else
+    {
+        tmp = shell->env;
+        while (tmp->next)
+            tmp = tmp->next;
+        tmp->next = new;
+    }
+    envp_update(shell);
+    return shell->env;
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 10:25:23 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/03 15:11:23 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:42:54 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	reset_prompt(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-
+/*antigo
 void	signals_set(int sg, t_shell *m_shell)
 {
 	printf("Setting signal state: %d\n", sg);
@@ -85,4 +85,30 @@ void	signals_set(int sg, t_shell *m_shell)
 		signal(SIGINT, back_slash);
 		signal(SIGQUIT, back_slash);
 	}
+}*/
+void signals_set(int sg, t_shell *m_shell)
+{
+    if (sg == RESTORE)
+    {
+        signal(SIGINT, reset_prompt);
+        signal(SIGQUIT, SIG_IGN);
+    }
+    if (sg == QUIT)
+    {
+        signal(SIGINT, ctrl_c);
+        signal(SIGQUIT, back_slash);
+    }
+    if (sg == EXIT)
+    {
+        clean_exit(m_shell, BUILTIN_EXIT);
+    }
+    if (sg == HEREDOC)
+        signal(SIGINT, child_signal_handler);
+    if (sg == HEREDOC_PAUSE)
+        signal(SIGINT, child_signal_handler2);
+    if (sg == SIGCHILD)
+    {
+        signal(SIGINT, SIG_IGN);
+        signal(SIGQUIT, SIG_IGN);
+    }
 }

@@ -131,6 +131,7 @@ void	run_exec(t_shell *shell, t_exec_node *cmd)
     check_exit_status();
     signals_set(RESTORE, shell);
 }*/
+/*antigo
 void run_exec(t_shell *shell, t_exec_node *cmd)
 {
     pid_t pid;
@@ -164,8 +165,43 @@ void run_exec(t_shell *shell, t_exec_node *cmd)
         g_exit = EXIT_SIG_OFFSET + WTERMSIG(g_exit);
     check_exit_status();
     signals_set(RESTORE, shell);
-}
+}*/
+void run_exec(t_shell *shell, t_exec_node *cmd)
+{
+    pid_t pid;
+    char *path;
+    char **argv;
 
+    expand_argv(shell, cmd->tokens_argv);
+    if (!cmd->tokens_argv[0]->value)
+        return (g_exit = 0, (void)0);
+
+    if (run_builtin(shell, cmd))
+        return;
+
+    signals_set(SIGCHILD, shell);
+    pid = check_fork();
+    if (pid == 0)
+    {
+        // Reset signal handlers to default in the child process
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
+
+        path = get_path(shell, cmd->tokens_argv[0]->value);
+        argv = convert_tokens_to_argv(cmd->tokens_argv);
+        execve(path, argv, shell->envp);
+
+        free(argv);
+        check_execve(shell, path);
+    }
+    waitpid(pid, &g_exit, 0);
+    if (WIFEXITED(g_exit))
+        g_exit = WEXITSTATUS(g_exit);
+    else if (WIFSIGNALED(g_exit))
+        g_exit = EXIT_SIG_OFFSET + WTERMSIG(g_exit);
+    check_exit_status();
+    signals_set(RESTORE, shell);
+}
 void check_exit_status(void)
 {
     if (g_exit == SEGFAULT || g_exit == SEGFAULT_COREDUMPED)
