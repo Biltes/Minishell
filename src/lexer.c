@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:17:32 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/06 13:46:34 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:00:45 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,11 @@ t_token	*parsing_redirections_lexer1(t_lexer *lexer)
 		type = TOKEN_REDIR1;
 		increment_lexer(lexer);
 		if (lexer->c == '<')
+		{
+			printf("Token identificado: <<\n");
 			return (increment_lexer_and_token(lexer, \
-				init_token(TOKEN_REDIR3, ft_strdup("<<"))));
+				init_token(TOKEN_REDIR4, ft_strdup("<<"))));
+		}
 		value = ft_strdup("<");
 	}
 	else if (lexer->c == '>' )
@@ -81,9 +84,12 @@ t_token	*parsing_redirections_lexer1(t_lexer *lexer)
 		type = TOKEN_REDIR2;
 		increment_lexer(lexer);
 		if (lexer->c == '>')
+		{
+			printf("Token identificado: >>\n");
 			return (increment_lexer_and_token(lexer, \
-				init_token(TOKEN_REDIR4, ft_strdup(">>"))));
-		value = ft_strdup("<");
+				init_token(TOKEN_REDIR3, ft_strdup(">>"))));
+		}
+		value = ft_strdup(">");
 	}
 	return (init_token(type, value));
 }

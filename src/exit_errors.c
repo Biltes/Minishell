@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/03 14:03:15 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/09 17:38:14 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,16 @@ static void	free_redir_node(t_redir_node *redir)
 {
 	if (!redir)
 		return ;
-	free_cmd(redir->cmd);
+	if (redir->cmd)
+	{
+		free_cmd(redir->cmd);
+		redir->cmd = NULL;
+	}
 	if (redir->file)
+	{
 		free(redir->file);
+		redir->file = NULL;
+	}
 	free(redir);
 	printf("LIMPANDO A ESTRUTURA DO REDIR\n");
 	redir = NULL;
@@ -36,7 +43,8 @@ static void	free_here_doc(t_here *here)
 {
 	if (!here)
 		return ;
-	free_cmd(here->cmd);
+	if (here->cmd)
+		free_cmd(here->cmd);
 	if (here->eof)
 		free(here->eof);
 	free(here);
