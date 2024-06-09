@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:44:14 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/06 13:04:23 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:54:55 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ static void	zero_index(t_shell *shell)
 
 
 // Sorts the environment variables in the shell
-void	envp_sort(t_shell *shell)
+void envp_sort(t_shell *shell)
 {
-    t_env	*tmp;
-    t_env	*max;
-    char	*max_key;
-    int		i;
+    t_env *tmp;
+    t_env *max;
+    char *max_key;
+    int i;
 
-    // Set the index of each environment variable to 0
+    // Define o índice de cada variável de ambiente como 0
     zero_index(shell);
 
     i = shell->envp_size;
@@ -62,7 +62,7 @@ void	envp_sort(t_shell *shell)
         tmp = shell->env;
         max = NULL;
         max_key = "";
-        // Find the maximum key that hasn't been indexed yet
+        // Encontra a chave máxima que ainda não foi indexada
         while (tmp)
         {
             if (ft_strcmp(tmp->key, max_key) > 0 && tmp->index == 0)
@@ -72,11 +72,12 @@ void	envp_sort(t_shell *shell)
             }
             tmp = tmp->next;
         }
-        // Set the index of the maximum key to i + 1
+        // Define o índice da chave máxima como i + 1
         if (max)
             max->index = i + 1;
     }
 }
+
 
 // Converts the environment variables from an array to a linked list
 /*void	envp_to_list(char **envp, t_shell *shell)

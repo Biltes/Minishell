@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:13:12 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/06 13:58:03 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:35:53 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,5 @@ void	expand_arg(t_shell *shell, char **arg)
 {
 	expand_tilde(shell, arg);
 	env_expand(shell, *arg - 1, arg);
-	expand_wildcard(arg);
 }
 

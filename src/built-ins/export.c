@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:51 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 14:45:07 by migupere         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:56:09 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
+/* antigo
 static void	print_envp_sorted(t_shell *shell, int export)
 {
     t_env	*tmp;
@@ -37,7 +37,45 @@ static void	print_envp_sorted(t_shell *shell, int export)
         }
         tmp = shell->env;
     }
+}*/
+static void print_envp_sorted(t_shell *shell, int export)
+{
+    t_env *tmp;
+    int i;
+
+    i = 1; // Começar o índice de 1 para evitar confusão com índices de arrays
+
+    while (i <= shell->envp_size)
+    {
+        tmp = shell->env; // Reinicia `tmp` para o início da lista em cada iteração de `i`
+        while (tmp)
+        {
+            if (tmp->index == i)
+            {
+                if (export) // Se o comando for export
+                {
+                    if (tmp->visible) // Só exibe variáveis visíveis
+                    {
+                        ft_printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+                    }
+                    else
+                    {
+                        ft_printf("declare -x %s\n", tmp->key);
+                    }
+                }
+                else if (tmp->visible) // Se não for export, exibe variáveis visíveis
+                {
+                    ft_printf("%s=\"%s\"\n", tmp->key, tmp->value);
+                }
+                break; // Encontrou a variável com o índice correto, sai do loop interno
+            }
+            tmp = tmp->next; // Move para o próximo nó da lista
+        }
+        i++; // Incrementa o índice externo para procurar o próximo índice
+    }
 }
+
+
 
 static bool	valid_var(t_shell *shell, char *arg)
 {

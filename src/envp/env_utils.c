@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 13:47:47 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/06 12:11:55 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:55:45 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,23 +139,23 @@ void envp_update(t_shell *shell)
     t_env *tmp = shell->env;
     int i = 0;
 
-    // Free old envp array if it exists
+    // Libera a memória do array `envp` antigo, se existir
     if (shell->envp)
     {
         free_array(shell->envp);
     }
 
-    // Allocate memory for new envp array
-    shell->envp = malloc(sizeof(char *) * (shell->envp_size + 1));
+    // Aloca memória para o novo array `envp`
+    shell->envp = malloc(sizeof(char *) * (shell->envp_size + 1)); // +1 para o NULL terminador
     if (!shell->envp)
         return;
 
-    // Populate the envp array
+    // Popula o array `envp` com as variáveis visíveis
     while (tmp)
     {
         if (tmp->visible)
         {
-            shell->envp[i] = malloc(ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2);
+            shell->envp[i] = malloc(ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2); // +2 para '=' e NULL
             if (!shell->envp[i])
                 return;
             strcpy(shell->envp[i], tmp->key);
@@ -165,8 +165,9 @@ void envp_update(t_shell *shell)
         }
         tmp = tmp->next;
     }
-    shell->envp[i] = NULL;
+    shell->envp[i] = NULL; // Termina o array com NULL
 }
+
 
 
 
@@ -313,7 +314,6 @@ bool env_rm(char *key, t_shell *shell)
     }
     return (false);
 }
-
 void env_export(t_shell *shell, char *key, char *value, int visible)
 {
     t_env *tmp;
@@ -325,16 +325,24 @@ void env_export(t_shell *shell, char *key, char *value, int visible)
         if (!ft_strcmp(tmp->key, key))
         {
             found = true;
-            if (visible)
-                env_add_or_mod(shell, key, value, visible);
+            if (visible) // Se a variável é visível, modifica ou adiciona
+            {
+                free(tmp->value);
+                tmp->value = ft_strdup(value);
+                tmp->visible = visible;
+            }
             break;
         }
         tmp = tmp->next;
     }
     if (!found)
-        env_add_or_mod(shell, key, value, visible);
-    envp_update(shell);
+    {
+        shell->env = env_add_or_mod(shell, key, value, visible);
+    }
+    envp_sort(shell); // Ordena as variáveis após a modificação
+    envp_update(shell); // Atualiza a lista de ambiente `envp`
 }
+
 
 /*
 char	*env_get(char *key, t_shell *shell)
