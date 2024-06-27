@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:24:50 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/09 18:09:00 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:46:01 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,9 @@ void run_redir(t_shell *shell, t_redir_node *cmd)
     printf("Redirecionamento concluído para: %s\n", cmd->file);
 }
 */
+
+
+/* teste1
 void run_redir(t_shell *shell, t_redir_node *cmd)
 {
     int fd;
@@ -179,14 +182,14 @@ void run_redir(t_shell *shell, t_redir_node *cmd)
     {
         // Abrir o arquivo com os modos especificados (O_APPEND para >>)
         fd = open(cmd->file, cmd->mode, FILE_PERMISSIONS);
+        printf("Arquivo %s aberto com descritor %d e o modo é %d, o fd guardado é %d\n", cmd->file, fd, cmd->mode, cmd->fd);
         if (fd == -1)
         {
             ft_putstr_fd("Erro ao abrir o arquivo para redirecionamento\n", STDERR_FILENO);
             return;
         }
-        printf("Arquivo %s aberto com descritor %d\n", cmd->file, fd);
     }
-
+	printf("oi\n");
     if (fd != -1 && shell->status == CONTINUE)
     {
         if (dup2(fd, cmd->fd) == -1) // Duplica o fd para o descritor especificado (cmd->fd)
@@ -195,14 +198,58 @@ void run_redir(t_shell *shell, t_redir_node *cmd)
             close(fd);
             return;
         }
+		printf("2i\n");
         close(fd);
+		printf("4i\n");
         printf("Redirecionamento de descritor %d para %d concluído\n", fd, cmd->fd);
         run_cmd(shell, cmd->cmd); // Executa o comando com a redireção
     }
-
+	printf("o43i\n");
     if (dup2(original_fd, cmd->fd) == -1) // Restaura o descritor de arquivo original
+    {
+        ft_putstr_fd("Erro ao restaurar o descritor de arquivo original\n", STDERR_FILENO);
+    }
+	printf("o4343i\n");
+    close(original_fd);
+}*/
+void run_redir(t_shell *shell, t_redir_node *cmd)
+{
+    int fd;
+    int original_fd;
+
+    original_fd = dup(cmd->fd);
+    if (original_fd == -1)
+    {
+        ft_putstr_fd("Erro ao duplicar o descritor de arquivo original\n", STDERR_FILENO);
+        return;
+    }
+    fd = -2;
+    if (expand_file_mane(shell, &cmd->file))
+    {
+        fd = open(cmd->file, cmd->mode, FILE_PERMISSIONS); // Certifique-se de usar O_RDONLY para leitura
+        if (fd == -1)
+        {
+            ft_putstr_fd("Erro ao abrir o arquivo para redirecionamento\n", STDERR_FILENO);
+            return;
+        }
+    }
+
+    if (fd != -1 && shell->status == CONTINUE)
+    {
+        if (dup2(fd, cmd->fd) == -1)
+        {
+            ft_putstr_fd("Erro ao duplicar o descritor de arquivo para redirecionamento\n", STDERR_FILENO);
+            close(fd);
+            return;
+        }
+        close(fd);
+        run_cmd(shell, cmd->cmd);
+    }
+
+    if (dup2(original_fd, cmd->fd) == -1)
     {
         ft_putstr_fd("Erro ao restaurar o descritor de arquivo original\n", STDERR_FILENO);
     }
     close(original_fd);
 }
+

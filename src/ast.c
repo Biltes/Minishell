@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/06 13:44:52 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:30:28 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 	}
 	return (cmd);
 }*/
+
 static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 {
 	int	red_type;
@@ -70,7 +71,7 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
 	while (check_presence(m_shell->lexer, "<>", 1) || \
 		check_presence(m_shell->lexer, "<>", 2))
 	{
-		red_type = m_shell->next_token->type;
+		red_type = m_shell->next_token->type; //o erro comeca aqui
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 		if (m_shell->next_token->type != TOKEN_ID)
 		{
@@ -99,10 +100,38 @@ void	ft_add_token_to_exec(t_exec_node *exec, t_token *token)
 	i = 0;
 	if (!token)
 		return ;
+	printf("o valor do token é: %s\n", token->value);
 	while (exec->tokens_argv[i] && i < MAXARG)
 		i++;
 	if (!exec->tokens_argv[i])
 		exec->tokens_argv[i] = token;
+}
+static char *strjoin_with_space(const char *s1, const char *s2)
+{
+    char *result;
+    size_t len1 = ft_strlen(s1);
+    size_t len2 = ft_strlen(s2);
+
+    result = (char *)malloc(len1 + len2 + 2); // +2 para o espaço e o terminador nulo
+    if (!result)
+        return (NULL);
+
+    ft_strlcpy(result, s1, len1 + 1);   // Copia s1 para result
+    result[len1] = ' ';              // Adiciona o espaço
+    ft_strlcpy(result + len1 + 1, s2, len2 + 1); // Copia s2 para result após o espaço
+
+    return result;
+}
+
+
+static void	ft_add_file_to_redir(t_redir_node *redir, t_token *token)
+{
+	char *new_file;
+
+	new_file = strjoin_with_space(redir->file, token->value);
+    free(redir->file); // Libera a memória anterior
+    redir->file = new_file;
+
 }
 
 static t_cmd	*parsing_exec(t_shell *m_shell)
@@ -125,12 +154,17 @@ static t_cmd	*parsing_exec(t_shell *m_shell)
 			exit_error("Erro syntax2\n", m_shell);
 			return (ret);
 		}
-		ft_add_token_to_exec((t_exec_node *) ret, m_shell->next_token);
+		printf("ret type: %d\n", ret->type);
+		if (ret->type != 2)
+			ft_add_token_to_exec((t_exec_node *) ret, m_shell->next_token);
+		else if (ret->type == 2)
+			ft_add_file_to_redir((t_redir_node *)ret, m_shell->next_token);
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 		ret = check_redirections(ret, m_shell);
 	}
 	return (ret);
 }
+
 
 t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 {

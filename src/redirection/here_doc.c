@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:30:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 12:58:00 by migupere         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:14:40 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,33 +100,4 @@ void	run_heredoc(t_shell *shell, t_here *here)
 		run_cmd(shell, here->cmd);
 	dup2(here->fdin, STDIN_FILENO);
 	unlink("here_doc");
-}
-
-t_cmd	*here_cmd(t_cmd *cmd, char *eof)
-{
-	t_here	*here;
-	t_cmd	*tmp;
-	t_cmd	*tmp2;
-
-	here = (t_here *)ft_calloc(1, sizeof(t_here));
-	here->type = HERE_DOC;
-	here->eof = ft_strdup(eof);
-	here->mode = O_WRONLY | O_CREAT | O_TRUNC;
-	here->fdin = dup(STDIN_FILENO);
-	here->fdout = dup(STDOUT_FILENO);
-	if (cmd->type == EXEC || cmd->type == REDIR || cmd->type == BLOCK)
-		here->cmd = cmd;
-	else
-	{
-		tmp = cmd;
-		while (tmp->type != EXEC && tmp->type != REDIR && tmp->type != BLOCK)
-		{
-			tmp2 = tmp;
-			tmp = ((t_redir_node *)tmp)->cmd;
-		}
-		((t_redir_node *)tmp2)->cmd = (t_cmd *)here;
-		here->cmd = tmp;
-		return (cmd);
-	}
-	return ((t_cmd *)here);
 }

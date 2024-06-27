@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:30:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/03 14:07:03 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:11:12 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_cmd	*init_redir_cmd(t_cmd *cmd, t_token *token, int mode, int fd)
 
 	redir = (t_redir_node *)ft_calloc(1, sizeof(t_redir_node));
 	redir->type = REDIR;
-	redir->file = ft_strdup(token->value);
+	redir->file = ft_strdup(token->value); //aqui problema so guarda 1 token
 	redir->mode = mode;
 	redir->fd = fd;
 	if (cmd->type == EXEC)
