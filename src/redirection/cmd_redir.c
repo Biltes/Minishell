@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:24:50 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/27 15:46:01 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:48:00 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,6 @@ void run_redir(t_shell *shell, t_redir_node *cmd)
             return;
         }
     }
-
     if (fd != -1 && shell->status == CONTINUE)
     {
         if (dup2(fd, cmd->fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/09 17:38:14 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:49:32 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	free_redir_node(t_redir_node *redir)
 		redir->file = NULL;
 	}
 	free(redir);
-	printf("LIMPANDO A ESTRUTURA DO REDIR\n");
 	redir = NULL;
 }
 
