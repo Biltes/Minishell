@@ -6,11 +6,15 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:35:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/17 15:36:51 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/28 11:58:01 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+
+//strerror
+
 
 void	free_exec_node(t_exec_node *exec)
 {
