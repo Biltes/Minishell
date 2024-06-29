@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/27 12:09:05 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/29 11:03:28 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ static int	prepare_and_initial_check(t_shell *m_shell)
 	return (0);
 }
 
+static int check_redirection_syntax(t_shell *m_shell, int i)
+{
+	int j;
+
+	j = i + 1;
+	while (ft_strchr(WSPACES, m_shell->input[j]))
+		j++;
+	if (m_shell->input[j] == '.')
+		return (exit_error("minishell: syntax error near unexpected token `.'\n", m_shell));
+	return (0);
+}
+
 int	check_syntax(t_shell *m_shell, int double_quotes, int single_quotes, int i)
 {
 	if (prepare_and_initial_check(m_shell))
@@ -54,6 +66,10 @@ int	check_syntax(t_shell *m_shell, int double_quotes, int single_quotes, int i)
 			return (exit_error("minishell: no support for ';'\n", m_shell));
 		if (m_shell->input[i] == '*' && !single_quotes && !double_quotes)
 			return (exit_error("minishell: no support for '*'\n", m_shell));
+		if ((m_shell->input[i] == '<' || m_shell->input[i] == '>') \
+			&& !single_quotes && !double_quotes)
+			if (check_redirection_syntax(m_shell, i))
+				return (1);
 	}
 	if (single_quotes == OPEN || double_quotes == OPEN)
 		return (exit_error("Open quotes not supported.\n", m_shell));
