@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:03:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/06 13:59:54 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/06/30 21:28:06 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,25 @@ char	*handle_variable_expansion(t_lexer *lexer, char *current_value, t_shell *m_
 
 	increment_lexer(lexer);
 	var_name = calloc(1, sizeof(char));
-	while (ft_isalnum(lexer->c) || lexer->c == '_' || lexer->c == '?')
-	{
-		var_name = char_append(lexer, var_name);
-		increment_lexer(lexer);
-	}
-	if (strcmp(var_name, "?") == 0)
-		value = status_handler();
+	if (lexer->c == '\0' || lexer->c == ' ')
+		value = "$";
 	else
 	{
-		value= env_get(var_name, m_shell);
-		//value = getenv(var_name);
+		while (ft_isalnum(lexer->c) || lexer->c == '_' || lexer->c == '?')
+		{
+			var_name = char_append(lexer, var_name);
+			increment_lexer(lexer);
+		}
+		if (strcmp(var_name, "?") == 0)
+			value = status_handler();
+		else
+		{
+			value = env_get(var_name, m_shell);
+			//value = getenv(var_name);
+		}
+		if (!value)
+			value = "";
 	}
-	if (!value)
-		value = "";
 	new_value = calloc(strlen(current_value) + strlen(value) + 1, sizeof(char));
 	strcpy(new_value, current_value);
 	strcat(new_value, value);
