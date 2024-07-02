@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:57 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 13:57:38 by migupere         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:08:53 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,20 @@ int get_key_and_rm(char *key, t_shell *shell) {
         prev = tmp;
         tmp = tmp->next;
     }
-    return 0;
+    return (0);
 }
 
-void unset_command(t_shell *shell, t_exec_node *cmd) 
+void unset_command(t_shell *shell, t_exec_node *cmd)
 {
     int i;
 
     i = 0;
-    while (cmd->tokens_argv[++i]) 
+    while (cmd->tokens_argv[++i])
     {
-        if (*cmd->tokens_argv[i]->value && valid_unset_var(shell, cmd->tokens_argv[i]->value)) 
-        {  
+        if (*cmd->tokens_argv[i]->value && valid_unset_var(shell, cmd->tokens_argv[i]->value))
+        {
             if (!get_key_and_rm(cmd->tokens_argv[i]->value, shell))
-                error_in(shell, "unset: ", cmd->tokens_argv[i]->value, 1);
+                return ;
         }
     }
     if (shell->status == CONTINUE)

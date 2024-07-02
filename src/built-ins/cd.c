@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:32:52 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/09 14:02:02 by migupere         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:02:02 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,8 @@ void	cd_command(t_shell *shell, t_exec_node *cmd)
             hyphen_cd_print(shell, env_get("PWD", shell));
         }
         else if (cmd->tokens_argv[1]->value[0]
-            && !chdir_command(shell, cmd->tokens_argv[1]->value) && !cdpath(shell, cmd->tokens_argv[1]->value))
-            print_error(shell, "cd: no such file or directory",
-                cmd->tokens_argv[1]->value, 1);
+            && !chdir_command(shell, cmd->tokens_argv[1]->value)
+			&& !cdpath(shell, cmd->tokens_argv[1]->value))
+            print_error(shell, "cd", "No such file or directory", 1);
     }
-    if (shell->status == CONTINUE)
-        g_exit = 0;
 }

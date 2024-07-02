@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 14:49:21 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/28 11:46:55 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:17:52 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ void	run_cmd(t_shell *shell, t_cmd *cmd)
 	if (cmd->type == EXEC)
 		run_exec(shell, (t_exec_node *)cmd);
 	else if (cmd->type == REDIR )
-	{
 		run_redir(shell, (t_redir_node *)cmd);
-	}
 	else if (cmd->type == HERE_DOC)
 		run_heredoc(shell, (t_here *)cmd);
 	else if (cmd->type == PIPE)

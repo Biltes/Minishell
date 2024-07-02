@@ -6,7 +6,7 @@
 /*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:48 by migupere          #+#    #+#             */
-/*   Updated: 2024/05/31 16:03:31 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/02 16:47:12 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,16 @@ static bool	islonglong(char *str)
 
 void exit_command(t_shell *shell, t_exec_node *cmd) {
     if (cmd->tokens_argv[2]) {
-        print_error(shell, cmd->tokens_argv[0]->value, "too many arguments", 2);
-        return; // Return early if there's an error
+        print_error(shell, cmd->tokens_argv[0]->value, "too many arguments", 1);
+        return ; // Return early if there's an error
     }
-    if (cmd->tokens_argv[1]) {
+    if (cmd->tokens_argv[1])
+	{
         if (!islonglong(cmd->tokens_argv[1]->value) && ft_strcmp(cmd->tokens_argv[1]->value, "0")) {
-            print_error(shell, cmd->tokens_argv[0]->value, cmd->tokens_argv[1]->value, 2);
             print_error(shell, cmd->tokens_argv[0]->value, ": numeric argument required", 2);
-        } else {
+        } else
+		{
             int exit_status = ft_atoi(cmd->tokens_argv[1]->value);
-            if (exit_status > 255) {
-                print_error(shell, cmd->tokens_argv[0]->value, "exit status greater than 255, it will be modulo 256", 2);
-            }
             g_exit = exit_status % 256;
         }
     }

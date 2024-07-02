@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:55:51 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/09 15:56:09 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:11:16 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,4 @@ static void	run_export(t_shell *shell, t_exec_node *cmd)
 void	export_command(t_shell *shell, t_exec_node *cmd)
 {
     run_export(shell, cmd);
-    if (shell->status == CONTINUE)
-        g_exit = 0;
 }
