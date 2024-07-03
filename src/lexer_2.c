@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer_2.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 21:03:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 12:05:28 by pevieira         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   lexer_2.c										  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: pevieira <pevieira@student.42.com>		 +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/04/20 21:03:14 by pevieira		  #+#	#+#			 */
+/*   Updated: 2024/07/03 15:28:36 by pevieira		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
@@ -80,39 +80,4 @@ char	*char_to_str(t_lexer *lexer)
 	str[0] = lexer->c;
 	str[1] = '\0';
 	return (str);
-}
-
-char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell)
-{
-	char	*var_name;
-	char	*value;
-	char	*new_value;
-
-	increment_lexer(lexer);
-	var_name = calloc(1, sizeof(char));
-	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '"')
-		value = "$";
-	else
-	{
-		while (ft_isalnum(lexer->c) || lexer->c == '_' )
-		{
-			var_name = char_append(lexer, var_name);
-			increment_lexer(lexer);
-		}
-		if (lexer->c == '?')
-		{
-			value = status_handler();
-			increment_lexer(lexer);
-		}
-		else
-			value = env_get(var_name, m_shell);
-		if (!value)
-			value = "";
-	}
-	new_value = calloc(strlen(cur_value) + strlen(value) + 1, sizeof(char));
-	strcpy(new_value, cur_value);
-	strcat(new_value, value);
-	free(var_name);
-	free(cur_value);
-	return (new_value);
 }

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 14:54:43 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:44:21 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ typedef struct s_shell
 }			t_shell;
 
 int		parser(t_shell *m_shell);
-
+int		get_input(t_shell *m_shell);
+void	init_env(t_shell *shell, char **envp);
 t_token	*init_token(int type, char *value);
 t_lexer	*init_lexer(char *str);
 void	increment_lexer(t_lexer *lexer);
@@ -110,5 +111,7 @@ char	*status_handler(void);
 t_env	*env_add(t_shell *shell, char *key, char *value, int visible);
 t_env	*manage_env_node(char *key, char *value, int visible, int action);
 t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible);
+
+char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value);
 
 #endif

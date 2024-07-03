@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:40 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 13:49:41 by migupere         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:08:27 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	envp_print(t_shell *shell)
 	}
 }
 
-// Sets the index of each environment variable in the shell to 0
 static void	zero_index(t_shell *shell)
 {
 	t_env	*tmp;

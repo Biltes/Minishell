@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 14:50:27 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:09:05 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,18 +154,4 @@ void	env_export(t_shell *shell, char *key, char *value, int visible)
 		shell->env = env_add_or_mod(shell, key, value, visible);
 	envp_sort(shell);
 	envp_update(shell);
-}
-
-char	*env_get(char *key, t_shell *shell)
-{
-	t_env	*tmp;
-
-	tmp = shell->env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, key))
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
 }
