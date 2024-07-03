@@ -173,6 +173,10 @@ void run_exec(t_shell *shell, t_exec_node *cmd)
     char **argv;
 
     expand_argv(shell, cmd->tokens_argv);
+	//ADICIONEI ISTO PARA O << EOF
+	if (!cmd->tokens_argv[0])
+        return (g_exit = 0, (void)0);
+	//FIM
     if (!cmd->tokens_argv[0]->value)
         return (g_exit = 0, (void)0);
 

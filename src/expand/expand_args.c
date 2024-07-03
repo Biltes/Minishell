@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:13:12 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/27 16:14:04 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 10:42:58 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,11 @@ void expand_argv(t_shell *shell, t_token **tokens_argv)
     int expanded;
     char *tmp;
 
+//ADICIONEI ISTO PARA << EOF
+	if (!tokens_argv[0])
+		return ;
+
+//FIM DA ADIÇAO
     if (!tokens_argv[0]->value)
         return;
 
