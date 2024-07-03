@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:03:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/30 21:28:06 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 10:26:45 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,20 @@ char	*handle_variable_expansion(t_lexer *lexer, char *current_value, t_shell *m_
 
 	increment_lexer(lexer);
 	var_name = calloc(1, sizeof(char));
-	if (lexer->c == '\0' || lexer->c == ' ')
+	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '"')
 		value = "$";
 	else
 	{
-		while (ft_isalnum(lexer->c) || lexer->c == '_' || lexer->c == '?')
+		while (ft_isalnum(lexer->c) || lexer->c == '_' )
 		{
 			var_name = char_append(lexer, var_name);
 			increment_lexer(lexer);
 		}
-		if (strcmp(var_name, "?") == 0)
+		if (lexer->c == '?')
+		{
 			value = status_handler();
+			increment_lexer(lexer);
+		}
 		else
 		{
 			value = env_get(var_name, m_shell);
@@ -114,5 +117,6 @@ char	*handle_variable_expansion(t_lexer *lexer, char *current_value, t_shell *m_
 	strcat(new_value, value);
 	free(var_name);
 	free(current_value);
+	printf("new value a returnar: %s\n", new_value);
 	return (new_value);
 }
