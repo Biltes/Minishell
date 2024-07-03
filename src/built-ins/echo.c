@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:06 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 15:22:09 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:57:37 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int ft_contains_only(char *str, char *characters)
+static int	ft_contains_only(char *str, char *characters)
 {
 	while (*str)
 	{
@@ -22,10 +22,10 @@ static int ft_contains_only(char *str, char *characters)
 	return (1);
 }
 
-static int echo_flag(t_exec_node *cmd, int *arg_index)
+static int	echo_flag(t_exec_node *cmd, int *arg_index)
 {
-	int index;
-	int flag;
+	int	index;
+	int	flag;
 
 	flag = 0;
 	index = *arg_index;
@@ -43,9 +43,9 @@ static int echo_flag(t_exec_node *cmd, int *arg_index)
 	return (flag);
 }
 
-static void print_exit_code(void)
+static void	print_exit_code(void)
 {
-	char *exit_code;
+	char	*exit_code;
 
 	exit_code = ft_itoa(g_exit);
 	if (exit_code)
@@ -55,7 +55,7 @@ static void print_exit_code(void)
 	}
 }
 
-static void print_token_value(t_exec_node *cmd, int *i)
+static void	print_token_value(t_exec_node *cmd, int *i)
 {
 	if (strcmp(cmd->tokens_argv[*i]->value, "?") == 0)
 	{
@@ -67,10 +67,10 @@ static void print_token_value(t_exec_node *cmd, int *i)
 	}
 }
 
-void echo_command(t_exec_node *cmd)
+void	echo_command(t_exec_node *cmd)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
 
 	i = 1;
 	if (cmd->tokens_argv[1])
@@ -91,6 +91,5 @@ void echo_command(t_exec_node *cmd)
 	}
 	if (!flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-
 	g_exit = 0;
 }

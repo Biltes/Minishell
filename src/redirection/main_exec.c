@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:50:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 13:50:23 by migupere         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:50:13 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,7 @@ void	run_exec(t_shell *shell, t_exec_node *cmd)
 	char	**argv;
 
 	expand_argv(shell, cmd->tokens_argv);
-	//ADICIONEI ISTO PARA O << EOF
-	if (!cmd->tokens_argv[0])
-		return (g_exit = 0, (void)0);
-	//FIM
-	if (!cmd->tokens_argv[0]->value)
+	if ((!cmd->tokens_argv[0]) || (!cmd->tokens_argv[0]->value))
 		return (g_exit = 0, (void)0);
 	if (run_builtin(shell, cmd))
 		return ;
@@ -90,16 +86,16 @@ void	run_exec(t_shell *shell, t_exec_node *cmd)
 		check_execve(shell, path);
 	}
 	waitpid(pid, &g_exit, 0);
-	if (WIFEXITED(g_exit))
-		g_exit = WEXITSTATUS(g_exit);
-	else if (WIFSIGNALED(g_exit))
-		g_exit = EXIT_SIG_OFFSET + WTERMSIG(g_exit);
 	check_exit_status();
 	signals_set(RESTORE, shell);
 }
 
 void	check_exit_status(void)
 {
+	if (WIFEXITED(g_exit))
+		g_exit = WEXITSTATUS(g_exit);
+	else if (WIFSIGNALED(g_exit))
+		g_exit = EXIT_SIG_OFFSET + WTERMSIG(g_exit);
 	if (g_exit == SEGFAULT || g_exit == SEGFAULT_COREDUMPED)
 		ft_putendl_fd("Segmentation fault (core dumped)", STDERR_FILENO);
 	else if (g_exit == FLOAT_EXCEPTION || g_exit == FLOAT_EXCEPTION_COREDUMPED)

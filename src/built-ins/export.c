@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:26 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 14:44:41 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:04:53 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 static void	print_envp_sorted(t_shell *shell, int export)
 {
-	t_env	*tmp;
-	int		i;
+	t_env		*tmp;
+	static int	i;
 
-	i = 1;
-	while (i <= shell->envp_size)
+	while (++i <= shell->envp_size)
 	{
 		tmp = shell->env;
 		while (tmp)
@@ -39,11 +38,8 @@ static void	print_envp_sorted(t_shell *shell, int export)
 			}
 			tmp = tmp->next;
 		}
-		i++;
 	}
 }
-
-
 
 static bool	valid_var(t_shell *shell, char *arg)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:40 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 15:08:27 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:24:14 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,26 @@ void	envp_to_list(char **envp, t_shell *shell)
 		i++;
 	}
 	envp_sort(shell);
+	envp_update(shell);
+}
+
+void	env_add(t_shell *shell, char *key, char *value, int visible)
+{
+	t_env	*new;
+	t_env	*tmp;
+
+	new = manage_env_node(key, value, visible, 0);
+	if (!new)
+		return ;
+	shell->envp_size++;
+	if (!shell->env)
+		shell->env = new;
+	else
+	{
+		tmp = shell->env;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
 	envp_update(shell);
 }

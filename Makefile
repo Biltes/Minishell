@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+         #
+#    By: biltes <biltes@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 10:10:24 by pevieira          #+#    #+#              #
-#    Updated: 2024/07/03 10:33:45 by pevieira         ###   ########.fr        #
+#    Updated: 2024/07/03 17:11:53 by biltes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJS = $(patsubst src/%,${OBJDIR}/%,${SRC:.c=.o})
 
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDE = -I include
 MAKE = make -C
 LIBFT_PATH = libft

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:26:55 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 15:01:01 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:11:41 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void	expand_wildcard(char **line);
 char	**convert_tokens_to_argv(t_token **tokens);
 void	check_exit_status(void);
 void	expand_argv(t_shell *shell, t_token **tokens_argv);
+void 	run_exec_aux(t_shell *shell);
 
 #endif

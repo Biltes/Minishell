@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 15:09:05 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:48:23 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	envp_update(t_shell *shell)
 t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible)
 {
 	t_env	*tmp;
-	t_env	*new;
 
 	tmp = shell->env;
 	while (tmp)
@@ -85,20 +84,7 @@ t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible)
 		}
 		tmp = tmp->next;
 	}
-	new = manage_env_node(key, value, visible, 0);
-	if (!new)
-		return (NULL);
-	shell->envp_size++;
-	if (!shell->env)
-		shell->env = new;
-	else
-	{
-		tmp = shell->env;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-	envp_update(shell);
+	env_add(shell, key, value, visible);
 	return (shell->env);
 }
 
