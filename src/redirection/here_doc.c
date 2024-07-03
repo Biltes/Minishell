@@ -6,41 +6,41 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:30:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/27 12:14:40 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:05:29 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void expand_heredoc(t_shell *shell, char **line)
+static void	expand_heredoc(t_shell *shell, char **line)
 {
-    int i;
-    int j;
-    char *tmp;
-	char *env_value;
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*env_value;
 
-    i = 0;
-    while ((*line)[i])
-    {
-        if ((*line)[i] == '$' && (*line)[i + 1] == '?')
-        {
-            tmp = ft_itoa(g_exit);
-            expand(tmp, i, i + 2, line);
-            free(tmp);
-        }
-        else if ((*line)[i] == '$' && ft_isalpha((*line)[i + 1]))
-        {
-            j = i + 1;
-            while (ft_isalnum((*line)[j]) || (*line)[j] == '_')
-                j++;
-            tmp = ft_substr(*line, i + 1, j - i - 1);
-            env_value = env_get(tmp, shell);
-            expand(env_value, i, j, line);
-            free(tmp);
-            free(env_value);
-        }
-        i++;
-    }
+	i = 0;
+	while ((*line)[i])
+	{
+		if ((*line)[i] == '$' && (*line)[i + 1] == '?')
+		{
+			tmp = ft_itoa(g_exit);
+			expand(tmp, i, i + 2, line);
+			free(tmp);
+		}
+		else if ((*line)[i] == '$' && ft_isalpha((*line)[i + 1]))
+		{
+			j = i + 1;
+			while (ft_isalnum((*line)[j]) || (*line)[j] == '_')
+				j++;
+			tmp = ft_substr(*line, i + 1, j - i - 1);
+			env_value = env_get(tmp, shell);
+			expand(env_value, i, j, line);
+			free(tmp);
+			free(env_value);
+		}
+		i++;
+	}
 }
 
 static void	heredoc_reader(t_shell *shell, t_here *here, int fd)
@@ -88,7 +88,7 @@ void	run_heredoc(t_shell *shell, t_here *here)
 	pid = check_fork();
 	if (pid == 0)
 	{
-		signals_set(SIGHEREDOC, shell); // Pass shell to signals_set
+		signals_set(SIGHEREDOC, shell);
 		heredoc_reader(shell, here, 0);
 	}
 	waitpid(pid, &g_exit, 0);

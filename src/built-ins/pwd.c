@@ -1,34 +1,36 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 14:47:11 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/03 13:37:42 by pevieira         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   pwd.c											  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: pevieira <pevieira@student.42.com>		 +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/04/08 14:47:11 by migupere		  #+#	#+#			 */
+/*   Updated: 2024/06/03 13:37:42 by pevieira		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int print_error_invalid_option(t_shell *shell, char *option)
+static int	print_error_invalid_option(t_shell *shell, char *option)
 {
-    ft_putstr_fd("minishell: pwd: ", STDERR_FILENO);
-    ft_putstr_fd(option, STDERR_FILENO);
-    ft_putendl_fd(": invalid option", STDERR_FILENO);
-    shell->status = 1;
-    return (1);
+	ft_putstr_fd("minishell: pwd: ", STDERR_FILENO);
+	ft_putstr_fd(option, STDERR_FILENO);
+	ft_putendl_fd(": invalid option", STDERR_FILENO);
+	shell->status = 1;
+	return (1);
 }
 
-static int print_error_getcwd(t_shell *shell)
+static int	print_error_getcwd(t_shell *shell)
 {
-    ft_putendl_fd("minishell: pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory", STDERR_FILENO);
-    shell->status = 1;
-    return (1);
+	ft_putendl_fd("minishell: pwd: error retrieving current directory: \
+		getcwd: cannot access parent directories: \
+			No such file or directory", STDERR_FILENO);
+	shell->status = 1;
+	return (1);
 }
 
-static int handle_pwd(t_shell *shell, char *pwd)
+static int	handle_pwd(t_shell *shell, char *pwd)
 {
 	ft_putendl_fd(pwd, STDOUT_FILENO);
 	if (pwd)
@@ -39,18 +41,17 @@ static int handle_pwd(t_shell *shell, char *pwd)
 
 int	pwd_command(t_shell *shell, t_exec_node *cmd)
 {
-    char	*pwd;
-	int		logical = 0;
+	char	*pwd;
+	int		logical;
 
+	logical = 0;
 	if (cmd->tokens_argv[1] && cmd->tokens_argv[1]->value[0] == '-')
-		return print_error_invalid_option(shell, cmd->tokens_argv[1]->value);
-    if (logical && shell->pwd)
-        pwd = ft_strdup(shell->pwd);
-    else
-        pwd = getcwd(NULL, 0);
-
-    if (!pwd)
-        return print_error_getcwd(shell);
-
-    return handle_pwd(shell, pwd);
+		return (print_error_invalid_option(shell, cmd->tokens_argv[1]->value));
+	if (logical && shell->pwd)
+		pwd = ft_strdup(shell->pwd);
+	else
+		pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (print_error_getcwd(shell));
+	return (handle_pwd(shell, pwd));
 }

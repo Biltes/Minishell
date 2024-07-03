@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/06/27 13:39:24 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:08:43 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,24 @@ void	trim_quotes(char *arg, int *len)
 	}
 }
 
-char **convert_tokens_to_argv(t_token **tokens)
+char	**convert_tokens_to_argv(t_token **tokens)
 {
-    int i = 0;
-    while (tokens[i] != NULL) i++;
-    char **argv = malloc((i + 1) * sizeof(char *));
-    for (int j = 0; j < i; j++) {
-        argv[j] = tokens[j]->value;
-    }
-    argv[i] = NULL;
-    return argv;
+	int		i;
+	int		j;
+	char	**argv;
+
+	i = 0;
+	while (tokens[i] != NULL)
+		i++;
+	argv = malloc((i + 1) * sizeof(char *));
+	if (!argv)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		argv[j] = tokens[j]->value;
+		j++;
+	}
+	argv[i] = NULL;
+	return (argv);
 }

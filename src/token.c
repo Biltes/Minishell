@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:54 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/24 16:10:10 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:05:30 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_ast(t_shell *m_shell)
 	t_cmd	*cmd;
 
 	cmd = parsing_exec_and_pipe(m_shell);
-	if (check_presence(m_shell->lexer, "&|", 2) && cmd)
+	if (scan(m_shell->lexer, "&|", 2) && cmd)
 	{
 		exit_error("this is not the bonus!", m_shell);
 	}

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/28 11:49:32 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:22:31 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	exit_error(char *str, t_shell *m_shell)
 {
 	printf ("%s", str);
 	(void)m_shell;
-	//clean_exit(m_shell, EXIT_SUCCESS);
 	return (1);
 }
 
@@ -48,7 +47,6 @@ static void	free_here_doc(t_here *here)
 		free(here->eof);
 	free(here);
 	here = NULL;
-	printf("LIMPANDO A ESTRUTURA DO HEREDOC\n");
 }
 
 static void	free_pipe_node(t_pipe_node *pipe)
@@ -73,5 +71,4 @@ void	free_cmd(t_cmd *cmd)
 		free_redir_node((t_redir_node *)cmd);
 	else if (cmd->type == EXEC)
 		free_exec_node((t_exec_node *)cmd);
-	//ENTRA AQUI DUAS VEZES :´(
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 15:55:57 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/02 20:08:53 by biltes           ###   ########.fr       */
+/*   Created: 2024/07/03 13:49:31 by migupere          #+#    #+#             */
+/*   Updated: 2024/07/03 14:54:02 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,43 +27,46 @@ static bool	valid_unset_var(t_shell *shell, char *arg)
 	return (true);
 }
 
+int	get_key_and_rm(char *key, t_shell *shell)
+{
+	t_env	*tmp;
+	t_env	*prev;
 
-int get_key_and_rm(char *key, t_shell *shell) {
-    t_env *tmp;
-    t_env *prev;
-
-    tmp = (shell->env);
-    prev = NULL;
-    while (tmp) {
-        if (strcmp(tmp->key, key) == 0) {
-            if (prev)
-                prev->next = tmp->next;
-            else
-                (shell->env) = tmp->next;
-            free(tmp->key);
-            free(tmp->value);
-            free(tmp);
-            return 1;
-        }
-        prev = tmp;
-        tmp = tmp->next;
-    }
-    return (0);
+	tmp = (shell->env);
+	prev = NULL;
+	while (tmp)
+	{
+		if (strcmp(tmp->key, key) == 0)
+		{
+			if (prev)
+				prev->next = tmp->next;
+			else
+				(shell->env) = tmp->next;
+			free(tmp->key);
+			free(tmp->value);
+			free(tmp);
+			return (1);
+		}
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
-void unset_command(t_shell *shell, t_exec_node *cmd)
+void	unset_command(t_shell *shell, t_exec_node *cmd)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (cmd->tokens_argv[++i])
-    {
-        if (*cmd->tokens_argv[i]->value && valid_unset_var(shell, cmd->tokens_argv[i]->value))
-        {
-            if (!get_key_and_rm(cmd->tokens_argv[i]->value, shell))
-                return ;
-        }
-    }
-    if (shell->status == CONTINUE)
-        g_exit = 0;
+	i = 0;
+	while (cmd->tokens_argv[++i])
+	{
+		if (*cmd->tokens_argv[i]->value && \
+			valid_unset_var(shell, cmd->tokens_argv[i]->value))
+		{
+			if (!get_key_and_rm(cmd->tokens_argv[i]->value, shell))
+				return ;
+		}
+	}
+	if (shell->status == CONTINUE)
+		g_exit = 0;
 }

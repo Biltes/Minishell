@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/06 13:49:37 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:54:43 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ typedef struct s_shell
 {
 	char	*input;
 	char	*prompt;
-	char 	*pwd;
+	char	*pwd;
 	int		line_len;
 	int		status;
 	int		envp_size;
 	int		exec_cmd;
-	int 	pid;
+	int		pid;
 	char	**envp;
 	t_lexer	*lexer;
 	t_token	*next_token;
@@ -80,7 +80,7 @@ void	skip_wspaces_lexer(t_lexer *lexer);
 t_token	*lexer_get_next_token(t_lexer *lexer, t_shell *m_shell);
 t_token	*increment_lexer_and_token(t_lexer *lexer, t_token *token);
 t_token	*parsing_string_lexer(t_lexer *lexer);
-t_token	*parsing_id_lexer(t_lexer *lexer, int double_quotes, int single_quotes, t_shell *m_shell);
+t_token	*parse_id(t_lexer *lexer, int double_q, int single_q, t_shell *m_shell);
 char	*char_to_str(t_lexer *lexer);
 t_token	*parsing_redirections_lexer1(t_lexer *lexer);
 
@@ -103,7 +103,7 @@ void	envp_destroy(t_env *env);
 
 t_cmd	*parsing_exec_and_pipe(t_shell *m_shell);
 void	cleaning_input_and_lexer(t_shell *m_shell);
-char	*handle_variable_expansion(t_lexer *lexer, char *current_value, t_shell *m_shell);
+char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell);
 char	*char_append(t_lexer *lexer, char *value);
 char	*status_handler(void);
 

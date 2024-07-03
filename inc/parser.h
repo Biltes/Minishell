@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:24:40 by pevieira          #+#    #+#             */
-/*   Updated: 2024/05/07 15:17:56 by migupere         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:06:32 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_cmd	*init_pipe_node(t_cmd *left, t_cmd *right);
 t_cmd	*init_exec_node(void);
 t_cmd	*init_block_node(t_cmd *cmd);
 
-int		check_presence(t_lexer *lexer, char *op, int mode);
+int		scan(t_lexer *lexer, char *op, int mode);
 void	ft_add_token_to_exec(t_exec_node *exec, t_token *token);
 void	init_ast(t_shell *m_shell);
 

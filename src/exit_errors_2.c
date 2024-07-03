@@ -6,15 +6,11 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:35:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/06/28 11:58:01 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:47:40 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-
-//strerror
-
 
 void	free_exec_node(t_exec_node *exec)
 {
@@ -80,9 +76,4 @@ void	clean_exit(t_shell *m_shell, int mode)
 	if (m_shell->envp)
 		free_array(m_shell->envp);
 	(void) mode;
-	/*
-	if (mode == BUILTIN_EXIT)
-		exit(EXIT_SUCCESS);
-	else
-		exit(g_exit);*/
 }

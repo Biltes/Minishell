@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/02 17:20:33 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/03 14:49:26 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ char	*char_append(t_lexer *lexer, char *value)
 	return (tmp);
 }
 
-	char	*status_handler(void)
-	{
-		char	*status_str;
+char	*status_handler(void)
+{
+	char	*status_str;
 
-		status_str = ft_itoa(g_exit);
-		if (status_str == NULL)
-		{
-			printf("Failed to allocate memory for status string\n");
-			return (NULL);
-		}
-		return (status_str);
+	status_str = ft_itoa(g_exit);
+	if (status_str == NULL)
+	{
+		printf("Failed to allocate memory for status string\n");
+		return (NULL);
 	}
+	return (status_str);
+}
