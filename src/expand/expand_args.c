@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:44 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/04 15:13:53 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:13:15 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static char	*get_tilde_env_var(t_shell *sh, char *tmp)
-{
-	if (!tmp[1] || ft_strchr(NOT_EXP, tmp[1]))
-		return (env_get("HOME", sh));
-	else if (tmp[1] == '+' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
-		return (env_get("PWD", sh));
-	else if (tmp[1] == '-' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
-		return (env_get("OLDPWD", sh));
-	else if (*tmp == '$' && tmp[1] == '?')
-		return (ft_itoa(g_exit));
-	return (NULL);
-}
 
 static int	point_to_exp_tilde(t_shell *sh, int point, char *tmp, char **line)
 {
@@ -44,7 +31,7 @@ static int	point_to_exp_tilde(t_shell *sh, int point, char *tmp, char **line)
 	return (expand(env_var, point, point + len, line));
 }
 
-static int	expand_tilde(t_shell *shell, char **line)
+int	expand_tilde(t_shell *shell, char **line)
 {
 	int		dblquote;
 	int		sgquote;
@@ -109,7 +96,7 @@ static int	point_to_expand_env(t_shell *sh, int point, char *tmp, char **line)
 	return (1);
 }
 
-static void	env_expand(t_shell *shell, char *tmp, char **line)
+void	env_expand(t_shell *shell, char *tmp, char **line)
 {
 	int		dblquote;
 	int		sgquote;
@@ -134,52 +121,4 @@ static void	env_expand(t_shell *shell, char *tmp, char **line)
 			}
 		}
 	}
-}
-
-void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
-{
-	int		expanded;
-	char	*tmp;
-
-	if (!token->value)
-		return ;
-	expanded = (ft_strchr(token->value, '$') || ft_strchr(token->value, '*'));
-	expand_arg(shell, &token->value);
-	len = ft_strlen(token->value);
-	trim_arg(token->value);
-	trim_quotes(token->value, &len);
-	tmp = token->value;
-	while (tmp < token->value + len)
-	{
-		if (*tmp == '\0' && (ft_strcmp(token->value, \
-			"printf") || token != token + 2))
-			if (token + 1)
-				token->value = tmp + 1;
-		tmp++;
-	}
-	if (!token->value[0] && expanded)
-	{
-		free(token->value);
-		token->value = NULL;
-	}
-}
-
-void	expand_argv(t_shell *shell, t_token **tokens_argv)
-{
-	int	i;
-
-	if (!tokens_argv[0])
-		return ;
-	i = 0;
-	while (tokens_argv[i])
-	{
-		process_and_trim_arg(shell, tokens_argv[i], 0);
-		i++;
-	}
-}
-
-void	expand_arg(t_shell *shell, char **arg)
-{
-	expand_tilde(shell, arg);
-	env_expand(shell, *arg - 1, arg);
 }

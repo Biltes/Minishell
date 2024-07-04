@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 13:32:35 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 17:04:26 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:05:37 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,24 @@ int	expand_free(char *key, int i, int j, char **line)
 	ret = expand(key, i, j, line);
 	free(key);
 	return (ret);
+}
+
+void	expand_argv(t_shell *shell, t_token **tokens_argv)
+{
+	int	i;
+
+	if (!tokens_argv[0])
+		return ;
+	i = 0;
+	while (tokens_argv[i])
+	{
+		process_and_trim_arg(shell, tokens_argv[i], 0);
+		i++;
+	}
+}
+
+void	expand_arg(t_shell *shell, char **arg)
+{
+	expand_tilde(shell, arg);
+	env_expand(shell, *arg - 1, arg);
 }

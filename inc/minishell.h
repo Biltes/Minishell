@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/04 15:23:02 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:20:51 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,15 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell);
 char	*char_append(t_lexer *lexer, char *value);
 char	*status_handler(void);
 
-t_env	*env_add(t_shell *shell, char *key, char *value, int visible);
 t_env	*manage_env_node(char *key, char *value, int visible, int action);
 t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible);
 
 char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value);
-void	env_add(t_shell *shell, char *key, char *value, int visible, t_env *tmp);//Igual acima
+void	env_add(t_shell *shell, char *key, char *value, int visible);
 void	process_and_trim_arg(t_shell *shell, t_token *token, int len);
+bool	env_rm(char *key, t_shell *shell);
+char	*get_tilde_env_var(t_shell *sh, char *tmp);
+void	env_expand(t_shell *shell, char *tmp, char **line);
+int		expand_tilde(t_shell *shell, char **line);
 
 #endif

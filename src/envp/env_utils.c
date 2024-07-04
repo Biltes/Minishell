@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/04 15:23:48 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:09:50 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static size_t	envp_update_size(t_shell *shell)
 	while (tmp)
 	{
 		if (tmp->visible)
-			total_size += strlcpy(NULL, tmp->key, 0) \
-				+ strlcpy(NULL, tmp->value, 0) + 2;
+			total_size += ft_strlcpy(NULL, tmp->key, 0) \
+				+ ft_strlcpy(NULL, tmp->value, 0) + 2;
 		tmp = tmp->next;
 	}
 	return (total_size + 1);
@@ -68,8 +68,8 @@ static void	envp_update_copy(t_shell *shell, size_t envp_size, int i)
 	{
 		if (tmp->visible)
 		{
-			key_len = strlcpy(NULL, tmp->key, 0);
-			value_len = strlcpy(NULL, tmp->value, 0);
+			key_len = ft_strlcpy(NULL, tmp->key, 0);
+			value_len = ft_strlcpy(NULL, tmp->value, 0);
 			shell->envp[i] = malloc(key_len + value_len + 2);
 			if (!shell->envp[i])
 				return ;
@@ -93,66 +93,6 @@ void	envp_update(t_shell *shell)
 	shell->envp = NULL;
 	if (envp_size > 0)
 		envp_update_copy(shell, envp_size, 0);
-}
-
-t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible)
-{
-	t_env	*tmp;
-
-	tmp = shell->env;
-	while (tmp)
-	{
-		if (ft_strcmp(key, tmp->key) == 0)
-		{
-			free(tmp->value);
-			tmp->value = ft_strdup(value);
-			tmp->visible = visible;
-			envp_update(shell);
-			return (shell->env);
-		}
-		tmp = tmp->next;
-	}
-	new = manage_env_node(key, value, visible, 0);
-	if (!new)
-		return (NULL);
-	shell->envp_size++;
-	if (!shell->env)
-		shell->env = new;
-	else
-	{
-		tmp = shell->env;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-	envp_update(shell);
-	return (shell->env);
-}
-
-bool	env_rm(char *key, t_shell *shell)
-{
-	t_env	*tmp;
-	t_env	*tmp_last;
-
-	tmp = shell->env;
-	tmp_last = tmp;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, key))
-		{
-			tmp_last->next = tmp->next;
-			if (tmp == shell->env)
-				shell->env = tmp->next;
-			manage_env_node(tmp->key, tmp->value, tmp->visible, 1);
-			free(tmp);
-			shell->envp_size--;
-			envp_update(shell);
-			return (true);
-		}
-		tmp_last = tmp;
-		tmp = tmp->next;
-	}
-	return (false);
 }
 
 void	env_export(t_shell *shell, char *key, char *value, int visible)

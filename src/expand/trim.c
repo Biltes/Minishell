@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 14:08:43 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/04 17:05:41 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,45 @@ char	**convert_tokens_to_argv(t_token **tokens)
 	}
 	argv[i] = NULL;
 	return (argv);
+}
+
+void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
+{
+	int		expanded;
+	char	*tmp;
+
+	if (!token->value)
+		return ;
+	expanded = (ft_strchr(token->value, '$') || ft_strchr(token->value, '*'));
+	expand_arg(shell, &token->value);
+	len = ft_strlen(token->value);
+	trim_arg(token->value);
+	trim_quotes(token->value, &len);
+	tmp = token->value;
+	while (tmp < token->value + len)
+	{
+		if (*tmp == '\0' && (ft_strcmp(token->value, \
+			"printf") || token != token + 2))
+			if (token + 1)
+				token->value = tmp + 1;
+		tmp++;
+	}
+	if (!token->value[0] && expanded)
+	{
+		free(token->value);
+		token->value = NULL;
+	}
+}
+
+char	*get_tilde_env_var(t_shell *sh, char *tmp)
+{
+	if (!tmp[1] || ft_strchr(NOT_EXP, tmp[1]))
+		return (env_get("HOME", sh));
+	else if (tmp[1] == '+' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
+		return (env_get("PWD", sh));
+	else if (tmp[1] == '-' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
+		return (env_get("OLDPWD", sh));
+	else if (*tmp == '$' && tmp[1] == '?')
+		return (ft_itoa(g_exit));
+	return (NULL);
 }
