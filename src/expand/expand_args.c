@@ -6,46 +6,42 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:44 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 14:52:11 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/04 15:13:53 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static char	*get_tilde_env_var(t_shell *sh, char *tmp)
+{
+	if (!tmp[1] || ft_strchr(NOT_EXP, tmp[1]))
+		return (env_get("HOME", sh));
+	else if (tmp[1] == '+' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
+		return (env_get("PWD", sh));
+	else if (tmp[1] == '-' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
+		return (env_get("OLDPWD", sh));
+	else if (*tmp == '$' && tmp[1] == '?')
+		return (ft_itoa(g_exit));
+	return (NULL);
+}
+
 static int	point_to_exp_tilde(t_shell *sh, int point, char *tmp, char **line)
 {
 	char	*env_var;
-	char	*exit_status;
+	int		len;
 
+	env_var = get_tilde_env_var(sh, tmp);
+	if (!env_var)
+		return (0);
+	if (*tmp == '$' && tmp[1] == '?')
+		return (expand_free(env_var, point, point + 2, line));
 	if (!tmp[1] || ft_strchr(NOT_EXP, tmp[1]))
-	{
-		env_var = env_get("HOME", sh);
-		if (!env_var)
-			return (-1);
-		return (expand(env_var, point, point + 1, line));
-	}
-	else if (tmp[1] == '+' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
-	{
-		env_var = env_get("PWD", sh);
-		if (!env_var)
-			return (-1);
-		return (expand(env_var, point, point + 2, line));
-	}
-	else if (tmp[1] == '-' && (!tmp[2] || ft_strchr(NOT_EXP, tmp[2])))
-	{
-		env_var = env_get("OLDPWD", sh);
-		if (!env_var)
-			return (-1);
-		return (expand(env_var, point, point + 2, line));
-	}
-	else if (*tmp == '$' && tmp[1] == '?')
-	{
-		exit_status = ft_itoa(g_exit);
-		if (!exit_status)
-			return (-1);
-		return (expand_free(exit_status, point, point + 2, line));
-	}
-	return (0);
+		len = 1;
+	else if (tmp[1] == '+' || tmp[1] == '-')
+		len = 2;
+	else
+		len = 1;
+	return (expand(env_var, point, point + len, line));
 }
 
 static int	expand_tilde(t_shell *shell, char **line)
@@ -73,40 +69,44 @@ static int	expand_tilde(t_shell *shell, char **line)
 	return (0);
 }
 
-static int	point_to_expand_env(t_shell *sh, int point, char *tmp, char **line)
+static char	*get_env_var(t_shell *sh, const char *tmp, int *len)
 {
 	char	*key;
-	int		len;
-	char	*exit_status;
 	char	*env_var;
 
 	if (tmp[1] == '?')
-	{
-		exit_status = ft_itoa(g_exit);
-		if (!exit_status)
-			return (-1);
-		return (expand_free(exit_status, point, point + 2, line));
-	}
+		return (ft_itoa(g_exit));
 	else if (tmp[1])
 	{
-		len = 1;
-		while (ft_isalpha(tmp[len]) || tmp[len] == '_')
-			len++;
-		len += (ft_isalnum(tmp[len]) > 0);
-		while (len > 2 && (ft_isalnum(tmp[len]) || tmp[len] == '_'))
-			len++;
-		key = ft_substr(tmp, 1, len - 1);
+		*len = 1;
+		while (ft_isalpha(tmp[*len]) || tmp[*len] == '_')
+			(*len)++;
+		*len += (ft_isalnum(tmp[*len]) > 0);
+		while (*len > 2 && (ft_isalnum(tmp[*len]) || tmp[*len] == '_'))
+			(*len)++;
+		key = ft_substr(tmp, 1, *len - 1);
 		if (!key)
-			return (-1);
+			return (NULL);
 		env_var = env_get(key, sh);
 		free(key);
-		if (!env_var)
-			return (-1);
-		if (expand(env_var, point, point + len, line) == -1)
-			return (-1);
-		return (1);
+		return (env_var);
 	}
-	return (0);
+	return (NULL);
+}
+
+static int	point_to_expand_env(t_shell *sh, int point, char *tmp, char **line)
+{
+	int		len;
+	char	*env_var;
+
+	env_var = get_env_var(sh, tmp, &len);
+	if (!env_var)
+		return (-1);
+	if (tmp[1] == '?')
+		return (expand_free(env_var, point, point + 2, line));
+	if (expand(env_var, point, point + len, line) == -1)
+		return (-1);
+	return (1);
 }
 
 static void	env_expand(t_shell *shell, char *tmp, char **line)
@@ -136,41 +136,44 @@ static void	env_expand(t_shell *shell, char *tmp, char **line)
 	}
 }
 
-void	expand_argv(t_shell *shell, t_token **tokens_argv)
+void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
 {
-	int		len;
-	int		i;
 	int		expanded;
 	char	*tmp;
 
-//ADICIONEI ISTO PARA << EOF
-	if (!tokens_argv[0])
+	if (!token->value)
 		return ;
-//FIM DA ADIÇAO
-	if (!tokens_argv[0]->value)
+	expanded = (ft_strchr(token->value, '$') || ft_strchr(token->value, '*'));
+	expand_arg(shell, &token->value);
+	len = ft_strlen(token->value);
+	trim_arg(token->value);
+	trim_quotes(token->value, &len);
+	tmp = token->value;
+	while (tmp < token->value + len)
+	{
+		if (*tmp == '\0' && (ft_strcmp(token->value, \
+			"printf") || token != token + 2))
+			if (token + 1)
+				token->value = tmp + 1;
+		tmp++;
+	}
+	if (!token->value[0] && expanded)
+	{
+		free(token->value);
+		token->value = NULL;
+	}
+}
+
+void	expand_argv(t_shell *shell, t_token **tokens_argv)
+{
+	int	i;
+
+	if (!tokens_argv[0])
 		return ;
 	i = 0;
 	while (tokens_argv[i])
 	{
-		expanded = (ft_strchr(tokens_argv[i]->value, '$') \
-			|| ft_strchr(tokens_argv[i]->value, '*'));
-		expand_arg(shell, &tokens_argv[i]->value);
-		len = ft_strlen(tokens_argv[i]->value);
-		trim_arg(tokens_argv[i]->value);
-		trim_quotes(tokens_argv[i]->value, &len);
-		tmp = tokens_argv[i]->value;
-		while ((tmp < tokens_argv[i]->value + len) && i < (MAXARG - 1))
-		{
-			if (*tmp == '\0' && (ft_strcmp(tokens_argv[i]->value, "printf") \
-				|| i != 2))
-				tokens_argv[i + 1]->value = tmp + 1;
-			tmp++;
-		}
-		if (!tokens_argv[i]->value[0] && expanded)
-		{
-			free(tokens_argv[i]->value);
-			tokens_argv[i]->value = NULL;
-		}
+		process_and_trim_arg(shell, tokens_argv[i], 0);
 		i++;
 	}
 }

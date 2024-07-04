@@ -6,11 +6,18 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 13:32:35 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 11:59:54 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:04:26 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static int	free_and_return(char *tmp)
+{
+	if (tmp)
+		free(tmp);
+	return (-1);
+}
 
 int	expand(char *key, int i, int j, char **line)
 {
@@ -22,18 +29,12 @@ int	expand(char *key, int i, int j, char **line)
 		return (-1);
 	tmp2 = ft_substr(*line, j, ft_strlen(*line) - j + 1);
 	if (!tmp2)
-	{
-		free(tmp);
-		return (-1);
-	}
+		return (free_and_return(tmp));
 	free(*line);
 	*line = ft_strjoin(tmp, key);
 	free(tmp);
 	if (!*line)
-	{
-		free(tmp2);
-		return (-1);
-	}
+		free_and_return(tmp2);
 	tmp = *line;
 	*line = ft_strjoin(*line, tmp2);
 	free(tmp);

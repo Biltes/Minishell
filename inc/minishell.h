@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 17:24:57 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:23:02 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,12 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell);
 char	*char_append(t_lexer *lexer, char *value);
 char	*status_handler(void);
 
-void	env_add(t_shell *shell, char *key, char *value, int visible);
+t_env	*env_add(t_shell *shell, char *key, char *value, int visible);
 t_env	*manage_env_node(char *key, char *value, int visible, int action);
 t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible);
 
 char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value);
+void	env_add(t_shell *shell, char *key, char *value, int visible, t_env *tmp);//Igual acima
+void	process_and_trim_arg(t_shell *shell, t_token *token, int len);
 
 #endif

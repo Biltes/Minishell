@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 13:50:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 17:50:13 by biltes           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/07/04 15:29:39 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/minishell.h"
 
@@ -30,14 +31,12 @@ static void	check_execve(t_shell *shell, char *path)
 	free_exit(shell);
 }
 
-static char	*get_path(t_shell *sh, char *cmd)
+static char	*get_path(t_shell *sh, char *cmd, int i)
 {
-	int		i;
 	char	*path;
 	char	*path2;
 	char	**paths;
 
-	i = 0;
 	path = NULL;
 	path2 = NULL;
 	if (!sh->env)
@@ -45,7 +44,7 @@ static char	*get_path(t_shell *sh, char *cmd)
 	if (ft_strchr("/.", cmd[0]) || !env_get("PATH", sh) || !ft_strcmp(cmd, ""))
 		return (ft_strdup(cmd));
 	paths = ft_split(env_get("PATH", sh), ':');
-	while (paths[i])
+	while (paths[++i])
 	{
 		path = ft_strjoin(paths[i], "/");
 		path2 = ft_strjoin(path, cmd);
@@ -56,7 +55,6 @@ static char	*get_path(t_shell *sh, char *cmd)
 			return (path2);
 		}
 		free(path2);
-		i++;
 	}
 	free_array(paths);
 	return (ft_strdup(cmd));
@@ -79,7 +77,7 @@ void	run_exec(t_shell *shell, t_exec_node *cmd)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		path = get_path(shell, cmd->tokens_argv[0]->value);
+		path = get_path(shell, cmd->tokens_argv[0]->value, -1);
 		argv = convert_tokens_to_argv(cmd->tokens_argv);
 		execve(path, argv, shell->envp);
 		free(argv);

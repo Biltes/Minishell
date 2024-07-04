@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:26 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 17:04:53 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/04 15:27:23 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	print_envp_sorted(t_shell *shell, int export)
+static void	print_envp_sorted(t_shell *shell, int export, int i)
 {
 	t_env		*tmp;
 	static int	i;
@@ -75,25 +75,25 @@ static bool	valid_args(t_token **tokens_argv)
 	return (flag);
 }
 
-static void	run_export(t_shell *shell, t_exec_node *cmd)
+static void	run_export(t_shell *shell, t_exec_node *cmd, int i)
 {
-	int		i;
 	char	*value;
 	char	**split;
 
 	if (!valid_args(cmd->tokens_argv))
-		print_envp_sorted(shell, 1);
+		print_envp_sorted(shell, 1, 1);
 	else
 	{
-		i = 0;
 		while (cmd->tokens_argv[++i])
 		{
-			if (!*cmd->tokens_argv[i]->value || !valid_var(shell, cmd->tokens_argv[i]->value))
+			if (!*cmd->tokens_argv[i]->value || \
+				!valid_var(shell, cmd->tokens_argv[i]->value))
 				continue ;
 			if (ft_strchr(cmd->tokens_argv[i]->value, '='))
 			{
 				split = ft_split(cmd->tokens_argv[i]->value, '=');
-				value = ft_strdup(ft_strchr(cmd->tokens_argv[i]->value, '=') + 1);
+				value = ft_strdup(ft_strchr(cmd->tokens_argv[i]->value, '=') \
+					+ 1);
 				env_export(shell, split[0], value, 1);
 				free_array(split);
 				free(value);
@@ -106,5 +106,5 @@ static void	run_export(t_shell *shell, t_exec_node *cmd)
 
 void	export_command(t_shell *shell, t_exec_node *cmd)
 {
-	run_export(shell, cmd);
+	run_export(shell, cmd, 0);
 }
