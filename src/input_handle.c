@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 15:12:08 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/06 14:12:31 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	prepare_and_initial_check(t_shell *m_shell)
 	m_shell->input = ft_strtrim(m_shell->input, WSPACES);
 	if (tmp == NULL)
 		free(tmp);
-	else if (ft_strchr("&;|>", m_shell->input[0]))
+	else if (ft_strchr("&;|", m_shell->input[0]))
 	{
 		free(m_shell->input);
 		return (exit_error("Can't start with that operator\n", m_shell));

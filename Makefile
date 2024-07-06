@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: biltes <biltes@student.42.fr>              +#+  +:+       +#+         #
+#    By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 10:10:24 by pevieira          #+#    #+#              #
-#    Updated: 2024/07/03 17:11:53 by biltes           ###   ########.fr        #
+#    Updated: 2024/07/06 13:00:29 by pevieira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ SRC = $(shell find src -name "*.c")
 OBJDIR = obj
 OBJS = $(patsubst src/%,${OBJDIR}/%,${SRC:.c=.o})
 
-CC = cc
+CC = gcc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDE = -I include
 MAKE = make -C
 LIBFT_PATH = libft
