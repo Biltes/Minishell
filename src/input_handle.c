@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/06 14:45:57 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/06 16:08:33 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,17 @@ static int	check_redirection_syntax(t_shell *m_shell, int i)
 	int	j;
 
 	j = i + 1;
+	if (m_shell->input[j] == '<' || m_shell->input[j] == '>')
+		j++;
 	while (ft_strchr(WSPACES, m_shell->input[j]))
 		j++;
 	if (m_shell->input[j] == '.' && (m_shell->input[j + 1] == ' ' \
 		|| m_shell->input[j + 1] == '\0'))
-		return (exit_error("minishell: syntax error \
-			near unexpected token '.'\n", m_shell));
+		return (exit_error(\
+		"minishell: syntax error near unexpected token '.'\n", m_shell));
+	if (m_shell->input[j] == '>' || m_shell->input[j] == '<')
+		return (exit_error(\
+		"minishell: syntax error near unexpected token.\n", m_shell));
 	return (0);
 }
 

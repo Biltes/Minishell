@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 14:34:16 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/06 17:01:28 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,16 @@ void	ft_add_token_to_exec(t_exec_node *exec, t_token *token)
 	int	i;
 
 	i = 0;
-	if (!token)
+	if (!token || ft_strcmp(token->value, "") == 0)
+	{
+		if (token)
+		{
+			if (token->value)
+				free(token->value);
+			free (token);
+		}
 		return ;
+	}
 	while (exec->tokens_argv[i] && i < MAXARG)
 		i++;
 	if (!exec->tokens_argv[i] && i < MAXARG)
@@ -102,7 +110,7 @@ static t_cmd	*parsing_exec(t_shell *m_shell)
 			break ;
 		if (m_shell->next_token->type != TOKEN_ID)
 		{
-			exit_error("Erro syntax2\n", m_shell);
+			exit_error("Erro de syntax\n", m_shell);
 			return (ret);
 		}
 		ft_add_token_to_exec((t_exec_node *) cmd, m_shell->next_token);
@@ -120,7 +128,7 @@ t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 	if (scan(m_shell->lexer, "|", 1) \
 		&& m_shell->status == CONTINUE)
 	{
-		exit_error("this is not the bonus!", m_shell);
+		exit_error("Double || not supported!\n", m_shell);
 		return (NULL);
 	}
 	cmd = parsing_exec(m_shell);
