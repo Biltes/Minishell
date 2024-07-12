@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 11:22:31 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 16:05:22 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:06:56 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ char	*insert_str(char *original, char *to_insert, int position, int jl)
 	while (++j < (int)ft_strlen(to_insert))
 		new_str[i + j] = to_insert[j];
 	while (original[jl])
-	{
-		new_str[i + j] = original[jl];
-		i++;
-		jl++;
-	}
+		new_str[(i++) + j] = original[jl++];
 	new_str[new_len] = '\0';
 	free(original);
 	printf("a str é: %s", new_str);
