@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/12 11:37:00 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:52:19 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
 	{
 		if (*tmp == '\0' && (ft_strcmp(token->value, \
 			"printf") || token != token + 2))
-			if (token + 1)
-				token->value = tmp + 1;
+			token->value = tmp + 1;
 		tmp++;
 	}
 	if (!token->value[0] && expanded)
