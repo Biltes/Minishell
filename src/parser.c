@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:21:07 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 11:42:31 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:18:34 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int	scan(t_lexer *lexer, char *op, int mode)
 
 int	parser(t_shell *m_shell)
 {
-	init_ast(m_shell);
-	return (1);
+	return (init_ast(m_shell));
 }

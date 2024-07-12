@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/04 17:20:51 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/12 10:23:57 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define SIGCHILD 31
 # define SIGIGNORE 41
 
-# define CONTINUE 1
+# define CONTINUE 101
 # define STOP 0
 
 extern int	g_exit;
@@ -85,7 +85,7 @@ t_token	*parse_id(t_lexer *lexer, int double_q, int single_q, t_shell *m_shell);
 char	*char_to_str(t_lexer *lexer);
 t_token	*parsing_redirections_lexer1(t_lexer *lexer);
 
-int		exit_error(char *str, t_shell *m_shell);
+int		exit_error(char *str, t_shell *m_shell, char *char_error);
 void	set_signal(int sg, t_shell *msh);
 void	executor(t_shell *m_shell);
 
@@ -118,5 +118,6 @@ bool	env_rm(char *key, t_shell *shell);
 char	*get_tilde_env_var(t_shell *sh, char *tmp);
 void	env_expand(t_shell *shell, char *tmp, char **line);
 int		expand_tilde(t_shell *shell, char **line);
+char	*reset_value(char *value);
 
 #endif

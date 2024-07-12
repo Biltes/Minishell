@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/06 15:55:40 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:33:34 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*status_handler(void)
 	status_str = ft_itoa(g_exit);
 	if (status_str == NULL)
 	{
-		printf("Failed to allocate memory for status string\n");
+		printf("minishell: failed to allocate memory for status string\n");
 		return (NULL);
 	}
 	return (status_str);
@@ -78,5 +78,15 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell)
 	strcpy(new_value, cur_value);
 	strcat(new_value, value);
 	free(cur_value);
+	return (new_value);
+}
+
+char	*reset_value(char *value)
+{
+	char	*new_value;
+
+	new_value = calloc(1, sizeof(char));
+	new_value[0] = '\0';
+	free(value);
 	return (new_value);
 }

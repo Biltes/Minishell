@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/04 17:05:41 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/12 11:37:00 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	**convert_tokens_to_argv(t_token **tokens)
 	j = 0;
 	while (j < i)
 	{
+		printf("CONVERTING TOKENS TO ARGS\n");
 		argv[j] = tokens[j]->value;
 		j++;
 	}
@@ -86,10 +87,10 @@ void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
 
 	if (!token->value)
 		return ;
+	(void)shell;
 	expanded = (ft_strchr(token->value, '$') || ft_strchr(token->value, '*'));
 	expand_arg(shell, &token->value);
 	len = ft_strlen(token->value);
-	trim_arg(token->value);
 	trim_quotes(token->value, &len);
 	tmp = token->value;
 	while (tmp < token->value + len)

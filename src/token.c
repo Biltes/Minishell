@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:54 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 12:05:30 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:23:12 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,29 @@ t_token	*init_token(int type, char *value)
 {
 	t_token	*token;
 
-	token = calloc(1, sizeof(struct s_token));
+	token = ft_calloc(1, sizeof(struct s_token));
 	token->type = type;
 	token->value = value;
 	return (token);
 }
 
-void	init_ast(t_shell *m_shell)
+int	init_ast(t_shell *m_shell)
 {
 	t_cmd	*cmd;
 
 	cmd = parsing_exec_and_pipe(m_shell);
-	if (scan(m_shell->lexer, "&|", 2) && cmd)
+	if (scan(m_shell->lexer, "&", 2) && cmd)
 	{
-		exit_error("this is not the bonus!", m_shell);
+		exit_error("no support for `&&'\n", m_shell, NULL);
+		return (0);
+	}
+	if (scan(m_shell->lexer, "|", 2) && cmd)
+	{
+		exit_error("no support for `||'\n", m_shell, NULL);
+		return (0);
 	}
 	m_shell->ast = cmd;
+	return (1);
 }
 
 void	reset_prompt(int sg)

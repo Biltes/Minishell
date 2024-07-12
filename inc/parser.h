@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:24:40 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 12:06:32 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:35:54 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ t_cmd	*init_block_node(t_cmd *cmd);
 
 int		scan(t_lexer *lexer, char *op, int mode);
 void	ft_add_token_to_exec(t_exec_node *exec, t_token *token);
-void	init_ast(t_shell *m_shell);
-
+int		init_ast(t_shell *m_shell);
+char	*change_lexer(t_lexer *lexer, char *value, int current_i);
+int		check_wspaces(char *arg);
 #endif

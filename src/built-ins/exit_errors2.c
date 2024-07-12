@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:30:18 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 13:49:20 by migupere         ###   ########.fr       */
+/*   Updated: 2024/07/11 10:48:16 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ int	error_in(t_shell *shell, char *cmd, char *arg, int error_code)
 
 void	free_exit(t_shell *shell)
 {
+	if (shell->lexer)
+	{
+		if (shell->lexer->str)
+			free(shell->lexer->str);
+		free(shell->lexer);
+	}
 	if (shell->input)
 		free(shell->input);
 	if (shell->ast)

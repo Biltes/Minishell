@@ -6,13 +6,13 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/06 16:08:33 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:18:09 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	prepare_and_initial_check(t_shell *m_shell)
+static int	prepare_and_initial_check(t_shell *m_shell, char *char_error)
 {
 	char	*tmp;
 
@@ -22,17 +22,21 @@ static int	prepare_and_initial_check(t_shell *m_shell)
 		free(tmp);
 	else if (m_shell->input && ft_strchr("&;|", m_shell->input[0]))
 	{
+		char_error = ft_strchr("&;|", m_shell->input[0]);
 		free(m_shell->input);
-		return (exit_error("Can't start with that operator\n", m_shell));
+		return (exit_error("unable to start with ", m_shell, char_error));
 	}
 	else if (m_shell->input && ft_strchr("&|<>", \
 		m_shell->input[ft_strlen(m_shell->input) - 1]))
 	{
+		char_error = ft_strchr("&|<>", \
+			m_shell->input[ft_strlen(m_shell->input) - 1]);
 		free(m_shell->input);
-		return (exit_error("Open | or || or && not supported\n", m_shell));
+		return (exit_error("no support for open ", m_shell, char_error));
 	}
 	else if (!m_shell->input)
 		return (1);
+	(void)char_error;
 	return (0);
 }
 
@@ -48,39 +52,42 @@ static int	check_redirection_syntax(t_shell *m_shell, int i)
 	if (m_shell->input[j] == '.' && (m_shell->input[j + 1] == ' ' \
 		|| m_shell->input[j + 1] == '\0'))
 		return (exit_error(\
-		"minishell: syntax error near unexpected token '.'\n", m_shell));
-	if (m_shell->input[j] == '>' || m_shell->input[j] == '<')
+		"syntax error near unexpected token `.'\n", m_shell, NULL));
+	if (m_shell->input[j] == '>')
 		return (exit_error(\
-		"minishell: syntax error near unexpected token.\n", m_shell));
+		"syntax error near unexpected token `>'\n", m_shell, NULL));
+	if (m_shell->input[j] == '<')
+		return (exit_error(\
+		"syntax error near unexpected token `<'\n", m_shell, NULL));
 	return (0);
 }
 
-int	check_syntax(t_shell *m_shell, int double_quotes, int single_quotes, int i)
+int	check_syntax(t_shell *shell, int d_q, int s_q, int i)
 {
-	if (prepare_and_initial_check(m_shell))
+	if (prepare_and_initial_check(shell, NULL))
 		return (1);
-	while (m_shell->input[++i])
+	while (shell->input[++i])
 	{
-		if (m_shell->input[i] == '"' && single_quotes == CLOSE)
-			double_quotes = !double_quotes;
-		if (m_shell->input[i] == '\'' && double_quotes == CLOSE)
-			single_quotes = !single_quotes;
-		if (m_shell->input[i] == '&' && !single_quotes && !double_quotes)
+		if (shell->input[i] == '"' && s_q == CLOSE)
+			d_q = !d_q;
+		if (shell->input[i] == '\'' && d_q == CLOSE)
+			s_q = !s_q;
+		if (shell->input[i] == '&' && !s_q && !d_q)
 		{
-			if (m_shell->input[i + 1] != '&' && m_shell->input[i - 1] != '&')
-				return (exit_error("minishell: no support for '&'\n", m_shell));
+			if (shell->input[i + 1] == '&' || shell->input[i - 1] == '&')
+				return (exit_error("no support for `&&'\n", shell, NULL));
+			return (exit_error("syntax error near token ", shell, "&"));
 		}
-		if (m_shell->input[i] == ';' && !single_quotes && !double_quotes)
-			return (exit_error("minishell: no support for ';'\n", m_shell));
-		if (m_shell->input[i] == '*' && !single_quotes && !double_quotes)
-			return (exit_error("minishell: no support for '*'\n", m_shell));
-		if ((m_shell->input[i] == '<' || m_shell->input[i] == '>') \
-			&& !single_quotes && !double_quotes)
-			if (check_redirection_syntax(m_shell, i))
+		if (shell->input[i] == ';' && !s_q && !d_q)
+			return (exit_error("no support for `;'\n", shell, NULL));
+		if (shell->input[i] == '*' && !s_q && !d_q)
+			return (exit_error("no support for `*'\n", shell, NULL));
+		if ((shell->input[i] == '<' || shell->input[i] == '>') && !s_q && !d_q)
+			if (check_redirection_syntax(shell, i))
 				return (1);
 	}
-	if (single_quotes == OPEN || double_quotes == OPEN)
-		return (exit_error("Open quotes not supported.\n", m_shell));
+	if (s_q == OPEN || d_q == OPEN)
+		return (exit_error("no support for open quotes\n", shell, NULL));
 	return (0);
 }
 
@@ -101,7 +108,6 @@ int	get_input(t_shell *m_shell)
 {
 	signals_set(RESTORE, m_shell);
 	m_shell->prompt = get_prompt();
-	m_shell->envp = NULL;
 	m_shell->input = readline(m_shell->prompt);
 	if (m_shell->prompt)
 		free(m_shell->prompt);

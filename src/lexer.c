@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:17:32 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 15:16:47 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 10:24:03 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_lexer	*init_lexer(char *str)
 	lexer = ft_calloc(1, sizeof(struct s_lexer));
 	lexer->str = ft_strdup(str);
 	lexer->i = 0;
-	lexer->c = str[lexer->i];
+	lexer->c = lexer->str[lexer->i];
 	lexer->str_len = ft_strlen(str);
 	return (lexer);
 }

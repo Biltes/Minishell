@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/06 17:01:28 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:32:18 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
 	return ((t_cmd *)here);
 }
 
-static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell)
+static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)
 {
-	int	red_type;
-
 	while (scan(m_shell->lexer, "<>", 1) || scan(m_shell->lexer, "<>", 2))
 	{
 		red_type = m_shell->next_token->type;
+		free(m_shell->next_token);
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 		if (m_shell->next_token->type != TOKEN_ID)
 		{
-			printf("minishell: syntax error with token `%i '\n", red_type);
-			exit_error("", m_shell);
+			exit_error("syntax error with token", m_shell, NULL);
+			if (m_shell->next_token->value)
+				printf("%s \n", m_shell->next_token->value);
 			return (NULL);
 		}
 		else if (red_type == TOKEN_REDIR1)
@@ -75,14 +75,13 @@ void	ft_add_token_to_exec(t_exec_node *exec, t_token *token)
 	int	i;
 
 	i = 0;
-	if (!token || ft_strcmp(token->value, "") == 0)
+	if (!token)
+		return ;
+	if (ft_strcmp(token->value, "") == 0)
 	{
-		if (token)
-		{
-			if (token->value)
-				free(token->value);
-			free (token);
-		}
+		if (token->value)
+			free(token->value);
+		free (token);
 		return ;
 	}
 	while (exec->tokens_argv[i] && i < MAXARG)
@@ -98,24 +97,21 @@ static t_cmd	*parsing_exec(t_shell *m_shell)
 
 	if (scan(m_shell->lexer, "(", 1))
 	{
-		exit_error("this is not the bonus", m_shell);
+		exit_error("no support for `('\n", m_shell, NULL);
 		return (NULL);
 	}
 	ret = init_exec_node();
 	cmd = (t_exec_node *) ret;
-	ret = check_redirections(ret, m_shell);
+	ret = check_redirections(ret, m_shell, 0);
 	while (!scan(m_shell->lexer, "|", 1))
 	{
 		if (!m_shell->next_token)
 			break ;
 		if (m_shell->next_token->type != TOKEN_ID)
-		{
-			exit_error("Erro de syntax\n", m_shell);
-			return (ret);
-		}
+			break ;
 		ft_add_token_to_exec((t_exec_node *) cmd, m_shell->next_token);
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
-		ret = check_redirections(ret, m_shell);
+		ret = check_redirections(ret, m_shell, 0);
 	}
 	return (ret);
 }
@@ -128,7 +124,8 @@ t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 	if (scan(m_shell->lexer, "|", 1) \
 		&& m_shell->status == CONTINUE)
 	{
-		exit_error("Double || not supported!\n", m_shell);
+		exit_error("syntax error near unexpected token ", m_shell, "|");
+		free(m_shell->next_token);
 		return (NULL);
 	}
 	cmd = parsing_exec(m_shell);

@@ -6,15 +6,25 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 11:22:31 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:18:59 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	exit_error(char *str, t_shell *m_shell)
+int	exit_error(char *str, t_shell *m_shell, char *char_error)
 {
-	printf ("%s", str);
+	if (char_error != NULL)
+	{
+		printf("minishell: ");
+		printf ("%s", str);
+		printf("`%c'\n", char_error[0]);
+	}
+	else
+	{
+		printf("minishell: ");
+		printf ("%s", str);
+	}
 	(void)m_shell;
 	return (1);
 }

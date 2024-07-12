@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 10:25:23 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 14:52:38 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:37:30 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	child_signal_handler(int sig)
 
 void	ctrl_c(int sig)
 {
-	printf("ctrl_c (SIGINT) recebido\n");
+	printf("ctrl_c (SIGINT) recebido\n"); //verificar
 	g_exit = 130;
 	ft_putchar('\n');
 	(void)sig;
@@ -42,7 +42,7 @@ void	ctrl_c(int sig)
 void	back_slash(int sig)
 {
 	g_exit = 131;
-	printf("back_slash (SIGQUIT) recebido\n");
+	printf("back_slash (SIGQUIT) recebido\n"); //verificar
 	printf("Quit (core dumped)\n");
 	(void)sig;
 }

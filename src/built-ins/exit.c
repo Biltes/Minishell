@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:24 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 14:07:00 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/11 10:54:51 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static bool	islonglong(char *str)
 	int	is_negative;
 	int	len;
 
+	is_negative = 0;
 	if (*str == '-')
 	{
 		is_negative = 1;
