@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 11:18:59 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:11:29 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	exit_error(char *str, t_shell *m_shell, char *char_error)
 
 static void	free_redir_node(t_redir_node *redir)
 {
+	printf("limpando redir\n");
 	if (!redir)
 		return ;
 	if (redir->cmd)

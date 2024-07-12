@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 11:32:18 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:37:48 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
 	here = (t_here *)ft_calloc(1, sizeof(t_here));
 	here->type = HERE_DOC;
 	here->eof = ft_strdup((char *)token->value);
+	free(token->value);
 	here->mode = O_WRONLY | O_CREAT | O_TRUNC;
 	here->fdin = dup(STDIN_FILENO);
 	here->fdout = dup(STDOUT_FILENO);
@@ -65,6 +66,7 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)
 				O_WRONLY | O_CREAT | O_APPEND, 1);
 		else if (red_type == TOKEN_REDIR4)
 			cmd = init_heredoc_cmd(cmd, m_shell->next_token);
+		free(m_shell->next_token);
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 	}
 	return (cmd);

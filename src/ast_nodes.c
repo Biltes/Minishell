@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:30:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 12:05:28 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:37:04 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_cmd	*init_redir_cmd(t_cmd *cmd, t_token *token, int mode, int fd)
 	redir = (t_redir_node *)ft_calloc(1, sizeof(t_redir_node));
 	redir->type = REDIR;
 	redir->file = ft_strdup(token->value);
+	free(token->value);
 	redir->mode = mode;
 	redir->fd = fd;
 	if (cmd->type == EXEC)
