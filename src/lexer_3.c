@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 16:31:33 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:31:24 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell)
 	strcpy(new_value, cur_value);
 	strcat(new_value, value);
 	free(cur_value);
+	free(value);
 	return (new_value);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 16:37:48 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:36:04 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ static t_cmd	*parsing_exec(t_shell *m_shell)
 	if (scan(m_shell->lexer, "(", 1))
 	{
 		exit_error("no support for `('\n", m_shell, NULL);
+		m_shell->status = RESTORE;
+		free(m_shell->next_token->value);
+		free(m_shell->next_token);
 		return (NULL);
 	}
 	ret = init_exec_node();
@@ -128,8 +131,10 @@ t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 	{
 		exit_error("syntax error near unexpected token ", m_shell, "|");
 		free(m_shell->next_token);
+		m_shell->status = RESTORE;
 		return (NULL);
 	}
+	printf("AAAAAA\n");
 	cmd = parsing_exec(m_shell);
 	if (cmd && scan(m_shell->lexer, "|", 1))
 	{

@@ -17,7 +17,7 @@ static int	print_error_invalid_option(t_shell *shell, char *option)
 	ft_putstr_fd("minishell: pwd: ", STDERR_FILENO);
 	ft_putstr_fd(option, STDERR_FILENO);
 	ft_putendl_fd(": invalid option", STDERR_FILENO);
-	shell->status = 1;
+	shell->status = CONTINUE;
 	return (1);
 }
 
@@ -26,7 +26,7 @@ static int	print_error_getcwd(t_shell *shell)
 	ft_putendl_fd("minishell: pwd: error retrieving current directory: \
 		getcwd: cannot access parent directories: \
 			No such file or directory", STDERR_FILENO);
-	shell->status = 1;
+	shell->status = CONTINUE;
 	return (1);
 }
 
@@ -35,7 +35,7 @@ static int	handle_pwd(t_shell *shell, char *pwd)
 	ft_putendl_fd(pwd, STDOUT_FILENO);
 	if (pwd)
 		free(pwd);
-	shell->status = 1;
+	shell->status = CONTINUE;
 	return (0);
 }
 

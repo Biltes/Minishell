@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:50:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/06 17:02:27 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:06:47 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void	check_execve(t_shell *shell, char *path)
 		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	else
 		ft_putendl_fd(": command not found", STDERR_FILENO);
-	g_exit = 127
-		- ((!access(path, F_OK) && access(path, X_OK)) || !access(path, F_OK));
+	g_exit = 127 - !access(path, F_OK);
 	free(path);
 	free_exit(shell);
 }
@@ -77,12 +76,18 @@ void	run_exec(t_shell *shell, t_exec_node *cmd)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		path = get_path(shell, cmd->tokens_argv[0]->value, -1);
+		printf("TA\n");
 		argv = convert_tokens_to_argv(cmd->tokens_argv);
+		printf("TOMAAA1\n");
 		execve(path, argv, shell->envp);
+		printf("TOMAAA2\n");
 		free(argv);
+		printf("TOMAAA\n");
 		check_execve(shell, path);
 	}
+	printf("ola1\n");
 	waitpid(pid, &g_exit, 0);
+	printf("ola2\n");
 	check_exit_status();
 	signals_set(RESTORE, shell);
 }

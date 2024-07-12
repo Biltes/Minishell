@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:30:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/11 11:30:12 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:35:43 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	expand_heredoc(t_shell *shell, char **line, int i, int j)
 			env_value = env_get(tmp, shell);
 			expand(env_value, i, j, line);
 			free(tmp);
-			free(env_value);
 		}
 		i++;
 	}
