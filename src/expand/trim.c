@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/12 15:52:19 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:57:36 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	**convert_tokens_to_argv(t_token **tokens)
 	j = 0;
 	while (j < i)
 	{
-		printf("CONVERTING TOKENS TO ARGS\n");
 		argv[j] = tokens[j]->value;
 		j++;
 	}

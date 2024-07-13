@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:30:18 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/12 19:05:48 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:57:32 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	print_error(t_shell *shell, char *msg, char *msg2, int exit)
 	ft_putendl_fd(msg2, STDERR_FILENO);
 	shell->status = RESTORE;
 	g_exit = exit;
-	printf("verificando caminho \n");
 	return (1);
 }
 
@@ -39,7 +38,6 @@ int	error_in(t_shell *shell, char *cmd, char *arg, int error_code)
 
 void	free_exit(t_shell *shell)
 {
-	printf("olaa pedro\n");
 	if (shell->lexer)
 	{
 		if (shell->lexer->str)
@@ -56,6 +54,5 @@ void	free_exit(t_shell *shell)
 	envp_destroy(shell->env);
 	if (shell->envp)
 		free_array(shell->envp);
-	printf("saiu daqui\n");
 	exit(g_exit);
 }

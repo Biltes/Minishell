@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:54 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 19:29:05 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:57:02 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,13 @@ void	reset_prompt(int sg)
 
 void	cleaning_input_and_lexer(t_shell *m_shell)
 {
-	printf("entrou aqui\n");
 	if (m_shell->input)
 	{
-		printf("LOL1\n");
 		free(m_shell->input);
-		printf("LOL2\n");
 		m_shell->input = NULL;
 	}
 	if (m_shell->lexer)
 	{
-		printf("LOL3\n");
 		if (m_shell->lexer->str)
 		{
 			free(m_shell->lexer->str);
@@ -72,6 +68,5 @@ void	cleaning_input_and_lexer(t_shell *m_shell)
 		}
 		free(m_shell->lexer);
 		m_shell->lexer = NULL;
-		printf("LOL4\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 19:36:04 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:55:30 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 		m_shell->status = RESTORE;
 		return (NULL);
 	}
-	printf("AAAAAA\n");
 	cmd = parsing_exec(m_shell);
 	if (cmd && scan(m_shell->lexer, "|", 1))
 	{

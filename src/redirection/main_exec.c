@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:50:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/12 19:06:47 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:57:54 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,12 @@ void	run_exec(t_shell *shell, t_exec_node *cmd)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		path = get_path(shell, cmd->tokens_argv[0]->value, -1);
-		printf("TA\n");
 		argv = convert_tokens_to_argv(cmd->tokens_argv);
-		printf("TOMAAA1\n");
 		execve(path, argv, shell->envp);
-		printf("TOMAAA2\n");
 		free(argv);
-		printf("TOMAAA\n");
 		check_execve(shell, path);
 	}
-	printf("ola1\n");
 	waitpid(pid, &g_exit, 0);
-	printf("ola2\n");
 	check_exit_status();
 	signals_set(RESTORE, shell);
 }

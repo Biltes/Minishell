@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 18:32:43 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:55:59 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	exit_error(char *str, t_shell *m_shell, char *char_error)
 
 static void	free_redir_node(t_redir_node *redir)
 {
-	printf("limpando redir\n");
 	if (!redir)
 		return ;
 	if (redir->cmd)
@@ -72,7 +71,6 @@ static void	free_pipe_node(t_pipe_node *pipe)
 
 void	free_cmd(t_cmd *cmd)
 {
-	printf("couou\n");
 	if (!cmd)
 		return ;
 	else if (cmd->type == PIPE)
