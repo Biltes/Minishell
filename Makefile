@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+         #
+#    By: biltes <biltes@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 10:10:24 by pevieira          #+#    #+#              #
-#    Updated: 2024/07/12 16:09:02 by pevieira         ###   ########.fr        #
+#    Updated: 2024/07/13 23:07:03 by biltes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ fclean: clean
 re: fclean all
 
 leaks: readline.supp
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --log-file=output.log ./minishell
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all -s --log-file=output.log ./minishell
 
 readline.supp:
 	echo "{" > readline.supp

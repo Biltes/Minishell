@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 11:18:09 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 22:48:30 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	prepare_and_initial_check(t_shell *m_shell, char *char_error)
 		return (exit_error("no support for open ", m_shell, char_error));
 	}
 	else if (!m_shell->input)
-		return (1);
+		return ((free(m_shell->input), 1));
 	(void)char_error;
 	return (0);
 }

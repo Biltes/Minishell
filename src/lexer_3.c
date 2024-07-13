@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 18:31:24 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/13 23:08:53 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*status_handler(void)
 		printf("minishell: failed to allocate memory for status string\n");
 		return (NULL);
 	}
+	free(status_str);
 	return (status_str);
 }
 
@@ -78,7 +79,7 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell)
 	strcpy(new_value, cur_value);
 	strcat(new_value, value);
 	free(cur_value);
-	free(value);
+	//free(value);
 	return (new_value);
 }
 

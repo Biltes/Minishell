@@ -18,7 +18,7 @@ static int	print_error_invalid_option(t_shell *shell, char *option)
 	ft_putstr_fd(option, STDERR_FILENO);
 	ft_putendl_fd(": invalid option", STDERR_FILENO);
 	shell->status = CONTINUE;
-	return (1);
+	return (101);
 }
 
 static int	print_error_getcwd(t_shell *shell)
@@ -27,7 +27,7 @@ static int	print_error_getcwd(t_shell *shell)
 		getcwd: cannot access parent directories: \
 			No such file or directory", STDERR_FILENO);
 	shell->status = CONTINUE;
-	return (1);
+	return (101);
 }
 
 static int	handle_pwd(t_shell *shell, char *pwd)
