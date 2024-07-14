@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:54 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/13 13:57:02 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:33:18 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,6 @@ int	init_ast(t_shell *m_shell)
 	}
 	m_shell->ast = cmd;
 	return (1);
-}
-
-void	reset_prompt(int sg)
-{
-	g_exit = 130;
-	ft_putchar('\n');
-	rl_on_new_line();
-	rl_redisplay();
-	(void)sg;
 }
 
 void	cleaning_input_and_lexer(t_shell *m_shell)
