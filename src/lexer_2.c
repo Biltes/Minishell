@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 11:22:31 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 16:08:46 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:20:51 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_token	*parsing_string_lexer(t_lexer *lexer)
 	char	*cs;
 	char	*tmp;
 
-	value = calloc(1, sizeof(char));
+	value = ft_calloc(1, sizeof(char));
 	value[0] = '\0';
 	increment_lexer(lexer);
 	while (lexer->c != '"')

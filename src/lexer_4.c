@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 11:34:01 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/13 22:59:04 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/15 12:21:22 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*char_to_str(t_lexer *lexer)
 {
 	char	*str;
 
-	str = calloc (2, sizeof(char));
+	str = ft_calloc(2, sizeof(char));
 	str[0] = lexer->c;
 	str[1] = '\0';
 	return (str);

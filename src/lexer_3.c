@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 11:39:33 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:31:34 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*status_handler(void)
 char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value)
 {
 	increment_lexer(lexer);
-	var_name = calloc(1, sizeof(char));
+	var_name = ft_calloc(1, sizeof(char));
 	if (lexer->c == '\0' || lexer->c == ' ' || lexer->c == '"')
 		value = "$";
 	else
@@ -74,9 +74,9 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell)
 	value = NULL;
 	value = expand_v(lexer, m_shell, var_name, value);
 	free(var_name);
-	new_value = calloc(strlen(cur_value) + strlen(value) + 1, sizeof(char));
-	strcpy(new_value, cur_value);
-	strcat(new_value, value);
+	new_value = ft_calloc(strlen(cur_value) + strlen(value) + 1, sizeof(char));
+	ft_strlcpy(new_value, cur_value, ft_strlen(cur_value) + 1);
+	ft_strlcat(new_value, value, ft_strlen(cur_value) + ft_strlen(value) + 1);
 	free(cur_value);
 	return (new_value);
 }
@@ -85,7 +85,7 @@ char	*reset_value(char *value)
 {
 	char	*new_value;
 
-	new_value = calloc(1, sizeof(char));
+	new_value = ft_calloc(1, sizeof(char));
 	new_value[0] = '\0';
 	free(value);
 	return (new_value);
