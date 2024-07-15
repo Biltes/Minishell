@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 17:02:10 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:52:02 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)
 	{
 		red_type = m_shell->next_token->type;
 		free(m_shell->next_token);
+		if (red_type == TOKEN_REDIR4)
+			m_shell->heredoc = 1;
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 		if (m_shell->next_token->type != TOKEN_ID)
 			return (error_red(cmd, m_shell, m_shell->next_token->type));
@@ -76,6 +78,7 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)
 		else if (red_type == TOKEN_REDIR4)
 			cmd = init_heredoc_cmd(cmd, m_shell->next_token, NULL);
 		free(m_shell->next_token);
+		m_shell->heredoc = 0;
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 	}
 	return (cmd);

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 13:32:35 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/15 12:38:03 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 23:21:54 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	expand(char *key, int i, int j, char **line)
 	*line = ft_strjoin(tmp, key);
 	free(tmp);
 	if (!*line)
-		free_and_return(tmp2);
+		return (free_and_return(tmp2));
 	tmp = *line;
-	*line = ft_strjoin(*line, tmp2);
+	free(*line);
+	*line = ft_strjoin(tmp, tmp2);
 	free(tmp);
 	free(tmp2);
 	if (!*line)
