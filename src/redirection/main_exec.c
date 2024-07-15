@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:50:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/15 15:00:40 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:04:47 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	run_exec(t_shell *shell, t_exec_node *cmd)
 	char	*path;
 	char	**argv;
 
+	expand_argv(shell, cmd->tokens_argv);
 	if ((!cmd->tokens_argv[0]) || (!cmd->tokens_argv[0]->value))
 		return (g_exit = 0, (void)0);
 	if (run_builtin(shell, cmd))
