@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 17:53:21 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:54:53 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ char	*char_append(t_lexer *lexer, char *value)
 	cs = char_to_str(lexer);
 	tmp = ft_strjoin(value, cs);
 	free(value);
+	value = NULL;
 	free(cs);
+	cs = NULL;
 	return (tmp);
 }
 
