@@ -6,15 +6,14 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 12:41:13 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:02:10 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
+static t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token, t_here *here)
 {
-	t_here	*here;
 	t_cmd	*tmp;
 	t_cmd	*tmp2;
 
@@ -42,6 +41,21 @@ t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token)
 	return ((t_cmd *)here);
 }
 
+static t_cmd	*error_red(t_cmd *cmd, t_shell *m_shell, int red_type)
+{
+	if (red_type == TOKEN_REDIR1)
+		exit_error("syntax error near token ´<'\n", m_shell, NULL);
+	else if (red_type == TOKEN_REDIR2)
+		exit_error("syntax error near token ´>'\n", m_shell, NULL);
+	else if (red_type == TOKEN_REDIR3)
+		exit_error("syntax error near token ´>>'\n", m_shell, NULL);
+	else if (red_type == TOKEN_PIPE)
+		exit_error("syntax error near token ´|'\n", m_shell, NULL);
+	else
+		exit_error("syntax error near token ´newline'\n", m_shell, NULL);
+	return (cmd);
+}
+
 static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)
 {
 	while (scan(m_shell->lexer, "<>", 1) || scan(m_shell->lexer, "<>", 2))
@@ -50,12 +64,7 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)
 		free(m_shell->next_token);
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 		if (m_shell->next_token->type != TOKEN_ID)
-		{
-			exit_error("syntax error with token", m_shell, NULL);
-			if (m_shell->next_token->value)
-				printf("%s \n", m_shell->next_token->value);
-			return (NULL);
-		}
+			return (error_red(cmd, m_shell, m_shell->next_token->type));
 		else if (red_type == TOKEN_REDIR1)
 			cmd = init_redir_cmd(cmd, m_shell->next_token, O_RDONLY, 0);
 		else if (red_type == TOKEN_REDIR2)
@@ -65,7 +74,7 @@ static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)
 			cmd = init_redir_cmd(cmd, m_shell->next_token, \
 				O_WRONLY | O_CREAT | O_APPEND, 1);
 		else if (red_type == TOKEN_REDIR4)
-			cmd = init_heredoc_cmd(cmd, m_shell->next_token);
+			cmd = init_heredoc_cmd(cmd, m_shell->next_token, NULL);
 		free(m_shell->next_token);
 		m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
 	}
@@ -108,7 +117,7 @@ static t_cmd	*parsing_exec(t_shell *m_shell)
 	ret = init_exec_node();
 	cmd = (t_exec_node *) ret;
 	ret = check_redirections(ret, m_shell, 0);
-	while (!scan(m_shell->lexer, "|", 1))
+	while (!scan(m_shell->lexer, "|", 1) && m_shell->status == CONTINUE)
 	{
 		if (!m_shell->next_token)
 			break ;
@@ -126,7 +135,7 @@ t_cmd	*parsing_exec_and_pipe(t_shell *m_shell)
 	t_cmd	*cmd;
 
 	m_shell->next_token = lexer_get_next_token(m_shell->lexer, m_shell);
-	if (scan(m_shell->lexer, "|", 1) \
+	if (scan(m_shell->lexer, "|", 1)
 		&& m_shell->status == CONTINUE)
 	{
 		exit_error("syntax error near unexpected token ", m_shell, "|");

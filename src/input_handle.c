@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 14:46:44 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:59:10 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,24 @@
 
 static int	prepare_and_initial_check(t_shell *m_shell, char *char_error)
 {
-	char	*tmp;
-
-	tmp = m_shell->input;
 	m_shell->input = ft_strtrim(m_shell->input, WSPACES);
-	if (tmp == NULL)
-		free(tmp);
-	else if (m_shell->input && ft_strchr("&;|", m_shell->input[0]))
+	if (m_shell->input && ft_strchr("&;|", m_shell->input[0]))
 	{
 		char_error = ft_strchr("&;|", m_shell->input[0]);
 		free(m_shell->input);
 		return (exit_error("unable to start with ", m_shell, char_error));
 	}
-	else if (m_shell->input && ft_strchr("&|<>", \
+	else if (m_shell->input && ft_strchr("&|", \
 		m_shell->input[ft_strlen(m_shell->input) - 1]))
 	{
-		char_error = ft_strchr("&|<>", \
+		char_error = ft_strchr("&|", \
 			m_shell->input[ft_strlen(m_shell->input) - 1]);
 		free(m_shell->input);
 		return (exit_error("no support for open ", m_shell, char_error));
 	}
-	else if (!m_shell->input)
-		return ((free(m_shell->input), 1));
-	(void)char_error;
+	/*else if (!m_shell->input)
+		return (1);
+	(void)char_error;*/
 	return (0);
 }
 
@@ -47,20 +42,27 @@ static int	check_redirection_syntax(t_shell *m_shell, int i)
 	j = i + 1;
 	if (m_shell->input[j] == '<' || m_shell->input[j] == '>')
 		j++;
-	while (ft_strchr(WSPACES, m_shell->input[j]))
+	while (ft_strchr(WSPACES, m_shell->input[j]) && m_shell->input[j])
 		j++;
 	if (m_shell->input[j] == '.' && (m_shell->input[j + 1] == ' ' \
 		|| m_shell->input[j + 1] == '\0'))
 		return (exit_error(\
 		"syntax error near unexpected token `.'\n", m_shell, NULL));
+	if (m_shell->input[j] == '>' && (m_shell->input[j + 1] == '>'))
+		return (exit_error("syntax error near `>>'\n", m_shell, NULL));
 	if (m_shell->input[j] == '>')
-		return (exit_error(\
-		"syntax error near unexpected token `>'\n", m_shell, NULL));
+		return (exit_error("syntax error near `>'\n", m_shell, NULL));
+	if (m_shell->input[j] == '<' && (m_shell->input[j + 1] == '<'))
+		return (exit_error("syntax error near `<<'\n", m_shell, NULL));
 	if (m_shell->input[j] == '<')
-		return (exit_error(\
-		"syntax error near unexpected token `<'\n", m_shell, NULL));
+		return (exit_error("syntax error near `<'\n", m_shell, NULL));
+	if (m_shell->input && ft_strchr("<>", \
+		m_shell->input[ft_strlen(m_shell->input) - 1]))
+		return (exit_error( \
+			"syntax error near unexpected token `newline'\n", m_shell, NULL));
 	return (0);
 }
+
 
 int	check_syntax(t_shell *shell, int d_q, int s_q, int i)
 {
