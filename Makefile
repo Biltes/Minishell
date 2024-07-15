@@ -6,7 +6,7 @@
 #    By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 10:10:24 by pevieira          #+#    #+#              #
-#    Updated: 2024/07/14 19:11:06 by pevieira         ###   ########.fr        #
+#    Updated: 2024/07/15 11:27:59 by pevieira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC = $(shell find src -name "*.c")
 OBJDIR = obj
 OBJS = $(patsubst src/%,${OBJDIR}/%,${SRC:.c=.o})
 
-CC = cc
+CC = gcc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDE = -I include
