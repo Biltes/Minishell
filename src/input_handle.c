@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/13 22:48:30 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/15 14:46:44 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	get_input(t_shell *m_shell)
 		free(m_shell->prompt);
 	if (!m_shell->input)
 	{
-		printf("quit minishell\n");
+		printf("exit\n");
 		g_exit = 0;
 		m_shell->status = STOP;
 		return (1);

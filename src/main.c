@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:11:24 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 10:24:39 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:29:03 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		if (get_input(&m_shell))
 			continue ;
-		signals_set(SIGPIPE, &m_shell);
+		signals_set(SIGIGNORE, &m_shell);
 		if (m_shell.input[0])
 			if (parser(&m_shell) && m_shell.status == CONTINUE)
 				executor(&m_shell);

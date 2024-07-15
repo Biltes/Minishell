@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:30:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/12 17:35:43 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:38:15 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	run_heredoc(t_shell *shell, t_here *here)
 	pid = check_fork();
 	if (pid == 0)
 	{
-		signals_set(SIGHEREDOC, shell);
+		signals_set(HEREDOC, shell);
 		heredoc_reader(shell, here, 0);
 	}
 	waitpid(pid, &g_exit, 0);
