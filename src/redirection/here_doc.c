@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:30:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/15 18:29:55 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 23:27:23 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static void	process_heredoc_lines(t_shell *shell, t_here *here, int fd)
 			ft_printf(ERROR_TITLE ERROR_HERE_DOC "%s'\n", here->eof);
 			break ;
 		}
-		expand_heredoc(shell, &line, 0, 0);
 		if (ft_strcmp(line, here->eof) == 0)
 		{
 			free(line);
 			break ;
 		}
+		expand_heredoc(shell, &line, 0, 0);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
