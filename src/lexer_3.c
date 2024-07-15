@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 12:31:34 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:18:38 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,16 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell)
 	char	*value;
 	char	*new_value;
 	char	*var_name;
+	int		size_total;
 
 	var_name = NULL;
 	value = NULL;
+	size_total = ft_strlen(cur_value) + ft_strlen(value);
 	value = expand_v(lexer, m_shell, var_name, value);
 	free(var_name);
-	new_value = ft_calloc(strlen(cur_value) + strlen(value) + 1, sizeof(char));
+	new_value = ft_calloc(size_total + 1, sizeof(char));
 	ft_strlcpy(new_value, cur_value, ft_strlen(cur_value) + 1);
-	ft_strlcat(new_value, value, ft_strlen(cur_value) + ft_strlen(value) + 1);
+	ft_strlcat(new_value, value, size_total + 1);
 	free(cur_value);
 	return (new_value);
 }
