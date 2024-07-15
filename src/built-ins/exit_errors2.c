@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:30:18 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/13 13:57:32 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:38:24 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_exit(t_shell *shell)
 	if (shell->input)
 	{
 		free(shell->input);
-		shell->input= NULL;
+		shell->input = NULL;
 	}
 	if (shell->ast)
 		free_cmd(shell->ast);

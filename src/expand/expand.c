@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 13:32:35 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/13 22:50:07 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/15 12:38:03 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	expand(char *key, int i, int j, char **line)
 	tmp2 = ft_substr(*line, j, ft_strlen(*line) - j + 1);
 	if (!tmp2)
 		return (free_and_return(tmp));
-	//free(*line);
 	*line = ft_strjoin(tmp, key);
 	free(tmp);
 	if (!*line)
