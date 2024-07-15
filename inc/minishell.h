@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 10:23:57 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:39:37 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	executor(t_shell *m_shell);
 void	child_signal_handler2(int sig);
 void	child_signal_handler(int sig);
 void	ctrl_c(int sig);
-void	back_slash(int sig);
+void	ctrl_c_slash(int sig);
 void	signals_set(int sg, t_shell *m_shell);
 
 void	free_exec_node(t_exec_node *exec);

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 10:59:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 17:05:44 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:56:04 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	signals_set(int sg, t_shell *m_shell)
 	}
 	if (sg == SIGCHILD)
 	{
-		signal(SIGINT, back_slash);
-		signal(SIGQUIT, back_slash);
+		signal(SIGINT, ctrl_c_slash);
+		signal(SIGQUIT, ctrl_c_slash);
 	}
 	if (sg == EXIT)
 		clean_exit(m_shell, BUILTIN_EXIT);

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 10:25:23 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 10:40:03 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:38:49 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	child_signal_handler(int sig)
 	}
 }
 
-void	back_slash(int sig)
+void	ctrl_c_slash(int sig)
 {
 	g_exit = 131;
 	if (sig == SIGINT)

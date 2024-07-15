@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 15:48:29 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:55:30 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	exit_error(char *str, t_shell *m_shell, char *char_error)
 	{
 		printf("minishell: ");
 		printf ("%s", str);
+	}
+	if (m_shell->input)
+	{
+		free(m_shell->input);
+		m_shell->input = NULL;
 	}
 	m_shell->status = RESTORE;
 	return (1);
