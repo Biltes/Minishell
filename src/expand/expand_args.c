@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:44 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/04 17:13:15 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/16 12:55:57 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	point_to_exp_tilde(t_shell *sh, int point, char *tmp, char **line)
 	char	*env_var;
 	int		len;
 
+	printf("o tmp é: %s\n\n\n", tmp);
 	env_var = get_tilde_env_var(sh, tmp);
 	if (!env_var)
 		return (0);
@@ -36,23 +37,31 @@ int	expand_tilde(t_shell *shell, char **line)
 	int		dblquote;
 	int		sgquote;
 	char	*tmp;
+	char	**tmp2;
+	int		flag;
 
+	flag = 0;
 	dblquote = 0;
 	sgquote = 0;
 	tmp = *line;
+	tmp2 = line;
 	while (*tmp)
 	{
 		if (*tmp == '"' && !sgquote)
 			dblquote = !dblquote;
 		if (*tmp == '\'' && !dblquote)
 			sgquote = !sgquote;
-		if (*tmp == '~' && !dblquote && !sgquote
+		if ((*tmp == '~' && !dblquote && !sgquote) \
 			&& (tmp == *line || ft_strchr(SPACES, *(tmp - 1))))
+		{
 			if (point_to_exp_tilde(shell, tmp - *line, tmp, line))
 				tmp = *line;
+		}
 		if (*tmp)
 			tmp++;
 	}
+	if (flag == 1)
+		free(tmp2);
 	return (0);
 }
 

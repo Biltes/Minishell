@@ -1,36 +1,38 @@
-==8550== Memcheck, a memory error detector
-==8550== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==8550== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==8550== Command: ./minishell
-==8550== Parent PID: 8547
-==8550== 
-==8550== 
-==8550== HEAP SUMMARY:
-==8550==     in use at exit: 204,741 bytes in 224 blocks
-==8550==   total heap usage: 3,635 allocs, 3,411 frees, 1,221,902 bytes allocated
-==8550== 
-==8550== 2 bytes in 1 blocks are definitely lost in loss record 1 of 63
-==8550==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==8550==    by 0x10FE5A: ft_strjoin (in /home/biltes/Desktop/Minishell/minishell)
-==8550==    by 0x10C2C4: char_append (lexer_3.c:21)
-==8550==    by 0x10A4AE: parse_id (lexer_4.c:38)
-==8550==    by 0x109A03: lexer_get_next_token (lexer.c:56)
-==8550==    by 0x10BAA3: parsing_exec (ast.c:118)
-==8550==    by 0x10BB9A: parsing_exec_and_pipe (ast.c:137)
-==8550==    by 0x10C10D: init_ast (token.c:29)
-==8550==    by 0x10C8DA: parser (parser.c:35)
-==8550==    by 0x10C045: main (main.c:32)
-==8550== 
-==8550== LEAK SUMMARY:
-==8550==    definitely lost: 2 bytes in 1 blocks
-==8550==    indirectly lost: 0 bytes in 0 blocks
-==8550==      possibly lost: 0 bytes in 0 blocks
-==8550==    still reachable: 0 bytes in 0 blocks
-==8550==         suppressed: 204,739 bytes in 223 blocks
-==8550== 
-==8550== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
---8550-- 
---8550-- used_suppression:     58 leak readline readline.supp:2 suppressed: 200,639 bytes in 216 blocks
---8550-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,100 bytes in 7 blocks
-==8550== 
-==8550== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+==82620== Memcheck, a memory error detector
+==82620== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==82620== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==82620== Command: ./minishell
+==82620== Parent PID: 82617
+==82620== 
+==82620== 
+==82620== HEAP SUMMARY:
+==82620==     in use at exit: 208,323 bytes in 231 blocks
+==82620==   total heap usage: 2,931 allocs, 2,700 frees, 735,776 bytes allocated
+==82620== 
+==82620== 2 bytes in 1 blocks are definitely lost in loss record 1 of 68
+==82620==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==82620==    by 0x1107C7: ft_itoa (in /home/pevieira/minishell/minishell)
+==82620==    by 0x10DE99: status_handler (lexer_3.c:33)
+==82620==    by 0x10DF7F: expand_v (lexer_3.c:57)
+==82620==    by 0x10E040: handle_var_expand (lexer_3.c:84)
+==82620==    by 0x10E33D: parse_id (lexer_4.c:31)
+==82620==    by 0x10EAB1: lexer_get_next_token (lexer.c:56)
+==82620==    by 0x10CBB9: parsing_exec (ast.c:130)
+==82620==    by 0x10CCC5: parsing_exec_and_pipe (ast.c:149)
+==82620==    by 0x10E740: init_ast (token.c:29)
+==82620==    by 0x10E280: parser (parser.c:35)
+==82620==    by 0x10E4EC: main (main.c:33)
+==82620== 
+==82620== LEAK SUMMARY:
+==82620==    definitely lost: 2 bytes in 1 blocks
+==82620==    indirectly lost: 0 bytes in 0 blocks
+==82620==      possibly lost: 0 bytes in 0 blocks
+==82620==    still reachable: 0 bytes in 0 blocks
+==82620==         suppressed: 208,321 bytes in 230 blocks
+==82620== 
+==82620== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+--82620-- 
+--82620-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,220 bytes in 223 blocks
+--82620-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,101 bytes in 7 blocks
+==82620== 
+==82620== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)

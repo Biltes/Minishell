@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:08:16 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/03 15:08:51 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:50:30 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_env(t_shell *shell, char **envp)
 	envp_to_list(envp, shell);
 	envp_update(shell);
 }
+
 
 char	*env_get(char *key, t_shell *shell)
 {

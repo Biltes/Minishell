@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 18:54:53 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:55:17 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,13 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_value, t_shell *m_shell)
 
 	var_name = NULL;
 	value = NULL;
-	value = expand_v(lexer, m_shell, var_name, value);
+	if (lexer->c == '~')
+	{
+		value = env_get("HOME", m_shell);
+		increment_lexer(lexer);
+	}
+	else
+		value = expand_v(lexer, m_shell, var_name, value);
 	size_total = ft_strlen(cur_value) + ft_strlen(value);
 	free(var_name);
 	new_value = ft_calloc(size_total + 1, sizeof(char));

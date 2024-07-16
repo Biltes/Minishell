@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 11:34:01 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 21:47:48 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:41:43 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token	*parse_id(t_lexer *lexer, int double_q, int single_q, t_shell *m_shell)
 			double_q = !double_q;
 		if (lexer->c == '\'' && double_q == CLOSE)
 			single_q = !single_q;
-		else if (lexer->c == '$' && single_q == CLOSE && !m_shell->heredoc)
+		else if ((lexer->c == '$' || lexer->c == '~') && single_q == CLOSE && !m_shell->heredoc)
 		{
 			beggining = lexer->i;
 			value = handle_var_expand(lexer, value, m_shell);

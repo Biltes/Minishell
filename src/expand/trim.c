@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/13 13:57:36 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:56:13 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,22 @@ void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
 {
 	int		expanded;
 	char	*tmp;
+	char	*token_value_cpy;
 
 	if (!token->value)
 		return ;
-	(void)shell;
-	expanded = (ft_strchr(token->value, '$') || ft_strchr(token->value, '*'));
-	expand_arg(shell, &token->value);
+	token_value_cpy = ft_strdup(token->value);
+	expanded = (ft_strchr(token->value, '$') || \
+		 ft_strchr(token->value, '*') || ft_strchr(token->value, '~'));
+	expand_arg(shell, &token_value_cpy);
+	if (expanded)
+	{
+		free(token->value);
+		token->value = NULL;
+		token->value = token_value_cpy;
+	}
+	else
+		free(token_value_cpy);
 	len = ft_strlen(token->value);
 	trim_quotes(token->value, &len);
 	tmp = token->value;

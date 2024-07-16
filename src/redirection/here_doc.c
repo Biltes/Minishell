@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:30:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/15 23:27:23 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:11:38 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void	expand_heredoc(t_shell *shell, char **line, int i, int j)
 				j++;
 			tmp = ft_substr(*line, i + 1, j - i - 1);
 			env_value = env_get(tmp, shell);
-			expand(env_value, i, j, line);
+			if (env_value)
+				expand(env_value, i, j, line);
 			free(tmp);
 		}
 		i++;
