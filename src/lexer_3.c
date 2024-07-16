@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/16 12:55:17 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:35:05 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ char	*char_append(t_lexer *lexer, char *value)
 
 char	*status_handler(void)
 {
-	char	*status_str;
+	char		*status_str;
+	static char	tmp_str[8];
 
 	status_str = ft_itoa(g_exit);
 	if (status_str == NULL)
@@ -36,7 +37,10 @@ char	*status_handler(void)
 		printf("minishell: failed to allocate memory for status string\n");
 		return (NULL);
 	}
-	return (status_str);
+	ft_strlcpy(tmp_str, status_str, sizeof(tmp_str) - 1);
+	tmp_str[sizeof(tmp_str) - 1] = '\0';
+	free(status_str);
+	return (tmp_str);
 }
 
 char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value)
@@ -54,6 +58,7 @@ char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value)
 		}
 		if (lexer->c == '?')
 		{
+			free(value);
 			value = status_handler();
 			increment_lexer(lexer);
 		}

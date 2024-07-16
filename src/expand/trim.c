@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/16 12:56:13 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:43:46 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	trim_quotes(char *arg, int *len)
 		if ((arg[i] == '"' || arg[i] == '\'') && !quote)
 		{
 			quote = arg[i];
-			memmove(arg + i, arg + i + 1, *len - i);
+			ft_memmove(arg + i, arg + i + 1, *len - i);
 			(*len)--;
 		}
 		else if (quote && arg[i] == quote)
 		{
 			quote = 0;
-			memmove(arg + i, arg + i + 1, *len - i);
+			ft_memmove(arg + i, arg + i + 1, *len - i);
 			(*len)--;
 		}
 		else

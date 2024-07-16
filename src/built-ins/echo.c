@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:06 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/04 15:26:33 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:42:47 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	print_token_value(t_exec_node *cmd, int *i)
 {
 	if (strcmp(cmd->tokens_argv[*i]->value, "?") == 0)
 	{
+		//printf("AAAAA\n");
 		print_exit_code();
 	}
 	else
