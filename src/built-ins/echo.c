@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:06 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/16 16:29:57 by migupere         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:53:11 by biltes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 static int	ft_contains_only(char *str, char *characters)
 {
-	while (*str)
-	{
-		if (!ft_strchr(characters, *str++))
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (!ft_strchr(characters, str[i]))
 			return (0);
-	}
-	return (1);
+	return (i);
 }
 
 static int	echo_flag(t_exec_node *cmd, int *arg_index)

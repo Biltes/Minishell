@@ -1,24 +1,24 @@
-==157807== Memcheck, a memory error detector
-==157807== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==157807== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==157807== Command: ./minishell
-==157807== Parent PID: 157804
-==157807== 
-==157807== 
-==157807== HEAP SUMMARY:
-==157807==     in use at exit: 208,489 bytes in 242 blocks
-==157807==   total heap usage: 2,950 allocs, 2,708 frees, 1,084,978 bytes allocated
-==157807== 
-==157807== LEAK SUMMARY:
-==157807==    definitely lost: 0 bytes in 0 blocks
-==157807==    indirectly lost: 0 bytes in 0 blocks
-==157807==      possibly lost: 0 bytes in 0 blocks
-==157807==    still reachable: 0 bytes in 0 blocks
-==157807==         suppressed: 208,489 bytes in 242 blocks
-==157807== 
-==157807== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
---157807-- 
---157807-- used_suppression:     63 leak readline readline.supp:2 suppressed: 204,258 bytes in 226 blocks
---157807-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,231 bytes in 16 blocks
-==157807== 
-==157807== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==5281== Memcheck, a memory error detector
+==5281== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==5281== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==5281== Command: ./minishell
+==5281== Parent PID: 5278
+==5281== 
+==5281== 
+==5281== HEAP SUMMARY:
+==5281==     in use at exit: 204,838 bytes in 229 blocks
+==5281==   total heap usage: 3,713 allocs, 3,484 frees, 1,231,426 bytes allocated
+==5281== 
+==5281== LEAK SUMMARY:
+==5281==    definitely lost: 0 bytes in 0 blocks
+==5281==    indirectly lost: 0 bytes in 0 blocks
+==5281==      possibly lost: 0 bytes in 0 blocks
+==5281==    still reachable: 0 bytes in 0 blocks
+==5281==         suppressed: 204,838 bytes in 229 blocks
+==5281== 
+==5281== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--5281-- 
+--5281-- used_suppression:     60 leak readline readline.supp:2 suppressed: 200,682 bytes in 219 blocks
+--5281-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,156 bytes in 10 blocks
+==5281== 
+==5281== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
