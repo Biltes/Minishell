@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:06 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/16 15:42:47 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:29:57 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,6 @@ static int	echo_flag(t_exec_node *cmd, int *arg_index)
 	return (flag);
 }
 
-static void	print_exit_code(void)
-{
-	char	*exit_code;
-
-	exit_code = ft_itoa(g_exit);
-	if (exit_code)
-	{
-		ft_putstr_fd(exit_code, STDOUT_FILENO);
-		free(exit_code);
-	}
-}
-
-static void	print_token_value(t_exec_node *cmd, int *i)
-{
-	if (strcmp(cmd->tokens_argv[*i]->value, "?") == 0)
-	{
-		//printf("AAAAA\n");
-		print_exit_code();
-	}
-	else
-	{
-		ft_putstr_fd(cmd->tokens_argv[*i]->value, STDOUT_FILENO);
-	}
-}
-
 void	echo_command(t_exec_node *cmd)
 {
 	int	i;
@@ -84,7 +59,7 @@ void	echo_command(t_exec_node *cmd)
 	{
 		while (cmd->tokens_argv[i] != NULL)
 		{
-			print_token_value(cmd, &i);
+			ft_putstr_fd(cmd->tokens_argv[i]->value, STDOUT_FILENO);
 			if (cmd->tokens_argv[i + 1])
 				ft_putchar_fd(' ', STDOUT_FILENO);
 			i++;
