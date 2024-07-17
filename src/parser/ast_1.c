@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:30:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:52:09 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:56:15 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,3 @@ int	init_ast(t_shell *m_shell)
 	m_shell->ast = cmd;
 	return (1);
 }
-

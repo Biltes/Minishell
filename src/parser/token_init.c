@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:41:54 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:52:32 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:56:20 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ t_token	*init_token(int type, char *value)
 	token->value = value;
 	return (token);
 }
-

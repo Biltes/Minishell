@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:52:37 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:55:37 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,10 @@ static int	check_redirection_syntax(t_shell *m_shell, int i)
 		return (exit_error("syntax error near `<'", m_shell, NULL));
 	if (m_shell->input && ft_strchr("<>", \
 		m_shell->input[ft_strlen(m_shell->input) - 1]))
-		return (exit_error( \
+		return (exit_error(\
 			"syntax error near unexpected token `newline'", m_shell, NULL));
 	return (0);
 }
-
 
 int	check_syntax(t_shell *shell, int d_q, int s_q, int i)
 {
