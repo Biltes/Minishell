@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:35:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:52:00 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:08:07 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,3 @@ t_cmd	*error_red(t_cmd *cmd, t_shell *m_shell, int red_type)
 		exit_error("syntax error near token ´newline'\n", m_shell, NULL);
 	return (cmd);
 }
-
