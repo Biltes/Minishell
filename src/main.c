@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:11:24 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/16 09:41:51 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 09:43:56 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int	main(int ac, char **av, char **envp)
 		cleaning_input_and_lexer(&m_shell);
 	}
 	free_array(m_shell.envp);
-	envp_destroy(m_shell.env);
+	clean_envp(m_shell.env);
 	return (g_exit);
 }

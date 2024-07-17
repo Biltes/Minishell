@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:35:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/16 14:41:53 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 09:44:22 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	envp_destroy(t_env *env)
+void	clean_envp(t_env *env)
 {
-	t_env	*tmp;
+	t_env	*next_env;
 
 	while (env)
 	{
-		tmp = env->next;
-		free(env->key);
+		next_env = env->next;
 		free(env->value);
+		free(env->key);
 		free(env);
-		env = tmp;
+		env = next_env;
 	}
 }
 
@@ -72,7 +72,7 @@ void	clean_exit(t_shell *m_shell, int mode)
 	if (m_shell->next_token)
 		free(m_shell->next_token);
 	if (m_shell->env)
-		envp_destroy(m_shell->env);
+		clean_envp(m_shell->env);
 	if (m_shell->envp)
 		free_array(m_shell->envp);
 	(void) mode;

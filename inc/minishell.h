@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 21:49:42 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 09:44:08 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	free_exec_node(t_exec_node *exec);
 void	free_cmd(t_cmd *cmd);
 void	free_array(char **array);
 void	clean_exit(t_shell *m_shell, int mode);
-void	envp_destroy(t_env *env);
+void	clean_envp(t_env *env);
 
 t_cmd	*parsing_exec_and_pipe(t_shell *m_shell);
 void	cleaning_input_and_lexer(t_shell *m_shell);
