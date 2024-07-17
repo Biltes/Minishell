@@ -91,7 +91,6 @@ void	set_signal(int sg, t_shell *msh);
 void	executor(t_shell *m_shell);
 
 void	child_signal_handler(int sig);
-void	ctrl_c(int sig);
 void	ctrl_c_slash(int sig);
 void	signals_set(int sg, t_shell *m_shell);
 

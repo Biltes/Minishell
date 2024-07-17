@@ -24,7 +24,7 @@ static void	check_execve(t_shell *shell, char *path)
 		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	else
 		ft_putendl_fd(": command not found", STDERR_FILENO);
-	g_exit = 127 - !access(path, F_OK);
+	g_exit = 127 - !access(path, F_OK) && !access(path, X_OK);
 	free(path);
 	free_exit(shell);
 }

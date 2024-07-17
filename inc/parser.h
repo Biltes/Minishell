@@ -113,7 +113,6 @@ typedef struct s_shell	t_shell;
 t_cmd	*init_redir_cmd(t_cmd *cmd, t_token *token, int mode, int fd);
 t_cmd	*init_pipe_node(t_cmd *left, t_cmd *right);
 t_cmd	*init_exec_node(void);
-t_cmd	*init_block_node(t_cmd *cmd);
 
 int		scan(t_lexer *lexer, char *op, int mode);
 void	ft_add_token_to_exec(t_exec_node *exec, t_token *token);

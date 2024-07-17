@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-static int	expand_file_mane(t_shell *shell, char **file)
+static int	expand_name(t_shell *shell, char **file)
 {
 	int	len;
 
@@ -36,7 +36,7 @@ static int	open_redirect(t_shell *shell, t_redir_node *cmd, int *original_fd)
 	if (*original_fd == -1)
 		return (-1);
 	fd = -2;
-	if (expand_file_mane(shell, &cmd->file))
+	if (expand_name(shell, &cmd->file))
 	{
 		fd = open(cmd->file, cmd->mode, FILE_PERMISSIONS);
 		if (fd == -1)

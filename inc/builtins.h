@@ -57,7 +57,6 @@ void	wait_children(t_shell *shell);
 void	run_redir(t_shell *shell, t_redir_node *cmd);
 void	trim_arg(char *arg);
 int		expand_free(char *key, int i, int j, char **line);
-void	expand_wildcard(char **line);
 char	**convert_tokens_to_argv(t_token **tokens);
 void	check_exit_status(void);
 void	expand_argv(t_shell *shell, t_token **tokens_argv);

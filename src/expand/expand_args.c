@@ -17,7 +17,6 @@ static int	point_to_exp_tilde(t_shell *sh, int point, char *tmp, char **line)
 	char	*env_var;
 	int		len;
 
-	printf("o tmp é: %s\n\n\n", tmp);
 	env_var = get_tilde_env_var(sh, tmp);
 	if (!env_var)
 		return (0);
