@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 10:59:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 11:11:32 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:17:40 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	reset_prompt(int sig)
 	(void)sig;
 	g_exit = 130;
 	write(1, "\n", 1);
-	//rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }
