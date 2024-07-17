@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_handle.c                                     :+:      :+:    :+:   */
+/*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/16 14:19:41 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 09:58:13 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int	check_syntax(t_shell *shell, int d_q, int s_q, int i)
 	return (0);
 }
 
-static char	*get_prompt(void)
+static char	*prompt_generator(void)
 {
-	char	*cwd;
 	char	*prompt;
+	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
 	prompt = ft_strjoin("🐣 ", cwd);
@@ -104,7 +104,7 @@ static char	*get_prompt(void)
 int	get_input(t_shell *m_shell)
 {
 	signals_set(RESTORE, m_shell);
-	m_shell->prompt = get_prompt();
+	m_shell->prompt = prompt_generator();
 	m_shell->input = readline(m_shell->prompt);
 	if (m_shell->prompt)
 		free(m_shell->prompt);

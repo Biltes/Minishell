@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/16 14:12:24 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:01:50 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	exit_error(char *str, t_shell *m_shell, char *char_error)
 {
 	char	*error;
+
 	if (char_error != NULL)
 	{
 		error = ft_calloc(2, sizeof(char));

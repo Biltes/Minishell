@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:50:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/15 15:05:12 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:12:04 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,10 @@ void	check_exit_status(void)
 		ft_putendl_fd("Segmentation fault (core dumped)", STDERR_FILENO);
 	else if (g_exit == FLOAT_EXCEPTION || g_exit == FLOAT_EXCEPTION_COREDUMPED)
 		ft_putendl_fd("Floating point exception (core dumped)", STDERR_FILENO);
+}
+
+void	executor(t_shell *m_shell)
+{
+	if (m_shell->ast)
+		run_cmd(m_shell, m_shell->ast);
 }

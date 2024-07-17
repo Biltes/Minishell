@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 21:52:02 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:02:50 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,6 @@ static t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token, t_here *here)
 		return (cmd);
 	}
 	return ((t_cmd *)here);
-}
-
-static t_cmd	*error_red(t_cmd *cmd, t_shell *m_shell, int red_type)
-{
-	if (red_type == TOKEN_REDIR1)
-		exit_error("syntax error near token ´<'\n", m_shell, NULL);
-	else if (red_type == TOKEN_REDIR2)
-		exit_error("syntax error near token ´>'\n", m_shell, NULL);
-	else if (red_type == TOKEN_REDIR3)
-		exit_error("syntax error near token ´>>'\n", m_shell, NULL);
-	else if (red_type == TOKEN_PIPE)
-		exit_error("syntax error near token ´|'\n", m_shell, NULL);
-	else
-		exit_error("syntax error near token ´newline'\n", m_shell, NULL);
-	return (cmd);
 }
 
 static t_cmd	*check_redirections(t_cmd *cmd, t_shell *m_shell, int red_type)

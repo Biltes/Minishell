@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:24:40 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 11:35:54 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:02:34 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,6 @@ void	ft_add_token_to_exec(t_exec_node *exec, t_token *token);
 int		init_ast(t_shell *m_shell);
 char	*change_lexer(t_lexer *lexer, char *value, int current_i);
 int		check_wspaces(char *arg);
+
+t_cmd	*error_red(t_cmd *cmd, t_shell *m_shell, int red_type);
 #endif

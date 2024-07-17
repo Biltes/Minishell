@@ -1,0 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_errors_3                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 10:39:36 by pevieira          #+#    #+#             */
+/*   Updated: 2024/07/17 10:39:51 by pevieira         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/minishell.h"
+
+void	cleaning_input_and_lexer(t_shell *m_shell)
+{
+	if (m_shell->input)
+	{
+		free(m_shell->input);
+		m_shell->input = NULL;
+	}
+	if (m_shell->lexer)
+	{
+		if (m_shell->lexer->str)
+		{
+			free(m_shell->lexer->str);
+			m_shell->lexer->str = NULL;
+		}
+		free(m_shell->lexer);
+		m_shell->lexer = NULL;
+	}
+}

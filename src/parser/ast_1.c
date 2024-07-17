@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_nodes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 17:30:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/12 16:37:04 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:06:22 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,3 +60,25 @@ t_cmd	*init_redir_cmd(t_cmd *cmd, t_token *token, int mode, int fd)
 	}
 	return ((t_cmd *)redir);
 }
+
+int	init_ast(t_shell *m_shell)
+{
+	t_cmd	*cmd;
+
+	cmd = parsing_exec_and_pipe(m_shell);
+	if (scan(m_shell->lexer, "&", 2) && cmd)
+	{
+		exit_error("no support for `&&'\n", m_shell, NULL);
+		m_shell->status = RESTORE;
+		return (0);
+	}
+	if (scan(m_shell->lexer, "|", 2) && cmd)
+	{
+		exit_error("no support for `||'\n", m_shell, NULL);
+		m_shell->status = RESTORE;
+		return (0);
+	}
+	m_shell->ast = cmd;
+	return (1);
+}
+
