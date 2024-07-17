@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:50:43 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:03:08 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int		exit_error(char *str, t_shell *m_shell, char *char_error);
 void	set_signal(int sg, t_shell *msh);
 void	executor(t_shell *m_shell);
 
-void	child_signal_handler2(int sig);
 void	child_signal_handler(int sig);
 void	ctrl_c(int sig);
 void	ctrl_c_slash(int sig);
