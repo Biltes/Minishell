@@ -6,11 +6,11 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 10:59:45 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:46:00 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:52:57 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	reset_prompt(int sig)
 {

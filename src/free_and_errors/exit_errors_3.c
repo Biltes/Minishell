@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_errors_3                                      :+:      :+:    :+:   */
+/*   exit_errors_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:39:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:39:51 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:51:49 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	cleaning_input_and_lexer(t_shell *m_shell)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 11:22:31 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/15 12:20:51 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:52:19 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 t_token	*increment_lexer_and_token(t_lexer *lexer, t_token *token)
 {
