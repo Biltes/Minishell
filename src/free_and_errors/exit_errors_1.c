@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:38:14 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:52:03 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:20:13 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,25 @@ int	exit_error(char *str, t_shell *m_shell, char *char_error)
 
 	if (char_error != NULL)
 	{
-		error = ft_calloc(2, sizeof(char));
-		error[0] = char_error[0];
-		error[1] = '\0';
+		error = ft_calloc(4, sizeof(char));
+		error[0] = '`';
+		error[1] = char_error[0];
+		error[2] = '\'';
+		error[3] = '\0';
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putendl_fd(error, STDERR_FILENO);
 		free(error);
 	}
 	else
-	{
-		(void)error;
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putendl_fd(str, STDERR_FILENO);
-	}
+		ft_print_serror(str);
 	if (m_shell->input)
 	{
 		free(m_shell->input);
 		m_shell->input = NULL;
 	}
 	m_shell->status = RESTORE;
+	g_exit = 2;
 	return (1);
 }
 

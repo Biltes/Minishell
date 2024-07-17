@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 21:35:36 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 11:08:07 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:19:15 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,15 @@ void	clean_exit(t_shell *m_shell, int mode)
 t_cmd	*error_red(t_cmd *cmd, t_shell *m_shell, int red_type)
 {
 	if (red_type == TOKEN_REDIR1)
-		exit_error("syntax error near token ´<'\n", m_shell, NULL);
+		exit_error("syntax error near unexpected token `<'", m_shell, NULL);
 	else if (red_type == TOKEN_REDIR2)
-		exit_error("syntax error near token ´>'\n", m_shell, NULL);
+		exit_error("syntax error near unexpected token `>'", m_shell, NULL);
 	else if (red_type == TOKEN_REDIR3)
-		exit_error("syntax error near token ´>>'\n", m_shell, NULL);
+		exit_error("syntax error near unexpected token `>>'", m_shell, NULL);
 	else if (red_type == TOKEN_PIPE)
-		exit_error("syntax error near token ´|'\n", m_shell, NULL);
+		exit_error("syntax error near unexpected token `|'", m_shell, NULL);
 	else
-		exit_error("syntax error near token ´newline'\n", m_shell, NULL);
+		exit_error(\
+			"syntax error near unexpected token `newline'", m_shell, NULL);
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:24:40 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:02:34 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:14:43 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,6 @@ char	*change_lexer(t_lexer *lexer, char *value, int current_i);
 int		check_wspaces(char *arg);
 
 t_cmd	*error_red(t_cmd *cmd, t_shell *m_shell, int red_type);
+void	ft_print_serror(char *str);
+
 #endif
