@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 12:18:23 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 11:42:36 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	check_syntax(t_shell *shell, int d_q, int s_q, int i)
 {
 	if (prepare_and_initial_check(shell, NULL))
 		return (1);
-	while (shell->input[++i])
+	while (shell->input && shell->input[++i])
 	{
 		if (shell->input[i] == '"' && s_q == CLOSE)
 			d_q = !d_q;
@@ -134,6 +134,7 @@ int	get_input(t_shell *m_shell)
 	add_history(m_shell->input);
 	if (check_syntax(m_shell, CLOSE, CLOSE, -1))
 		return (1);
-	m_shell->lexer = init_lexer(m_shell->input);
+	if (m_shell->input)
+		m_shell->lexer = init_lexer(m_shell->input);
 	return (0);
 }
