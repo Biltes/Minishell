@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:50:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/17 10:12:04 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:53:58 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	check_execve(t_shell *shell, char *path)
 		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	else
 		ft_putendl_fd(": command not found", STDERR_FILENO);
-	g_exit = 127 - !access(path, F_OK) && !access(path, X_OK);
+	g_exit = 127 - !access(path, F_OK);
 	free(path);
 	free_exit(shell);
 }

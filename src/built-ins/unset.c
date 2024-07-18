@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:49:31 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/03 14:54:02 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:53:32 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	get_key_and_rm(char *key, t_shell *shell)
 	prev = NULL;
 	while (tmp)
 	{
-		if (strcmp(tmp->key, key) == 0)
+		if (ft_strcmp(tmp->key, key) == 0)
 		{
 			if (prev)
 				prev->next = tmp->next;
