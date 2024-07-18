@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:21:07 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 10:52:23 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:14:40 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token	*parse_id(t_lexer *lexer, int d_q, int s_q, t_shell *sh)
 		if ((lexer->c == '$' || lexer->c == '~') && s_q == 0 && !sh->heredoc)
 		{
 			beggining = lexer->i;
-			value = handle_var_expand(lexer, value, sh);
+			value = handle_var_expand(lexer, value, sh, 0);
 			if (check_wspaces(value))
 				value = change_lexer(lexer, value, beggining);
 			continue ;
