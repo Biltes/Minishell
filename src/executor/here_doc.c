@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:30:37 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/16 13:11:38 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:51:21 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	expand_heredoc(t_shell *shell, char **line, int i, int j)
 		if ((*line)[i] == '$' && (*line)[i + 1] == '?')
 		{
 			tmp = ft_itoa(g_exit);
-			expand(tmp, i, i + 2, line);
+			expander(i, i + 2, line, tmp);
 			free(tmp);
 		}
 		else if ((*line)[i] == '$' && ft_isalpha((*line)[i + 1]))
@@ -33,7 +33,7 @@ static void	expand_heredoc(t_shell *shell, char **line, int i, int j)
 			tmp = ft_substr(*line, i + 1, j - i - 1);
 			env_value = env_get(tmp, shell);
 			if (env_value)
-				expand(env_value, i, j, line);
+				expander(i, j, line, env_value);
 			free(tmp);
 		}
 		i++;
@@ -98,7 +98,7 @@ void	run_heredoc(t_shell *shell, t_here *here)
 	pid_t	pid;
 
 	len = ft_strlen(here->eof);
-	trim_quotes(here->eof, &len);
+	quotes_remove(here->eof, &len, 0, 0);
 	pid = check_fork();
 	if (pid == 0)
 	{

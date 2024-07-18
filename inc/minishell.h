@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/17 11:03:08 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:40:10 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ t_env	*env_add_or_mod(t_shell *shell, char *key, char *value, int visible);
 
 char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value);
 void	env_add(t_shell *shell, char *key, char *value, int visible);
-void	process_and_trim_arg(t_shell *shell, t_token *token, int len);
+void	args_process(t_shell *shell, t_token *token, int len, int expand);
 bool	env_rm(char *key, t_shell *shell);
 char	*get_tilde_env_var(t_shell *sh, char *tmp);
-void	env_expand(t_shell *shell, char *tmp, char **line);
-int		expand_tilde(t_shell *shell, char **line);
+void	env_checker(t_shell *shell, char *tmp, char **line);
+int		tilde_checker(t_shell *shell, char **line, int dblquote, int sgquote);
 char	*reset_value(char *value);
 
 #endif

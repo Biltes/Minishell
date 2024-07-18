@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pevieira <pevieira@student.42.com>         +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:24:50 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/04 15:14:56 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:24:41 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static int	expand_name(t_shell *shell, char **file)
 	}
 	expand_arg(shell, file);
 	len = ft_strlen(*file);
-	trim_arg(*file);
-	trim_quotes(*file, &len);
+	trimming(*file, 0, 0);
+	quotes_remove(*file, &len, 0, 0);
 	return (1);
 }
 

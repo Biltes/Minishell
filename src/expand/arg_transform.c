@@ -1,55 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   trim.c                                             :+:      :+:    :+:   */
+/*   arg_transform.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 11:14:20 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/16 15:43:46 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:26:57 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	trim_arg(char *arg)
+void	quotes_remove(char *str, int *len, int i, char quote)
 {
-	int		squote;
-	int		dquote;
-
-	dquote = 0;
-	squote = 0;
-	while (*arg)
-	{
-		if (*arg == '"' && !squote)
-			dquote = !dquote;
-		if (*arg == '\'' && !dquote)
-			squote = !squote;
-		if (ft_strchr(SPACES, *arg) && !squote && !dquote)
-			*arg = '\0';
-		arg++;
-	}
-}
-
-void	trim_quotes(char *arg, int *len)
-{
-	char	quote;
-	int		i;
-
-	quote = 0;
-	i = 0;
 	while (i < *len)
 	{
-		if ((arg[i] == '"' || arg[i] == '\'') && !quote)
-		{
-			quote = arg[i];
-			ft_memmove(arg + i, arg + i + 1, *len - i);
-			(*len)--;
-		}
-		else if (quote && arg[i] == quote)
+		if (quote && str[i] == quote)
 		{
 			quote = 0;
-			ft_memmove(arg + i, arg + i + 1, *len - i);
+			ft_memmove(str + i, str + i + 1, *len - i);
+			(*len)--;
+		}
+		else if ((str[i] == '\'' || str[i] == '"') && !quote)
+		{
+			quote = str[i];
+			ft_memmove(str + i, str + i + 1, *len - i);
 			(*len)--;
 		}
 		else
@@ -79,19 +55,31 @@ char	**convert_tokens_to_argv(t_token **tokens)
 	return (argv);
 }
 
-void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
+void	trimming(char *str, int squote, int dquote)
 {
-	int		expanded;
-	char	*tmp;
+	while (*str)
+	{
+		if (*str == '"' && !squote)
+			dquote = !dquote;
+		if (*str == '\'' && !dquote)
+			squote = !squote;
+		if (ft_strchr(SPACES, *str) && !squote && !dquote)
+			*str = '\0';
+		str++;
+	}
+}
+
+void	args_process(t_shell *shell, t_token *token, int len, int expand)
+{
 	char	*token_value_cpy;
 
 	if (!token->value)
 		return ;
 	token_value_cpy = ft_strdup(token->value);
-	expanded = (ft_strchr(token->value, '$') || \
-		 ft_strchr(token->value, '*') || ft_strchr(token->value, '~'));
+	expand = (ft_strchr(token->value, '$') || \
+		ft_strchr(token->value, '*') || ft_strchr(token->value, '~'));
 	expand_arg(shell, &token_value_cpy);
-	if (expanded)
+	if (expand)
 	{
 		free(token->value);
 		token->value = NULL;
@@ -100,16 +88,8 @@ void	process_and_trim_arg(t_shell *shell, t_token *token, int len)
 	else
 		free(token_value_cpy);
 	len = ft_strlen(token->value);
-	trim_quotes(token->value, &len);
-	tmp = token->value;
-	while (tmp < token->value + len)
-	{
-		if (*tmp == '\0' && (ft_strcmp(token->value, \
-			"printf") || token != token + 2))
-			token->value = tmp + 1;
-		tmp++;
-	}
-	if (!token->value[0] && expanded)
+	quotes_remove(token->value, &len, 0, 0);
+	if (!token->value[0] && expand)
 	{
 		free(token->value);
 		token->value = NULL;

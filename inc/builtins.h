@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: biltes <biltes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:26:55 by migupere          #+#    #+#             */
-/*   Updated: 2024/07/04 16:37:50 by biltes           ###   ########.fr       */
+/*   Updated: 2024/07/18 10:50:31 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	*env_get(char *key, t_shell *shell);
 bool	env_rm(char *key, t_shell *shell);
 void	run_cmd(t_shell *shell, t_cmd *cmd);
 void	expand_arg(t_shell *shell, char **arg);
-void	trim_quotes(char *arg, int *len);
-int		expand(char *key, int i, int j, char **line);
+void	quotes_remove(char *str, int *len, int i, char quote);
+int		expander(int i, int j, char **line, char *key);
 int		check_fork(void);
 void	run_cmd(t_shell *shell, t_cmd *cmd);
 void	run_exec(t_shell *shell, t_exec_node *cmd);
@@ -55,7 +55,7 @@ int		check_error_and_exit(int result, char *msg, int exit_code);
 int		check_fork(void);
 void	wait_children(t_shell *shell);
 void	run_redir(t_shell *shell, t_redir_node *cmd);
-void	trim_arg(char *arg);
+void	trimming(char *str, int squote, int dquote);
 int		expand_free(char *key, int i, int j, char **line);
 char	**convert_tokens_to_argv(t_token **tokens);
 void	check_exit_status(void);
