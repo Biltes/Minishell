@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:04:30 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/18 13:14:24 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:23:38 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*expand_v(t_lexer *lexer, t_shell *shell, char *var_name, char *value)
 	return (value);
 }
 
-char	*handle_var_expand(t_lexer *lexer, char *cur_vle, t_shell *m_shell, int sz)
+char	*handle_var_expand(t_lexer *lexer, char *cur_vle, t_shell *sh, int sz)
 {
 	char	*value;
 	char	*new_value;
@@ -81,16 +81,16 @@ char	*handle_var_expand(t_lexer *lexer, char *cur_vle, t_shell *m_shell, int sz)
 	value = NULL;
 	if (lexer->c == '~')
 	{
-		value = env_get("HOME", m_shell);
+		value = env_get("HOME", sh);
 		increment_lexer(lexer);
-		if ((((int)lexer->i)-2) > 0 && ((ft_isalnum(lexer->str[lexer->i-2])) \
-			|| lexer->str[lexer->i-2] == '\\'))
+		if ((((int)lexer->i) - 2) > 0 && ((ft_isalnum(lexer->str[lexer->i - 2]) \
+		) || lexer->str[lexer->i - 2] == '\\'))
 			value = "~";
 		if (lexer->c && ft_isalnum(lexer->c))
 			value = "~";
 	}
 	else
-		value = expand_v(lexer, m_shell, var_name, value);
+		value = expand_v(lexer, sh, var_name, value);
 	sz = ft_strlen(cur_vle) + ft_strlen(value);
 	free(var_name);
 	new_value = ft_calloc(sz + 1, sizeof(char));

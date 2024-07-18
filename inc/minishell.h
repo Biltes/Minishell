@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:38:21 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/18 13:14:57 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:20:54 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	clean_envp(t_env *env);
 
 t_cmd	*parsing_exec_and_pipe(t_shell *m_shell);
 void	cleaning_input_and_lexer(t_shell *m_shell);
-char	*handle_var_expand(t_lexer *lexer, char *cur_vle, t_shell *m_shell, int sz);
+char	*handle_var_expand(t_lexer *lexer, char *cur_vle, t_shell *sh, int sz);
 char	*char_append(t_lexer *lexer, char *value);
 char	*status_handler(void);
 
