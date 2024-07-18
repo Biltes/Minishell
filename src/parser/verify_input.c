@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 08:35:53 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/18 11:42:36 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:14:42 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static char	*prompt_generator(void)
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	prompt = ft_strjoin("🐣 ", cwd);
+	prompt = ft_strjoin("MS ", cwd);
 	free(cwd);
 	cwd = ft_strjoin(prompt, ":$ ");
 	free(prompt);
