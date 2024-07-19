@@ -6,7 +6,7 @@
 /*   By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:04:48 by pevieira          #+#    #+#             */
-/*   Updated: 2024/07/19 21:33:42 by pevieira         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:03:02 by pevieira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,17 @@ static t_cmd	*init_heredoc_cmd(t_cmd *cmd, t_token *token, t_here *here)
 	here->mode = O_WRONLY | O_CREAT | O_TRUNC;
 	here->fdin = dup(STDIN_FILENO);
 	here->fdout = dup(STDOUT_FILENO);
-	if (cmd->type == EXEC || cmd->type == REDIR)
-		here->cmd = cmd;
-	else if (cmd->type == HERE_DOC)
+	if (cmd->type != HERE_DOC)
 		here->cmd = cmd;
 	else
 	{
 		tmp = cmd;
-		while (tmp->type != EXEC && tmp->type != REDIR)
+		while (tmp->type == HERE_DOC)
 		{
 			tmp2 = tmp;
-			tmp = ((t_redir_node *)tmp)->cmd;
+			tmp = ((t_here *)tmp)->cmd;
 		}
-		((t_redir_node *)tmp2)->cmd = (t_cmd *)here;
+		((t_here *)tmp2)->cmd = (t_cmd *)here;
 		here->cmd = tmp;
 		return (cmd);
 	}
