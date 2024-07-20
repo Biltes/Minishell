@@ -6,7 +6,7 @@
 #    By: pevieira <pevieira@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/18 11:19:45 by pevieira          #+#    #+#              #
-#    Updated: 2024/07/18 11:19:49 by pevieira         ###   ########.fr        #
+#    Updated: 2024/07/20 11:12:39 by pevieira         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,21 +78,21 @@ fclean: clean
 
 re: fclean all
 
-leaks: readline.supp
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all -s --log-file=output.log ./minishell
+#leaks: readline.supp
+#	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all -s --log-file=output.log ./minishell
 
-readline.supp:
-	echo "{" > readline.supp
-	echo "    leak readline" >> readline.supp
-	echo "    Memcheck:Leak" >> readline.supp
-	echo "    ..." >> readline.supp
-	echo "    fun:readline" >> readline.supp
-	echo "}" >> readline.supp
-	echo "{" >> readline.supp
-	echo "    leak add_history" >> readline.supp
-	echo "    Memcheck:Leak" >> readline.supp
-	echo "    ..." >> readline.supp
-	echo "    fun:add_history" >> readline.supp
-	echo "}" >> readline.supp
+#readline.supp:
+#	echo "{" > readline.supp
+#	echo "    leak readline" >> readline.supp
+#	echo "    Memcheck:Leak" >> readline.supp
+#	echo "    ..." >> readline.supp
+#	echo "    fun:readline" >> readline.supp
+#	echo "}" >> readline.supp
+#	echo "{" >> readline.supp
+#	echo "    leak add_history" >> readline.supp
+#	echo "    Memcheck:Leak" >> readline.supp
+#	echo "    ..." >> readline.supp
+#	echo "    fun:add_history" >> readline.supp
+#	echo "}" >> readline.supp
 
 .PHONY: all clean fclean re
